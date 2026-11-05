@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>交互原型案例｜我的作品集</title>
+  <link rel="stylesheet" href="material.css">
+  <style>
+    .case-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px;margin-top:28px}
+    .case-list .panel{margin:0;display:flex;flex-direction:column;align-items:flex-start}
+    .case-list h2{margin:0;font-size:22px}
+    .case-list .download{margin-top:auto}
+    .case-list p{margin:10px 0 20px}
+    .download:focus-visible{outline:2px solid #1d2440;outline-offset:3px}
+  </style>
+</head>
+<body>
+  <nav aria-label="作品集导航"><a href="../watch-listen/">← 演示与复盘</a><a href="../">作品集首页</a></nav>
+  <main>
+    <h1>交互原型案例</h1>
+    <p class="note">从角色权限、业务状态和异常处理出发，体验原型中的关键流程。各案例使用示例数据。</p>
+    <div class="case-list">
+      <article class="panel"><h2>工程项目工作台</h2><p>切换三个部门视角，体验资料编辑、只读、合同审批和任务依赖。</p><a class="download" href="prototype.html">体验工程项目工作台</a></article>
+      <article class="panel"><h2>项目采购审批</h2><p>切换申请、审批、收货和财务角色，查看单据状态和成本分摊。</p><a class="download" href="prototypes/procurement.html">体验项目采购审批</a></article>
+      <article class="panel"><h2>财务双预算</h2><p>体验申请同时占用部门年度预算和项目预算，查看余额不足、冻结、释放和跨年场景。</p><a class="download" href="prototypes/dual-budget.html">体验财务双预算</a></article>
+      <article class="panel"><h2>项目信息系统 · 智能客服</h2><p>从项目资料提问，点击回答里的引用，查看文件片段。也可以试问资料没有覆盖的问题。</p><a class="download" href="prototypes/knowledge-assistant.html">体验智能客服</a></article>
+    </div>
+  </main>
+</body>
+</html>

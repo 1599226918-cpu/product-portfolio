@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data: blob:; connect-src 'none'; form-action 'none'; base-uri 'none'">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' data:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>工程项目工作台 · 财务模块双预算交互原型</title>
+  <style>:root{--orange:#fa5b0f;--orange-dark:#d84908;--orange-soft:#fff4ec;--ink:#263344;--muted:#7d8796;--line:#e7ebf0;--soft:#f4f6f9;--blue:#397ee9;--blue-soft:#edf4ff;--green:#159571;--green-soft:#eaf8f2;--red:#d84c4b;--red-soft:#fff1f0;--purple:#8170c6;--nav:#304156;--nav-dark:#263445}
+*{box-sizing:border-box}body{margin:0;background:var(--soft);color:var(--ink);font:14px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}button,input,select,textarea{font:inherit}button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.46}a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}button:focus-visible,a:focus-visible{outline:3px solid #9bc1ff;outline-offset:2px}input:focus,select:focus,textarea:focus{outline:2px solid #fa5b0f40;border-color:var(--orange)}[hidden]{display:none!important}.sidebar{position:fixed;inset:0 auto 0 0;width:204px;background:var(--nav);color:#bfcbd9;display:flex;flex-direction:column;z-index:5}.brand{height:74px;padding:0 19px;display:flex;align-items:center;gap:10px;background:#2b394d;color:#fff;font-size:17px;font-weight:650;letter-spacing:.5px}.brand-mark{width:31px;height:32px;border:2px solid #fa7c43;display:grid;place-items:center;color:#ff8b52;font-size:24px;line-height:1}.brand small{display:block;font-weight:400;font-size:10px;color:#aab9c9;letter-spacing:1.3px;margin-top:3px}.side-label{padding:24px 23px 13px;font-size:11px;letter-spacing:1.5px;color:#8193a8}.nav-item{border:0;border-left:3px solid transparent;width:100%;padding:14px 19px;color:#bac9d9;background:none;display:flex;align-items:center;gap:12px;text-align:left;font-size:14px}.nav-item:hover{background:#2b3a4e;color:#fff}.nav-item.active{background:var(--nav-dark);color:#ff884b;border-left-color:var(--orange)}.nav-icon{font-size:18px;display:inline-block;width:20px;text-align:center}.nav-count{margin-left:auto;font-size:11px;background:#43536a;padding:1px 6px;border-radius:4px}.side-bottom{margin-top:auto;padding:22px;font-size:12px;border-top:1px solid #465368;color:#d5deea}.side-bottom small{display:block;font-size:10px;color:#96a7ba;margin:6px 0 0 14px}.dot{width:6px;height:6px;border-radius:50%;display:inline-block;background:#4dd3a5;margin-right:7px;vertical-align:middle}.workspace{margin-left:204px;min-width:0}.topbar{height:55px;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 26px;border-bottom:1px solid var(--line)}.crumb{color:#7e8794;font-size:12px}.crumb span{padding:0 12px;color:#bdc4ce}.crumb b{font-weight:500;color:var(--ink)}.top-actions{display:flex;gap:11px;align-items:center;font-size:12px}.demo-label{padding:3px 9px;background:var(--orange-soft);color:#b55a24;border:1px solid #ffe4d1;border-radius:4px;font-size:11px}.avatar{width:28px;height:28px;background:#e6edf6;color:#4c607b;display:grid;place-items:center;border-radius:50%;font-size:12px}.tagsbar{display:flex;align-items:center;padding:0 25px;height:37px;background:#fff;border-bottom:1px solid #dde3eb;gap:15px}.tag-page{color:var(--orange-dark);border:1px solid #ffd1b5;background:#fff8f3;padding:2px 10px;font-size:11px;border-radius:3px}.tag-page b{margin-left:13px;font-weight:400;color:#c7a58e}.tags-hint{font-size:11px;color:#99a2af}.text-btn{background:none;border:0;padding:0;color:var(--blue);font-size:12px}.text-btn:hover{text-decoration:underline}.tagsbar .text-btn{margin-left:auto;color:#8390a1;font-size:11px}main{padding:26px 28px 38px;max-width:1640px;margin:auto;outline:none}.page-heading{display:flex;align-items:flex-start;gap:18px;justify-content:space-between;margin-bottom:20px}.page-heading h1{font-size:23px;letter-spacing:.3px;margin:0 0 5px;font-weight:650}.page-heading p{color:var(--muted);font-size:12px;margin:0}.heading-actions{display:flex;align-items:center;gap:9px;flex-shrink:0}.button{height:34px;padding:0 14px;background:#fff;border:1px solid #dce2e9;border-radius:4px;color:#536174;display:inline-flex;gap:7px;align-items:center;justify-content:center;white-space:nowrap}.button:hover{background:#fafbfc;border-color:#bdc9d7}.button.primary{background:var(--orange);border-color:var(--orange);color:#fff}.button.primary:hover{background:var(--orange-dark)}.button.danger{border-color:#f1c9c5;color:var(--red)}.button.small{height:29px;font-size:12px;padding:0 10px}.button.quiet{border-color:transparent;background:transparent}.button .plus{font-size:18px;line-height:1}.field-select{height:34px;background:#fff;border:1px solid #dce2e9;border-radius:4px;padding:0 11px;color:#536174;min-width:112px}.muted{color:var(--muted)}.small{font-size:12px}.micro{font-size:11px}.mono{font-variant-numeric:tabular-nums}.orange{color:var(--orange-dark)}.green{color:var(--green)}.red{color:var(--red)}.blue{color:var(--blue)}.badge{font-size:11px;border-radius:4px;padding:3px 7px;display:inline-flex;align-items:center;white-space:nowrap;gap:4px;background:#f0f3f7;color:#6a788b}.badge.success{background:var(--green-soft);color:var(--green)}.badge.warning{background:#fff4e5;color:#bc7b1d}.badge.error{background:var(--red-soft);color:var(--red)}.badge.info{background:var(--blue-soft);color:var(--blue)}.section{background:#fff;border:1px solid var(--line);border-radius:5px;margin-bottom:18px}.section-head{display:flex;align-items:center;gap:10px;justify-content:space-between;padding:17px 20px;border-bottom:1px solid var(--line)}.section-head h2{font-size:14px;font-weight:650;margin:0}.section-head .small{font-size:11px}.section-body{padding:20px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:20px}.stat{border:1px solid var(--line);border-radius:5px;background:#fff;padding:18px 21px;position:relative}.stat .stat-label{font-size:12px;color:#788598;display:flex;align-items:center;justify-content:space-between}.stat .stat-value{font-size:28px;line-height:1.3;font-weight:650;margin:10px 0 5px;letter-spacing:.5px;font-variant-numeric:tabular-nums}.stat .stat-value .currency{font-size:17px;font-weight:400;margin-right:5px}.stat .stat-foot{font-size:11px;color:#98a0ad}.stat .stat-icon{width:25px;height:25px;background:#f5f8fb;color:#8196b0;border-radius:5px;display:grid;place-items:center;font-size:14px}.stat.primary-stat{border-top:2px solid var(--orange);padding-top:17px}.stat.primary-stat .stat-value{color:var(--orange-dark)}.relation-grid{display:grid;grid-template-columns:1fr 100px 1fr;align-items:stretch;gap:0}.budget-box{padding:19px;border:1px solid #e5e9ef;border-radius:5px;background:#fff}.budget-box.annual{background:#fffaf6;border-color:#f6ddc9}.budget-box.project{background:#f7faff;border-color:#dce7f8}.box-kicker{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:#af8f78;margin-bottom:6px}.project .box-kicker{color:#7a94ba}.budget-box h3{margin:0;font-size:16px;font-weight:600}.budget-box .period{font-size:11px;color:#89929e;margin:5px 0 15px}.budget-box .box-total{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-size:12px;color:#8591a0}.budget-box .box-total strong{font-size:20px;color:var(--ink);font-weight:600}.triplet{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}.triplet span{font-size:11px;color:#929ba8;display:block}.triplet b{font-size:14px;display:block;margin-top:4px;font-weight:550;white-space:nowrap}.triplet .available b{color:var(--green);font-weight:650}.progress{height:7px;border-radius:3px;overflow:hidden;display:flex;background:#edf0f4}.progress .used{background:#fa7a39}.progress .reserved{background:#f4c18e}.progress .free{background:#e8edf3}.progress.blue .used{background:#6c99e0}.progress.blue .reserved{background:#b8d0f6}.flow-middle{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center}.flow-line{width:100%;height:1px;background:#d7e0ea;position:relative}.flow-line:after{content:"";position:absolute;right:0;top:-3px;border-left:5px solid #c2cedd;border-top:3px solid transparent;border-bottom:3px solid transparent}.flow-middle b{font-size:11px;font-weight:500;white-space:nowrap;background:#fff;color:#6e7e92}.flow-middle small{font-size:10px;color:#98a4b4}.relation-note{margin-top:16px;padding:10px 13px;background:#f7f9fc;border-radius:3px;display:flex;align-items:center;justify-content:space-between;gap:14px;font-size:11px;color:#7d899a}.relation-note strong{color:#526880;font-weight:500}.split{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(280px,1fr);gap:18px}.split .section{margin-bottom:0}.table-wrap{overflow-x:auto}table{border-collapse:collapse;width:100%;text-align:left;font-size:12px}th{background:#fafbfc;color:#8893a1;font-weight:500;font-size:11px;padding:12px 16px;border-bottom:1px solid var(--line);white-space:nowrap}td{padding:15px 16px;border-bottom:1px solid #edf0f3;vertical-align:middle}tr:last-child td{border-bottom:0}tbody tr:hover{background:#fcfdff}.number{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}.name-cell b{font-weight:550;display:block;font-size:12px}.name-cell small{display:block;color:#99a1ad;font-size:10px;margin-top:4px}.row-actions{display:flex;gap:12px;align-items:center;white-space:nowrap}.table-footer{padding:12px 18px;font-size:11px;color:#99a2ae;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.page-pill{border:1px solid #ffd0b3;color:var(--orange);background:#fff6f0;padding:1px 8px;border-radius:3px}.scenario-list{padding:7px 19px}.scenario-line{padding:12px 0;border-bottom:1px solid #edf0f3;display:flex;align-items:center;gap:11px;width:100%;text-align:left;background:none;border-left:0;border-right:0;border-top:0}.scenario-line:last-child{border-bottom:0}.scenario-index{height:27px;width:27px;display:grid;place-items:center;border-radius:4px;background:#f5f7fa;color:#8a9ab0;font-size:11px;flex-shrink:0}.scenario-title{font-size:12px;font-weight:500;display:block}.scenario-caption{display:block;font-size:10px;color:#97a1ae;margin-top:3px}.scenario-line .arrow{margin-left:auto;color:#aab5c4}.hint-strip{display:flex;gap:9px;padding:11px 15px;background:var(--blue-soft);color:#5e7fa9;font-size:11px;border:1px solid #dce9fd;border-radius:4px;margin-bottom:18px;align-items:flex-start}.hint-strip.warning{background:#fff8ed;border-color:#f3e0ba;color:#a47d39}.hint-strip.error{background:var(--red-soft);border-color:#f3d4d1;color:#bf5c54}.hint-strip strong{font-weight:600}.annual-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.annual-card{border:1px solid var(--line);background:#fff;border-radius:5px;padding:23px}.annual-card .head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.annual-card h2{font-size:16px;margin:0;font-weight:600}.annual-card .amount{font-size:31px;font-weight:600;margin:10px 0 16px}.annual-card .calculation{font-size:11px;color:#8d99a8;padding:10px 0 0;margin-top:17px;border-top:1px solid var(--line)}.annual-card .card-foot{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#97a1ad;margin-top:18px}.annual-related{margin-top:20px}.annual-related h3{margin:0 0 10px;font-size:12px;font-weight:550}.mini-project{display:flex;align-items:center;justify-content:space-between;border-top:1px solid #edf0f3;padding:10px 0;font-size:11px;color:#6e7d8f}.mini-project:first-of-type{border-top:0}.mini-project span small{display:block;font-size:10px;color:#a1aab5}.mini-project .number{color:#7c8d9f}.callout{padding:16px 18px;background:#fff;border-left:3px solid #edc28f;font-size:12px;color:#8391a1;margin-top:18px}.callout strong{color:#50647d;font-weight:550}.project-list{display:grid;grid-template-columns:310px 1fr;gap:18px}.project-choices{display:flex;flex-direction:column;gap:12px}.project-choice{display:block;width:100%;padding:18px;text-align:left;background:#fff;border:1px solid var(--line);border-radius:5px}.project-choice.selected{border-color:#ffaf80;background:#fffaf6;box-shadow:inset 3px 0 0 var(--orange)}.project-choice h3{font-size:13px;margin:7px 0;font-weight:600}.project-choice p{font-size:10px;color:#929dab;margin:0}.project-choice .choose-foot{display:flex;justify-content:space-between;align-items:center;margin-top:15px;font-size:11px;color:#7e8c9e}.project-choice .choose-foot strong{color:var(--green);font-weight:550}.project-detail h2{font-size:17px;margin:0 0 5px}.project-metadata{font-size:11px;color:#9ba4b1;margin-bottom:18px}.project-finances{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:17px 0;margin-bottom:18px;border-bottom:1px solid var(--line)}.project-finances small{display:block;font-size:11px;color:#96a0af}.project-finances strong{font-size:18px;display:block;margin-top:5px;font-weight:600}.detail-note{font-size:11px;color:#8998aa;background:#f7f9fc;padding:11px 13px;border-radius:3px;margin-top:15px}.inner-title{font-size:12px;font-weight:600;margin:20px 0 11px}.detail-info{display:grid;grid-template-columns:repeat(2,1fr);gap:11px 22px;font-size:11px;padding-top:8px}.detail-info .label{color:#9aa4b3;display:block;margin-bottom:3px}.detail-info b{font-weight:500}.tabs{display:flex;gap:25px;padding:0 20px;border-bottom:1px solid var(--line)}.tab{padding:14px 0 11px;border:0;border-bottom:2px solid transparent;color:#8995a5;font-size:12px;background:none}.tab.active{color:var(--orange);border-bottom-color:var(--orange)}.tab span{margin-left:5px;color:#a0aaba;font-size:10px}.toolbar{padding:15px 19px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}.search{height:32px;border:1px solid #dce2e9;border-radius:4px;padding:0 11px;min-width:240px;flex:1;max-width:340px}.empty{text-align:center;color:#a0a9b6;padding:46px;font-size:12px}.type-icon{width:26px;height:26px;background:var(--blue-soft);color:var(--blue);display:inline-grid;place-items:center;border-radius:4px;margin-right:8px;font-size:11px}.type-icon.reimburse{background:var(--orange-soft);color:var(--orange)}.bills-banner{background:#fff;border:1px solid var(--line);border-radius:5px;padding:13px 17px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:18px}.bills-banner .title{font-size:11px;color:#8996a5}.scenario-pill{border:0;background:#f5f7fa;border-radius:4px;color:#7b899a;font-size:11px;padding:6px 10px}.scenario-pill:hover{background:#fff1e6;color:var(--orange-dark)}.overlay{position:fixed;inset:0;background:#1c2b405c;z-index:30;display:flex;justify-content:flex-end;backdrop-filter:blur(2px)}.drawer{width:min(1080px,calc(100vw - 60px));background:#fff;display:flex;flex-direction:column;max-height:100dvh;box-shadow:-12px 0 42px #13233b26;animation:enter .18s ease}.drawer.narrow{width:min(720px,calc(100vw - 40px))}.drawer-head{padding:22px 26px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:15px}.drawer-head h2{font-size:19px;margin:0;font-weight:600}.drawer-head p{font-size:11px;color:#9aa4b1;margin:4px 0 0}.close{border:0;background:none;font-size:25px;color:#9aa4b3;line-height:1;padding:2px 5px}.drawer-scroll{flex:1;overflow:auto;padding:23px 26px}.drawer-foot{padding:17px 26px;border-top:1px solid var(--line);display:flex;gap:9px;align-items:center;justify-content:flex-end;background:#fff}.drawer-foot .foot-note{margin-right:auto;font-size:11px;color:#96a0ae}.form-layout{display:grid;grid-template-columns:minmax(280px,1fr) minmax(330px,1.05fr);gap:27px}.form-fields{display:grid;grid-template-columns:1fr 1fr;gap:17px 14px;align-content:start}.form-field{display:block;font-size:12px;color:#778599}.form-field.wide{grid-column:1/-1}.form-field label{display:block;margin-bottom:7px}.required:before{content:"*";color:#dc7164;padding-right:4px}.form-field input,.form-field select,.form-field textarea{width:100%;height:37px;border:1px solid #dce2e9;background:#fff;color:#45556a;border-radius:4px;padding:0 10px}.form-field textarea{height:73px;padding-top:9px;resize:vertical}.form-field input[readonly]{background:#f7f9fc;color:#7a8aa0}.form-field .field-hint{font-size:10px;color:#9ca6b4;margin-top:5px}.form-field .amount-input{font-size:21px;height:45px;font-variant-numeric:tabular-nums}.form-section-label{font-size:11px;letter-spacing:1.1px;color:#a0a9b6;grid-column:1/-1;border-bottom:1px solid var(--line);padding-bottom:9px;margin-bottom:-1px}.type-switch{display:flex;border:1px solid #dce2e9;border-radius:4px;overflow:hidden}.type-switch button{flex:1;border:0;padding:8px;background:#fff;color:#8b97a6;font-size:12px}.type-switch button.active{background:var(--orange-soft);color:var(--orange-dark)}.check-panel{background:#f7f9fc;border:1px solid #e7edf4;border-radius:5px;padding:17px;align-self:start}.check-title{display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:600;margin-bottom:12px}.check-title span{font-size:10px;font-weight:400;color:#a0aab9}.check-card{background:#fff;border:1px solid #e1e8f0;border-radius:4px;padding:14px;margin-bottom:11px}.check-card.fail{border-color:#f0cbc7}.check-card.pass{border-color:#cde8dd}.check-card .check-head{display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:550}.check-card .check-period{font-size:10px;color:#97a3b3;margin:5px 0 12px}.check-row{display:flex;justify-content:space-between;font-size:11px;color:#8795a7;padding:4px 0;gap:8px}.check-row strong{font-size:12px;color:#435770;font-weight:550;font-variant-numeric:tabular-nums}.check-row.after{border-top:1px dashed #e5eaf0;margin-top:7px;padding-top:9px}.check-row.after strong{color:var(--green)}.fail .check-row.after strong{color:var(--red)}.check-result{font-size:11px;padding:11px 12px;border-radius:4px;background:var(--green-soft);color:var(--green);margin-top:13px}.check-result.error{background:var(--red-soft);color:var(--red)}.check-result ul{margin:7px 0 0;padding-left:17px}.check-result li{margin:3px 0}.check-caption{font-size:10px;color:#98a5b5;line-height:1.7;margin-top:11px}.budget-route{padding:12px 0 0;margin-top:13px;border-top:1px solid #e1e7ef;font-size:10px;color:#8a9ab0;display:flex;justify-content:space-between;gap:8px}.drawer-scenarios{display:flex;gap:7px;flex-wrap:wrap;margin:0 0 19px}.drawer-scenarios .scenario-pill{font-size:10px}.request-summary{background:#f8fafc;padding:16px;border:1px solid #e9edf3;border-radius:4px;margin-bottom:19px;display:flex;justify-content:space-between;align-items:center}.request-summary .summary-amount{font-size:26px;font-weight:600;font-variant-numeric:tabular-nums}.request-summary .summary-label{font-size:11px;color:#9aa5b5;margin-bottom:4px}.request-info{display:grid;grid-template-columns:1fr 1fr;gap:15px 20px;font-size:12px;margin-bottom:21px}.request-info label{font-size:11px;color:#99a4b3;display:block;margin-bottom:4px}.request-info .full{grid-column:1/-1}.occupancy{border:1px solid var(--line);border-radius:4px;overflow:hidden}.occupancy .occupancy-row{padding:13px 15px;display:flex;justify-content:space-between;gap:15px;border-bottom:1px solid var(--line);font-size:12px}.occupancy .occupancy-row:last-child{border:0}.occupancy small{display:block;font-size:10px;color:#9ca5b2;margin-top:4px}.timeline{padding:3px 0 3px 9px}.timeline-item{border-left:1px solid #e1e7ef;padding:0 0 20px 20px;position:relative;font-size:12px;color:#60748d}.timeline-item:before{content:"";width:7px;height:7px;background:#c2d1e3;border:3px solid #f0f5fc;border-radius:50%;position:absolute;top:3px;left:-7px}.timeline-item:last-child{padding-bottom:0;border-color:transparent}.timeline-item:last-child:before{background:var(--orange)}.timeline-item small{display:block;color:#9ea8b6;font-size:10px;margin-top:4px}.modal-wrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:22px;z-index:35;background:#1c2b405c}.modal{width:450px;background:#fff;border-radius:6px;box-shadow:0 20px 80px #23354a30}.modal .drawer-scroll{max-height:75dvh}.modal .form-field{margin-bottom:15px}.modal h2{font-size:17px}.toast{position:fixed;left:calc(50% + 80px);top:111px;transform:translate(-50%,-10px);padding:10px 18px;border:1px solid #d7e8df;background:#f0fbf5;color:#268764;box-shadow:0 5px 18px #163a2b14;border-radius:5px;font-size:12px;z-index:60;opacity:0;pointer-events:none;transition:.2s;max-width:90vw}.toast.show{opacity:1;transform:translate(-50%,0)}.toast.error{background:#fff3f1;border-color:#f2d0c8;color:#b95c50}.rule-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.rule-row{padding:17px 0;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:20px;align-items:center}.rule-row:last-child{border-bottom:0}.rule-row b{font-size:12px;font-weight:550;display:block}.rule-row small{font-size:11px;color:#98a4b3;display:block;margin-top:6px;max-width:470px}.switch{position:relative;display:inline-flex;align-items:center;flex-shrink:0}.switch input{appearance:none;width:34px;height:19px;border-radius:12px;background:#cbd3dd;margin:0;position:relative;cursor:pointer;border:0}.switch input:before{content:"";width:13px;height:13px;background:#fff;border-radius:50%;position:absolute;left:3px;top:3px;transition:.15s}.switch input:checked{background:var(--orange)}.switch input:checked:before{left:18px}.rule-list{padding:0;margin:0;list-style:none}.rule-list li{border-bottom:1px solid var(--line);padding:13px 0;font-size:12px;color:#61748c}.rule-list li:last-child{border:0}.rule-list b{font-weight:550;color:#435a75;display:block;margin-bottom:3px}.rule-list small{font-size:11px;color:#99a4b3}.sources{font-size:12px;color:#7d8b9e}.sources p{line-height:1.9;margin:0 0 13px}.source-links{display:flex;gap:11px;flex-wrap:wrap}.source-links a{font-size:11px}.source-preview{display:flex;gap:14px;margin-top:16px}.source-preview .source-tile{display:block;flex:1;min-width:0;border:1px solid var(--line);padding:8px;border-radius:4px;background:#fbfcfd}.source-preview img{display:block;width:100%;height:130px;object-fit:contain;background:#fff}.source-preview small{display:block;color:#8190a4;margin-top:7px;font-size:10px;text-align:center}.page-footer{max-width:1640px;margin:0 auto;padding:0 28px 22px;color:#a5adba;font-size:10px;display:flex;justify-content:space-between;gap:15px}.section-action{font-size:11px}.adjust-event{padding:12px 0;border-bottom:1px solid var(--line);font-size:12px;color:#718196}.adjust-event small{color:#a1aab7;font-size:10px;display:block;margin-top:5px}.adjust-event:last-child{border:0}@keyframes enter{from{opacity:.7;transform:translateX(22px)}to{opacity:1;transform:translateX(0)}}@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media(min-width:1680px){main{padding-top:32px}.section-body{padding:24px}.budget-box{padding:23px}.relation-grid{grid-template-columns:1fr 130px 1fr}.stat{padding:22px}.stats{gap:20px}}
+@media(max-width:1200px){.sidebar{width:180px}.workspace{margin-left:180px}.brand{padding-left:14px;font-size:15px}.nav-item{font-size:13px;padding-left:16px}main{padding:22px 21px}.split{grid-template-columns:1fr}.relation-grid{grid-template-columns:1fr 75px 1fr}.project-list{grid-template-columns:260px 1fr}.stat .stat-value{font-size:25px}.triplet b{font-size:12px}.rule-grid{grid-template-columns:1fr}}
+@media(max-width:900px){.sidebar{width:66px}.brand{padding:0;justify-content:center}.brand>span:last-child,.side-label,.side-bottom,.nav-item .nav-label,.nav-count{display:none}.nav-item{justify-content:center;padding:18px 0}.nav-icon{font-size:20px}.workspace{margin-left:66px}.topbar{padding:0 17px}.tagsbar{padding:0 16px}.tags-hint{display:none}.reviewer{display:none}.stats{gap:10px}.stat{padding:14px}.stat .stat-value{font-size:23px}.annual-grid{grid-template-columns:1fr}.project-list{grid-template-columns:1fr}.project-choices{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.project-choice{padding:12px}.project-choice h3{font-size:12px}.project-choice .choose-foot{display:block}.project-choice .choose-foot strong{display:block;margin-top:5px}.form-layout{grid-template-columns:1fr}.check-panel{margin-top:4px}.drawer{width:calc(100vw - 35px)}.drawer-scroll{padding:20px}.drawer-head,.drawer-foot{padding:17px 20px}.heading-actions .button{font-size:12px}.page-heading h1{font-size:21px}}
+@media(max-width:620px){.sidebar{width:54px}.workspace{margin-left:54px}.brand-mark{width:27px;height:28px;font-size:21px}.nav-item{padding:17px 0}.topbar{height:49px;padding:0 11px}.crumb{font-size:10px}.crumb span{padding:0 5px}.top-actions{gap:5px}.avatar{display:none}.demo-label{font-size:9px;padding:2px 4px}.tagsbar{padding:0 10px}.tag-page{font-size:10px}main{padding:18px 12px 28px}.page-heading{flex-wrap:wrap;gap:12px;margin-bottom:17px}.page-heading h1{font-size:19px}.page-heading p{font-size:11px}.heading-actions{gap:6px;flex-wrap:wrap}.field-select{min-width:90px;height:31px;font-size:12px}.button{height:31px;font-size:12px;padding:0 10px}.stats{grid-template-columns:1fr;gap:8px;margin-bottom:14px}.stat{padding:12px 15px}.stat .stat-value{font-size:23px;margin:5px 0 2px}.stat .stat-icon{display:none}.relation-grid{grid-template-columns:1fr}.flow-middle{height:62px;gap:4px}.flow-line{display:none}.flow-middle b:after{content:" ↓";color:var(--orange)}.relation-note{display:block;font-size:10px}.relation-note .text-btn{display:block;margin-top:7px}.section-head{padding:14px}.section-head h2{font-size:13px}.section-body{padding:14px}.budget-box{padding:15px}.triplet b{font-size:13px}.project-choices{grid-template-columns:1fr}.project-choice .choose-foot{display:flex}.project-choice .choose-foot strong{margin:0}.project-finances{gap:9px}.project-finances strong{font-size:15px}.detail-info{grid-template-columns:1fr}.tabs{gap:17px;overflow:auto;padding:0 14px}.tab{white-space:nowrap;font-size:11px}.toolbar{padding:12px}.search{min-width:160px;max-width:none}.bills-banner{gap:7px;padding:12px}.bills-banner .title{width:100%}.scenario-pill{font-size:10px;padding:5px 7px}.drawer{width:100vw}.drawer.narrow{width:100vw}.drawer-scroll{padding:17px}.drawer-head,.drawer-foot{padding:14px 17px}.drawer-head h2{font-size:17px}.drawer-foot{flex-wrap:wrap}.drawer-foot .foot-note{width:100%}.form-fields{gap:14px 10px}.form-field{font-size:11px}.form-field input,.form-field select,.form-field textarea{font-size:16px;min-height:42px}.form-field .amount-input{font-size:22px}.check-panel{padding:12px}.source-preview{flex-direction:column}.source-preview img{height:180px}.page-footer{padding:0 12px 16px;display:block;font-size:9px}.page-footer span{display:block;margin-top:4px}.toast{left:50%;font-size:11px}.request-info{gap:13px}.request-summary .summary-amount{font-size:23px}.detail-note{font-size:10px}.modal-wrap{padding:12px}.rule-row{gap:12px}.rule-row small{font-size:10px}}
+.form-field,.section,.section-body,.project-detail,.budget-box{min-width:0}.form-fields{grid-template-columns:repeat(2,minmax(0,1fr))}.form-field input,.form-field select,.form-field textarea{min-width:0}
+@media(max-width:440px){.budget-box .box-total{display:block}.budget-box .box-total strong{display:block;margin-top:5px}.triplet{grid-template-columns:1fr 1fr;gap:12px}.triplet .available{grid-column:1/-1}.project-finances{grid-template-columns:1fr 1fr}.project-finances>div:last-child{grid-column:1/-1}.crumb{min-width:0;flex:1}.top-actions{flex-shrink:0;max-width:95px}.demo-label{white-space:normal}.section-head{gap:8px}.section-head .field-select{max-width:110px;min-width:90px}.check-row strong{font-size:11px}.drawer-foot .button{font-size:11px}.drawer-scenarios{gap:5px}.request-info{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
+
+.prototype-intro{background:#fffaf6;border:1px solid #f5ddca;border-left:3px solid var(--orange);border-radius:5px;padding:16px 20px;margin-bottom:20px}.prototype-intro h2{font-size:14px;color:#9c4a21;margin:0 0 7px;font-weight:650}.prototype-intro p{font-size:13px;line-height:1.9;color:#667386;margin:0;overflow-wrap:anywhere}.prototype-intro strong{color:#394b61;font-weight:600}@media(max-width:600px){.prototype-intro{padding:14px 15px}.prototype-intro p{font-size:12px;line-height:1.85}}
+</style>
+</head>
+<body>
+  <aside class="sidebar" aria-label="财务模块导航">
+    <div class="brand"><span class="brand-mark">OA</span><span>工程项目工作台<small>工程咨询 · 财务管理</small></span></div>
+    <div class="side-label">财务管理</div>
+    <nav id="navigation"></nav>
+    <div class="side-bottom"><span class="dot"></span>独立评审原型<small>全部为虚构演示数据</small></div>
+  </aside>
+  <div class="workspace">
+    <header class="topbar"><div class="crumb">工作台 <span>/</span> 财务管理 <span>/</span> <b id="breadcrumb">预算总览</b></div><div class="top-actions"><span class="demo-label">交互原型 · 未接入系统</span><span class="avatar">财</span><span class="reviewer">评审视角</span></div></header>
+    <div class="tagsbar"><span class="tag-page">财务管理 <b>×</b></span><span class="tags-hint">预算申请与占用演示 · 虚构数据</span><button class="text-btn" id="reset-demo">重置演示</button></div>
+    <main id="main" tabindex="-1"></main>
+    <footer class="page-footer">财务模块交互原型 v0.2<span>仅在当前浏览器保存演示状态，未连接业务接口或支付通道</span></footer>
+  </div>
+  <div id="overlay" class="overlay" hidden></div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script>(function (root) {
+  'use strict';
+  var clone = function (value) { return JSON.parse(JSON.stringify(value)); };
+  var cents = function (yuan) { return Math.round(yuan * 100); };
+  var statuses = { pending: '待审批', approved: '待支付', paid: '已支付', rejected: '已驳回', withdrawn: '已撤回' };
+  function seed() {
+    return {
+      version: 1, nextId: 1004, settings: { dual: true, receipt: false },
+      annual: [
+        { id: 'PM-2026', dept: '项目管理部', year: 2026, limit: cents(2000000), original: cents(2000000), baseUsed: cents(1820000), baseReserved: 0, revenue: cents(4000000), ratio: 50 },
+        { id: 'PM-2027', dept: '项目管理部', year: 2027, limit: cents(2200000), original: cents(2200000), baseUsed: cents(200000), baseReserved: cents(50000), revenue: cents(4400000), ratio: 50 },
+        { id: 'QS-2026', dept: '造价咨询部', year: 2026, limit: cents(1500000), original: cents(1500000), baseUsed: cents(1200000), baseReserved: 0, revenue: cents(3750000), ratio: 40 },
+        { id: 'QS-2027', dept: '造价咨询部', year: 2027, limit: cents(1650000), original: cents(1650000), baseUsed: cents(150000), baseReserved: 0, revenue: cents(4125000), ratio: 40 }
+      ],
+      projects: [
+        { id: 'A', code: 'DEMO-PM-026', name: '示例桥梁咨询项目', short: '滨河桥梁', dept: '项目管理部', start: '2026-03-01', end: '2027-09-30', limit: cents(600000), original: cents(600000), baseUsed: cents(360000), usedByYear: { '2026': cents(360000) }, contract: cents(1200000), received: cents(1000000), ratio: 50, contractNo: 'HT-DEMO-026', color: 'orange' },
+        { id: 'B', code: 'DEMO-PM-031', name: '示例园区管理项目', short: '科创园区', dept: '项目管理部', start: '2026-01-01', end: '2026-12-31', limit: cents(240000), original: cents(240000), baseUsed: cents(180000), usedByYear: { '2026': cents(180000) }, contract: cents(600000), received: cents(600000), ratio: 40, contractNo: 'HT-DEMO-031', color: 'blue' },
+        { id: 'C', code: 'DEMO-QS-018', name: '示例城市更新项目', short: '城市更新', dept: '造价咨询部', start: '2026-02-01', end: '2027-06-30', limit: cents(420000), original: cents(420000), baseUsed: cents(240000), usedByYear: { '2026': cents(240000) }, contract: cents(840000), received: cents(720000), ratio: 50, contractNo: 'HT-DEMO-018', color: 'purple' }
+      ],
+      docs: [
+        { id: 'FY-1001', key: 'seed-1', type: '付款', projectId: 'A', dept: '项目管理部', date: '2026-10-10', year: 2026, annualId: 'PM-2026', dual: true, amount: cents(60000), category: '外包服务', payee: '示例技术服务商', purpose: '桥梁专项技术服务第一期', status: 'approved', history: [{ title: '提交申请，同时冻结两层预算', time: '10-10 09:20' }, { title: '审批通过，冻结额度继续保留', time: '10-11 14:10' }] },
+        { id: 'FY-1002', key: 'seed-2', type: '付款', projectId: 'B', dept: '项目管理部', date: '2026-10-12', year: 2026, annualId: 'PM-2026', dual: true, amount: cents(40000), category: '外包服务', payee: '示例咨询服务商', purpose: '园区资料编制服务', status: 'pending', history: [{ title: '提交申请，同时冻结两层预算', time: '10-12 10:30' }] },
+        { id: 'FY-1003', key: 'seed-3', type: '报销', projectId: 'C', dept: '造价咨询部', date: '2026-10-14', year: 2026, annualId: 'QS-2026', dual: true, amount: cents(100000), category: '差旅费', payee: '示例项目经办人', purpose: '项目现场勘查费用汇总', status: 'pending', history: [{ title: '提交申请，同时冻结两层预算', time: '10-14 15:10' }] }
+      ],
+      events: []
+    };
+  }
+  function sum(items, pick) { return items.reduce(function (s, item) { return s + pick(item); }, 0); }
+  function balance(state, scope, id) {
+    var budget = (scope === 'annual' ? state.annual : state.projects).find(function (b) { return b.id === id; });
+    if (!budget) return null;
+    var docs = state.docs.filter(function (d) { return scope === 'annual' ? d.dual && d.annualId === id : d.projectId === id; });
+    var paid = sum(docs.filter(function (d) { return d.status === 'paid'; }), function (d) { return d.amount; });
+    var reserved = (budget.baseReserved || 0) + sum(docs.filter(function (d) { return d.status === 'pending' || d.status === 'approved'; }), function (d) { return d.amount; });
+    var used = budget.baseUsed + paid;
+    return { id: id, scope: scope, limit: budget.limit, used: used, reserved: reserved, available: budget.limit - used - reserved };
+  }
+  function parseAmount(value) {
+    var text = String(value).trim();
+    if (!/^(?:0|[1-9]\d*)(?:\.\d{1,2})?$/.test(text)) return null;
+    var parts = text.split('.');
+    var valueCents = Number(parts[0]) * 100 + Number(((parts[1] || '') + '00').slice(0, 2));
+    return Number.isSafeInteger(valueCents) && valueCents > 0 && valueCents <= 100000000000 ? valueCents : null;
+  }
+  function validDate(date) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(date || '')) return false;
+    var d = new Date(date + 'T00:00:00Z');
+    return !isNaN(d.getTime()) && d.toISOString().slice(0, 10) === date;
+  }
+  function evaluate(state, form) {
+    var errors = [];
+    var project = state.projects.find(function (p) { return p.id === form.projectId; });
+    var amount = parseAmount(form.amount);
+    var dateOK = validDate(form.date);
+    var year = dateOK ? Number(form.date.slice(0, 4)) : null;
+    if (!project) errors.push('请选择关联项目。');
+    if (!amount) errors.push('金额须大于 0，最多保留两位小数。');
+    if (!dateOK) errors.push('请填写有效的费用发生日期。');
+    if (project && dateOK && (form.date < project.start || form.date > project.end)) errors.push('费用发生日期不在项目起止时间内。');
+    if (form.type !== '付款' && form.type !== '报销') errors.push('请选择报销或付款。');
+    var annual = project && year ? state.annual.find(function (a) { return a.dept === project.dept && a.year === year; }) : null;
+    var annualBalance = annual ? balance(state, 'annual', annual.id) : null;
+    var projectBalance = project ? balance(state, 'project', project.id) : null;
+    var annualPass = !!annualBalance && !!amount && annualBalance.available >= amount;
+    var projectPass = !!projectBalance && !!amount && projectBalance.available >= amount;
+    var receiptBalance = project ? Math.min(project.limit, Math.round(project.received * project.ratio / 100)) - projectBalance.used - projectBalance.reserved : null;
+    if (state.settings.dual && !annual) errors.push('该部门在 ' + (year || '所选') + ' 年尚未编制年度预算，不能提交。');
+    if (state.settings.dual && annualBalance && amount && !annualPass) errors.push('部门年度预算不足，缺口 ¥' + ((amount - annualBalance.available) / 100).toLocaleString('zh-CN', { minimumFractionDigits: 2 }) + '。');
+    if (projectBalance && amount && !projectPass) errors.push('项目全周期预算不足，缺口 ¥' + ((amount - projectBalance.available) / 100).toLocaleString('zh-CN', { minimumFractionDigits: 2 }) + '。');
+    if (state.settings.receipt && project && amount && amount > receiptBalance) errors.push('按实收释放的额度不足，请先核对回款或预算比例。');
+    return { ok: errors.length === 0, errors: errors, project: project, annual: annual, year: year, amount: amount, annualBalance: annualBalance, projectBalance: projectBalance, annualPass: annualPass, projectPass: projectPass, receiptAvailable: receiptBalance, receiptPass: !!amount && receiptBalance >= amount };
+  }
+  function stamp() {
+    return new Date().toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false });
+  }
+  function submit(state, form, key) {
+    var existing = state.docs.find(function (d) { return d.key === key; });
+    if (existing) return { ok: true, duplicate: true, state: state, doc: existing };
+    var result = evaluate(state, form);
+    if (!result.ok) return { ok: false, errors: result.errors, state: state };
+    if (!(form.purpose || '').trim()) return { ok: false, errors: ['请填写费用事由。'], state: state };
+    var next = clone(state);
+    var doc = { id: 'FY-' + next.nextId++, key: key, type: form.type, projectId: form.projectId, dept: result.project.dept, date: form.date, year: result.year, annualId: result.annual ? result.annual.id : null, dual: !!state.settings.dual, amount: result.amount, category: form.category || '其他费用', payee: (form.payee || '').trim() || '示例收款方', purpose: form.purpose.trim(), status: 'pending', snapshot: { annual: result.annualBalance, project: result.projectBalance }, history: [{ title: state.settings.dual ? '提交申请，同时冻结年度与项目预算' : '提交申请，仅冻结项目预算', time: stamp() }] };
+    next.docs.push(doc);
+    return { ok: true, state: next, doc: doc };
+  }
+  function transition(state, id, action) {
+    var doc = state.docs.find(function (d) { return d.id === id; });
+    if (!doc) return { ok: false, error: '单据不存在。', state: state };
+    var allowed = { approve: ['pending'], pay: ['approved'], reject: ['pending'], withdraw: ['pending', 'approved'] };
+    if (!allowed[action] || allowed[action].indexOf(doc.status) < 0) return { ok: false, error: '当前单据状态不支持此操作，未重复占用或扣减。', state: state };
+    var next = clone(state), target = next.docs.find(function (d) { return d.id === id; });
+    var change = {
+      approve: ['approved', '审批通过，已冻结额度继续保留'],
+      pay: ['paid', '确认支付：冻结转为已用，同一支付流水只记一笔'],
+      reject: ['rejected', '驳回申请，释放已冻结预算'],
+      withdraw: ['withdrawn', '撤回申请，释放已冻结预算']
+    }[action];
+    target.status = change[0];
+    target.history.push({ title: change[1], time: stamp() });
+    return { ok: true, state: next, doc: target };
+  }
+  function totals(state, year) {
+    var rows = state.annual.filter(function (a) { return a.year === year; });
+    var balances = rows.map(function (a) { return balance(state, 'annual', a.id); });
+    return {
+      limit: sum(balances, function (b) { return b.limit; }),
+      used: sum(balances, function (b) { return b.used; }),
+      reserved: sum(balances, function (b) { return b.reserved; }),
+      available: sum(balances, function (b) { return b.available; }),
+      paidUnique: sum(rows, function (a) { return a.baseUsed; }) + sum(state.docs.filter(function (d) { return d.year === year && d.status === 'paid'; }), function (d) { return d.amount; })
+    };
+  }
+  function projectYearUsed(state, id, year) {
+    var p = state.projects.find(function (x) { return x.id === id; });
+    return (p.usedByYear[String(year)] || 0) + sum(state.docs.filter(function (d) { return d.projectId === id && d.year === year && d.status === 'paid'; }), function (d) { return d.amount; });
+  }
+  function adjust(state, scope, id, amount, reason) {
+    var value = parseAmount(amount), b = balance(state, scope, id);
+    if (!b || !value) return { ok: false, error: '请填写有效的新预算总额。', state: state };
+    if (value < b.used + b.reserved) return { ok: false, error: '新预算不能低于已用与冻结之和。', state: state };
+    if (!(reason || '').trim()) return { ok: false, error: '请填写预算调整原因。', state: state };
+    var next = clone(state);
+    (scope === 'annual' ? next.annual : next.projects).find(function (x) { return x.id === id; }).limit = value;
+    next.events.unshift({ title: (scope === 'annual' ? '年度' : '项目') + '预算调整', id: id, before: b.limit, after: value, reason: reason.trim(), time: stamp() });
+    return { ok: true, state: next };
+  }
+  root.FinanceDemo = { seed: seed, clone: clone, cents: cents, balance: balance, parseAmount: parseAmount, evaluate: evaluate, submit: submit, transition: transition, totals: totals, projectYearUsed: projectYearUsed, adjust: adjust, statuses: statuses };
+})(typeof globalThis !== 'undefined' ? globalThis : this);
+</script>
+  <script>(function () {
+  'use strict';
+  var E = window.FinanceDemo;
+  var KEY = 'danli-finance-dual-budget-prototype-20261016-v1';
+  var state;
+  try { state = JSON.parse(localStorage.getItem(KEY)); } catch (error) { state = null; }
+  if (!state || state.version !== 1 || !Array.isArray(state.docs) || !Array.isArray(state.annual)) state = E.seed();
+  var ui = { view: 'overview', year: 2026, dept: '项目管理部', project: 'A', filter: 'all', query: '' };
+  var drawer = null, form = null, formKey = null, toastTimer = null, focusBefore = null;
+  var views = [
+    ['overview', '▥', '预算总览'],
+    ['annual', '▦', '年度预算'],
+    ['projects', '▤', '项目预算'],
+    ['bills', '↗', '报销与付款'],
+    ['rules', '⚙', '规则与依据']
+  ];
+  var scenarios = [
+    { id: 'normal', title: '两层均通过', caption: '桥梁项目 · 申请 3 万元', amount: '30000', project: 'A', date: '2026-10-16', icon: '01' },
+    { id: 'annual', title: '仅年度预算不足', caption: '桥梁项目 · 申请 10 万元', amount: '100000', project: 'A', date: '2026-10-16', icon: '02' },
+    { id: 'project', title: '仅项目预算不足', caption: '园区项目 · 申请 3 万元', amount: '30000', project: 'B', date: '2026-10-16', icon: '03' },
+    { id: 'both', title: '两层预算均不足', caption: '桥梁项目 · 申请 20 万元', amount: '200000', project: 'A', date: '2026-10-16', icon: '04' },
+    { id: 'cross', title: '跨年项目申请', caption: '2027 年发生 · 项目额度继续累计', amount: '30000', project: 'A', date: '2027-01-15', icon: '05' }
+  ];
+  function esc(v) { return String(v == null ? '' : v).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function money(v, dp) { return '¥' + ((v || 0) / 100).toLocaleString('zh-CN', { minimumFractionDigits: dp == null ? 2 : dp, maximumFractionDigits: dp == null ? 2 : dp }); }
+  function m(v) { return money(v, 0); }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (error) { /* File previews may deny storage; interactions still work for this session. */ } }
+  function project(id) { return state.projects.find(function (p) { return p.id === id; }); }
+  function annual(dept, year) { return state.annual.find(function (a) { return a.dept === dept && a.year === year; }); }
+  function button(text, action, extra, classes) { return '<button type="button" class="button ' + (classes || '') + '" data-action="' + action + '" ' + (extra || '') + '>' + text + '</button>'; }
+  function textButton(text, action, extra) { return '<button type="button" class="text-btn" data-action="' + action + '" ' + (extra || '') + '>' + text + '</button>'; }
+  function statusBadge(status) {
+    var cls = { pending: 'warning', approved: 'info', paid: 'success', rejected: 'error', withdrawn: '' }[status] || '';
+    return '<span class="badge ' + cls + '">' + esc(E.statuses[status] || status) + '</span>';
+  }
+  function yearSelect() { return '<select class="field-select" aria-label="查看预算年度" id="year-select"><option value="2026"' + (ui.year === 2026 ? ' selected' : '') + '>2026 年度</option><option value="2027"' + (ui.year === 2027 ? ' selected' : '') + '>2027 年度</option></select>'; }
+  function pageHeading(title, subtitle, actions) { return '<div class="page-heading"><div><h1>' + title + '</h1><p>' + subtitle + '</p></div><div class="heading-actions">' + (actions || '') + '</div></div>'; }
+  function progress(b, blue) {
+    var used = Math.min(100, Math.max(0, b.used / b.limit * 100));
+    var reserved = Math.min(100 - used, Math.max(0, b.reserved / b.limit * 100));
+    return '<div class="progress ' + (blue ? 'blue' : '') + '" aria-label="已用 ' + money(b.used) + '，冻结 ' + money(b.reserved) + '，可用 ' + money(b.available) + '"><span class="used" style="width:' + used + '%"></span><span class="reserved" style="width:' + reserved + '%"></span></div>';
+  }
+  function triplet(b) { return '<div class="triplet"><div><span>已用</span><b class="mono">' + m(b.used) + '</b></div><div><span>冻结中</span><b class="mono">' + m(b.reserved) + '</b></div><div class="available"><span>可用余额</span><b class="mono">' + m(b.available) + '</b></div></div>'; }
+  function stat(label, value, foot, cls, icon) { return '<div class="stat ' + (cls || '') + '"><div class="stat-label">' + label + '<span class="stat-icon">' + (icon || '▥') + '</span></div><div class="stat-value"><span class="currency">¥</span>' + money(value, 0).slice(1) + '</div><div class="stat-foot">' + foot + '</div></div>'; }
+  function section(title, content, action) { return '<section class="section"><div class="section-head"><h2>' + title + '</h2>' + (action || '') + '</div>' + content + '</section>'; }
+  function scenarioPills() { return scenarios.map(function (s) { return '<button type="button" class="scenario-pill" data-action="scenario" data-id="' + s.id + '">' + s.title + '</button>'; }).join(''); }
+  function budgetBox(title, period, b, kind, action) {
+    if (!b) return '<div class="budget-box"><h3>尚未编制年度预算</h3></div>';
+    return '<div class="budget-box ' + kind + '"><div class="box-kicker">' + (kind === 'annual' ? 'Annual budget' : 'Project budget') + '</div><h3>' + title + '</h3><div class="period">' + period + '</div><div class="box-total"><span>预算总额</span><strong class="mono">' + m(b.limit) + '</strong></div>' + progress(b, kind === 'project') + triplet(b) + (action ? '<div style="margin-top:16px">' + action + '</div>' : '') + '</div>';
+  }
+  function render() {
+    var pending = state.docs.filter(function (d) { return d.status === 'pending'; }).length;
+    document.getElementById('navigation').innerHTML = views.map(function (v) {
+      return '<button type="button" class="nav-item ' + (v[0] === ui.view ? 'active' : '') + '" data-action="navigate" data-view="' + v[0] + '" aria-label="' + v[2] + '"' + (v[0] === ui.view ? ' aria-current="page"' : '') + '><span class="nav-icon" aria-hidden="true">' + v[1] + '</span><span class="nav-label">' + v[2] + '</span>' + (v[0] === 'bills' && pending ? '<span class="nav-count">' + pending + '</span>' : '') + '</button>';
+    }).join('');
+    document.getElementById('breadcrumb').textContent = views.find(function (v) { return v[0] === ui.view; })[2];
+    document.getElementById('main').innerHTML = ({ overview: overview, annual: annualPage, projects: projectsPage, bills: billsPage, rules: rulesPage }[ui.view])();
+    if (drawer && drawer.kind === 'doc') showDoc(drawer.id, true);
+  }
+  function overview() {
+    var totals = E.totals(state, ui.year), p = project(ui.project), a = annual(p.dept, ui.year);
+    var ab = a && E.balance(state, 'annual', a.id), pb = E.balance(state, 'project', p.id);
+    var choices = '<select class="field-select" id="relation-project" aria-label="查看项目预算关联">' + state.projects.map(function (x) { return '<option value="' + x.id + '"' + (x.id === p.id ? ' selected' : '') + '>' + x.short + '</option>'; }).join('') + '</select>';
+    var relation = '<div class="section-body"><div class="relation-grid">' +
+      budgetBox(p.dept, ui.year + ' 年度 · 按费用发生日期归属', ab, 'annual', textButton('查看年度预算 →', 'navigate', 'data-view="annual"')) +
+      '<div class="flow-middle"><b>同一笔支出</b><div class="flow-line"></div><small>同时校验<br>同时占用</small></div>' +
+      budgetBox(p.name, p.start + ' 至 ' + p.end + ' · 全周期累计', pb, 'project', textButton('查看项目预算 →', 'navigate', 'data-view="projects"')) +
+      '</div><div class="relation-note"><span><strong>日期决定年度，项目决定全周期。</strong> 同一张单据关联两个预算规则，支付流水只计一笔。</span>' + textButton('试一笔 3 万元付款 →', 'new', 'data-type="付款"') + '</div></div>';
+    var rows = state.projects.map(function (x) {
+      var b = E.balance(state, 'project', x.id);
+      return '<tr><td class="name-cell"><b>' + textButton(esc(x.short), 'select-project', 'data-id="' + x.id + '"') + '</b><small>' + x.code + '</small></td><td>' + esc(x.dept) + '</td><td class="number">' + m(b.limit) + '</td><td class="number">' + m(b.available) + '</td></tr>';
+    }).join('');
+    var sc = scenarios.map(function (s) { return '<button type="button" class="scenario-line" data-action="scenario" data-id="' + s.id + '"><span class="scenario-index">' + s.icon + '</span><span><span class="scenario-title">' + s.title + '</span><span class="scenario-caption">' + s.caption + '</span></span><span class="arrow">↗</span></button>'; }).join('');
+    return pageHeading('年度预算与项目预算', '把年度经营计划与项目支出放在同一条资金链上', yearSelect() + button('<span class="plus">＋</span> 新建申请', 'new', 'data-type="付款"', 'primary')) +
+      '<section class="prototype-intro" aria-labelledby="prototype-intro-title"><h2 id="prototype-intro-title">双预算控制说明</h2><p>这版原型重点演示“年度预算＋项目预算”双重控制：<strong>年度预算管部门当年的支出，项目预算管项目全周期支出</strong>，同一笔费用按所属部门、项目和发生年度同时关联两层预算。报销或付款申请提交时，<strong>两层余额都充足才能通过，并同步预占额度</strong>；实际付款后转为已支出，驳回或撤回则释放额度，公司总支出只统计一次。跨年项目持续累计项目费用，同时分别计入对应年度预算。原型使用模拟数据，尚未接入现有系统，可打开体验。</p></section>' +
+      (!state.settings.dual ? '<div class="hint-strip warning">双层预算已关闭。新单仅控制项目预算，历史单据仍保留提交时的占用规则。' + textButton('去开启', 'navigate', 'data-view="rules"') + '</div>' : '') +
+      '<div class="stats">' + stat('年度预算可用余额', totals.available, '年度总额 ' + m(totals.limit) + ' · 两个部门', 'primary-stat', '▦') + stat('在途申请冻结', totals.reserved, '已提交未支付，额度不会被其他单据重复使用', '', '◷') + stat('本年已付支出', totals.paidUnique, '按支付流水统计一次，不累加两套预算账', '', '↗') + '</div>' +
+      section('一笔支出，关联两层预算', relation, choices) +
+      '<div class="split">' + section('项目预算概览', '<div class="table-wrap"><table><thead><tr><th>项目名称</th><th>归属部门</th><th class="number">全周期预算</th><th class="number">当前可用</th></tr></thead><tbody>' + rows + '</tbody></table></div><div class="table-footer"><span>跨年项目的总额度连续累计，不因切换年度重置</span><span>3 个示例项目</span></div>', textButton('全部项目 →', 'navigate', 'data-view="projects"')) +
+      section('试一试预算控制', '<div class="scenario-list">' + sc + '</div>', '<span class="badge">5 种情景</span>') + '</div>';
+  }
+  function annualPage() {
+    var cards = state.annual.filter(function (a) { return a.year === ui.year; }).map(function (a) {
+      var b = E.balance(state, 'annual', a.id);
+      var related = state.projects.filter(function (p) { return p.dept === a.dept && a.year >= Number(p.start.slice(0, 4)) && a.year <= Number(p.end.slice(0, 4)); }).map(function (p) {
+        return '<div class="mini-project"><span>' + textButton(esc(p.short), 'select-project', 'data-id="' + p.id + '"') + '<small>' + p.start.slice(0, 4) + '—' + p.end.slice(0, 4) + ' · 全周期预算 ' + m(p.limit) + '</small></span><span class="number">本年已用 ' + m(E.projectYearUsed(state, p.id, ui.year)) + '</span></div>';
+      }).join('');
+      return '<section class="annual-card"><div class="head"><h2>' + a.dept + '</h2><span class="badge success">已生效</span></div><div class="micro muted">' + ui.year + ' 年度费用预算 · 所有费用类别</div><div class="amount mono">' + m(a.limit) + '</div>' + progress(b) + triplet(b) + '<div class="calculation">编制基准：预计收入 ' + m(a.revenue) + ' × 费用预算率 ' + a.ratio + '%<br>累计调整：' + m(a.limit - a.original) + '</div><div class="annual-related"><h3>关联项目</h3>' + related + '</div><div class="card-foot"><span>按单据发生日期归属年度</span>' + textButton('预算调整', 'adjust', 'data-scope="annual" data-id="' + a.id + '"') + '</div></section>';
+    }).join('');
+    var events = state.events.length ? state.events.map(function (x) { return '<div class="adjust-event"><b>' + esc(x.title) + ' · ' + esc(x.id) + '</b><span style="float:right">' + m(x.before) + ' → ' + m(x.after) + '</span><small>' + esc(x.time) + ' · ' + esc(x.reason) + ' · 原型中按审批通过后生效演示</small></div>'; }).join('') : '<div class="empty">暂无预算调整。可点击部门卡片中的“预算调整”体验。</div>';
+    return pageHeading('年度预算', '先定年度费用计划，再以实际单据追踪执行', yearSelect()) + '<div class="annual-grid">' + cards + '</div>' +
+      '<div class="callout"><strong>年度预算 ≠ 项目预算相加。</strong> 年度账包含当年全部项目与部门公共费用；项目账按项目全周期累计。同一笔项目支出进入两套视角，公司支出仍只统计一次。示例中的历史已用包含未展开的历史项目及公共费用。</div>' +
+      '<div style="margin-top:20px">' + section('预算调整记录', '<div class="section-body">' + events + '</div>', '<span class="small muted">保留原预算、调整原因与生效记录</span>') + '</div>';
+  }
+  function projectsPage() {
+    var p = project(ui.project), b = E.balance(state, 'project', p.id);
+    var choices = state.projects.map(function (x) {
+      var xb = E.balance(state, 'project', x.id);
+      return '<button type="button" class="project-choice ' + (x.id === p.id ? 'selected' : '') + '" data-action="choose-project" data-id="' + x.id + '"><span class="badge ' + (x.start.slice(0, 4) !== x.end.slice(0, 4) ? 'info' : '') + '">' + (x.start.slice(0, 4) !== x.end.slice(0, 4) ? '跨年项目' : '当年项目') + '</span><h3>' + esc(x.name) + '</h3><p>' + x.code + ' · ' + x.dept + '</p><div class="choose-foot"><span>全周期 ' + m(x.limit) + '</span><strong>可用 ' + m(xb.available) + '</strong></div></button>';
+    }).join('');
+    var related = state.annual.filter(function (a) { return a.dept === p.dept && a.year >= Number(p.start.slice(0, 4)) && a.year <= Number(p.end.slice(0, 4)); }).map(function (a) {
+      var ab = E.balance(state, 'annual', a.id), projectUsed = E.projectYearUsed(state, p.id, a.year);
+      var reserve = state.docs.filter(function (d) { return d.projectId === p.id && d.year === a.year && ['pending', 'approved'].indexOf(d.status) >= 0; }).reduce(function (v, d) { return v + d.amount; }, 0);
+      return '<tr><td>' + a.year + ' 年度</td><td class="number">' + m(ab.available) + '</td><td class="number">' + m(projectUsed) + '</td><td class="number">' + m(reserve) + '</td></tr>';
+    }).join('');
+    var released = Math.min(p.limit, Math.round(p.received * p.ratio / 100));
+    var detail = '<div class="section-body project-detail"><div style="display:flex;justify-content:space-between;gap:15px"><div><h2>' + esc(p.name) + '</h2><div class="project-metadata">' + p.code + ' · ' + p.dept + ' · ' + p.start + ' 至 ' + p.end + '</div></div>' + textButton('调整项目预算', 'adjust', 'data-scope="project" data-id="' + p.id + '"') + '</div>' +
+      '<div class="project-finances"><div><small>项目全周期预算</small><strong class="mono">' + m(b.limit) + '</strong></div><div><small>已用 + 冻结</small><strong class="mono">' + m(b.used + b.reserved) + '</strong></div><div><small>当前可用额度</small><strong class="mono green">' + m(b.available) + '</strong></div></div>' + progress(b, true) +
+      '<h3 class="inner-title">按年度看这一个项目</h3><div class="table-wrap"><table><thead><tr><th>关联年度</th><th class="number">部门年度可用</th><th class="number">本项目已用</th><th class="number">本项目冻结</th></tr></thead><tbody>' + related + '</tbody></table></div>' +
+      '<div class="detail-note">2027 年继续报销时：占用 ' + p.dept + '的 2027 年预算，同时继续消耗本项目的全周期余额，不重新获得一笔项目预算。</div>' +
+      '<h3 class="inner-title">合同与回款衔接</h3><div class="detail-info"><div><span class="label">来源合同（演示）</span><b>' + p.contractNo + '</b></div><div><span class="label">已审批合同金额</span><b>' + m(p.contract) + '</b></div><div><span class="label">项目预算编制基准</span><b>' + m(p.contract) + ' × ' + p.ratio + '% = ' + m(p.original) + '</b></div><div><span class="label">累计实收</span><b>' + m(p.received) + '</b></div></div>' +
+      '<div class="detail-note"><strong>旧方案的“按实收释放”单独保留：</strong>实收 ' + m(p.received) + ' × ' + p.ratio + '%，累计释放上限为 ' + m(released) + '。' + (state.settings.receipt ? '<span class="orange">已启用，将作为额外约束。</span>' : '当前未启用，避免与批准后的项目预算总额混为一谈。') + ' ' + textButton('查看规则', 'navigate', 'data-view="rules"') + '</div></div>';
+    return pageHeading('项目预算', '项目全周期管总额，年度预算管当年的支出空间', button('＋ 新建报销', 'new', 'data-type="报销"') + button('＋ 新建付款', 'new', 'data-type="付款"', 'primary')) +
+      '<div class="project-list"><div class="project-choices">' + choices + '</div>' + section('项目预算详情', detail, '<span class="badge info">按项目编码关联</span>') + '</div>';
+  }
+  function billActions(d) {
+    var id = 'data-id="' + d.id + '"', items = [textButton('详情', 'detail', id)];
+    if (d.status === 'pending') items.push(textButton('审批通过', 'transition', id + ' data-kind="approve"'));
+    if (d.status === 'approved') items.push(textButton('确认支付', 'transition', id + ' data-kind="pay"'));
+    return items.join('');
+  }
+  function billsTable() {
+    var docs = state.docs.slice().reverse().filter(function (d) {
+      var p = project(d.projectId), q = ui.query.toLowerCase();
+      return d.year === ui.year && (ui.filter === 'all' || d.status === ui.filter) && (!q || (d.id + p.name + d.purpose + d.payee).toLowerCase().indexOf(q) >= 0);
+    });
+    if (!docs.length) return '<div class="empty">当前筛选下没有单据。可新建申请，或切换年度、状态。</div>';
+    return '<div class="table-wrap"><table><thead><tr><th>单据 / 事由</th><th>关联项目</th><th>费用发生日期</th><th class="number">申请金额</th><th>预算占用</th><th>状态</th><th>操作</th></tr></thead><tbody>' + docs.map(function (d) {
+      var p = project(d.projectId);
+      return '<tr><td class="name-cell"><b><span class="type-icon ' + (d.type === '报销' ? 'reimburse' : '') + '">' + d.type.slice(0, 1) + '</span>' + esc(d.id) + '</b><small>' + esc(d.purpose) + '</small></td><td class="name-cell"><b>' + esc(p.short) + '</b><small>' + d.dept + '</small></td><td>' + d.date + '</td><td class="number">' + money(d.amount) + '</td><td><span class="badge ' + (d.dual ? 'info' : 'warning') + '">' + (d.dual ? '年度 + 项目' : '仅项目') + '</span></td><td>' + statusBadge(d.status) + '</td><td><div class="row-actions">' + billActions(d) + '</div></td></tr>';
+    }).join('') + '</tbody></table></div>';
+  }
+  function billsPage() {
+    var filters = [['all', '全部单据'], ['pending', '待审批'], ['approved', '待支付'], ['paid', '已支付'], ['withdrawn', '已撤回'], ['rejected', '已驳回']];
+    var tabs = filters.map(function (f) { var n = state.docs.filter(function (d) { return d.year === ui.year && (f[0] === 'all' || d.status === f[0]); }).length; return '<button type="button" class="tab ' + (ui.filter === f[0] ? 'active' : '') + '" data-action="filter" data-id="' + f[0] + '">' + f[1] + '<span>' + n + '</span></button>'; }).join('');
+    return pageHeading('报销与付款', '提交先冻结，审批通过继续保留，支付后转已用；驳回或撤回释放', yearSelect() + button('＋ 新建报销', 'new', 'data-type="报销"') + button('＋ 新建付款', 'new', 'data-type="付款"', 'primary')) +
+      '<div class="bills-banner"><span class="title">快速体验</span>' + scenarioPills() + '<span class="micro muted">以初始数据为基准，可随时重置</span></div>' +
+      '<section class="section"><div class="tabs">' + tabs + '</div><div class="toolbar"><input class="search" id="bill-search" aria-label="搜索演示单据" placeholder="搜索单据号、项目、事由" value="' + esc(ui.query) + '"><span class="small muted">以下仅为在途示例和你本次创建的单据</span></div><div id="bill-table">' + billsTable() + '</div><div class="table-footer"><span>历史已用金额作为演示期初数，不在这里展开</span><span class="page-pill">1</span></div></section>';
+  }
+  function rulesPage() {
+    var settings = '<div class="section-body"><div class="rule-row"><div><b>一张单据同时占用两层预算</b><small>参考钉钉“同时占用多个预算”。开启后，新单同时校验并冻结年度与项目余额；关闭仅影响新单。</small></div><label class="switch"><input type="checkbox" id="dual-setting" aria-label="一张单据同时占用两层预算"' + (state.settings.dual ? ' checked' : '') + '></label></div><div class="rule-row"><div><b>按实收释放项目可用额度</b><small>保留旧方案的实收 × 预算比例，作为额外约束。默认关闭，不与批准后的项目预算总额混用。</small></div><label class="switch"><input type="checkbox" id="receipt-setting" aria-label="按实收释放项目可用额度"' + (state.settings.receipt ? ' checked' : '') + '></label></div><div class="rule-row"><div><b>预算超额处理</b><small>本版固定为任意一层不足即禁止提交，不设置自动特批。</small></div><span class="badge error">禁止提交</span></div></div>';
+    var rules = '<div class="section-body"><ul class="rule-list"><li><b>年度归属</b><small>按费用发生日期，匹配项目所属部门对应年度的预算；缺少预算则拦截。</small></li><li><b>项目归属</b><small>按项目编码关联，全周期使用同一额度，跨年不清零。</small></li><li><b>冻结与释放</b><small>提交时同时冻结；审批不重复扣减；驳回、撤回时释放。</small></li><li><b>支付与记账</b><small>确认支付将冻结转为已用，不再新增占用；公司支出只按支付流水计一次。</small></li><li><b>报销与付款统一规则</b><small>两类申请进入同一预算校验流程；当前均使用综合费用额度，费用类别用于归集。</small></li></ul></div>';
+    var design = '<div class="section-body sources"><p><strong>沿用 8 月财务方案：</strong>年度预算按预计收入与预算模板编制；合同与项目通过项目编码联动；财务统一记录资金，成本按项目和费用类别归集。已审批合同额与实收分别用于计划预算和可选的额度释放。</p><p><strong>本版新增、待评审：</strong>费用发生日期决定年度，提交即冻结两层，审批不重复冻结，确认支付转已用，撤回 / 驳回释放。实际系统的审批链、预算调整审批、期间结账及跨部门分摊仍需后续确认。</p><div class="hint-strip warning" style="margin-bottom:0">钉钉指南的“历史预算重算”段仍写着只占一个规则，与多预算开关有说明差异。本原型不模拟历史重算，也不声称已在钉钉企业账号完成双预算实测。</div></div>';
+    return pageHeading('规则与依据', '区分参考能力与本版设计，便于逐项评审') +
+      '<div class="rule-grid">' + section('预算控制设置', settings) + section('本版统一的业务规则', rules, '<span class="badge warning">原型约定 · 待确认</span>') + section('与之前财务方案的衔接', design) + '</div>';
+  }
+  function toast(message, error) {
+    var el = document.getElementById('toast'); clearTimeout(toastTimer); el.className = 'toast show' + (error ? ' error' : ''); el.textContent = message; toastTimer = setTimeout(function () { el.className = 'toast'; }, 3800);
+  }
+  function mountOverlay(html) {
+    var el = document.getElementById('overlay');
+    if (el.hidden) focusBefore = document.activeElement;
+    el.innerHTML = html; el.hidden = false; document.body.style.overflow = 'hidden';
+    var first = el.querySelector('button,input,select,textarea'); if (first) first.focus();
+  }
+  function closeOverlay() {
+    document.getElementById('overlay').hidden = true; document.getElementById('overlay').innerHTML = ''; document.body.style.overflow = ''; drawer = null;
+    if (focusBefore && document.contains(focusBefore)) focusBefore.focus();
+  }
+  function formField(label, name, type, value, wide, required, hint) {
+    return '<div class="form-field' + (wide ? ' wide' : '') + '"><label for="field-' + name + '"' + (required ? ' class="required"' : '') + '>' + label + '</label><input id="field-' + name + '" data-form="' + name + '" type="' + (type || 'text') + '" value="' + esc(value) + '"' + (name === 'amount' ? ' class="amount-input" inputmode="decimal" placeholder="0.00"' : '') + (required ? ' required' : '') + '>' + (hint ? '<div class="field-hint">' + hint + '</div>' : '') + '</div>';
+  }
+  function openForm(type, scenarioId, existing) {
+    var scene = scenarios.find(function (s) { return s.id === scenarioId; });
+    var selected = scene ? project(scene.project) : project(ui.project);
+    form = { type: type || '付款', projectId: selected.id, date: scene ? scene.date : '2026-10-16', amount: scene ? scene.amount : '30000', category: type === '报销' ? '差旅费' : '外包服务', payee: type === '报销' ? '示例项目经办人' : '示例技术服务商', purpose: type === '报销' ? '项目现场勘查交通及住宿费用' : '项目专项技术服务费用' };
+    if (existing) form = Object.assign(form, existing);
+    formKey = 'request-' + Date.now() + '-' + Math.random().toString(36).slice(2);
+    drawer = { kind: 'form' }; drawForm();
+  }
+  function drawForm() {
+    var p = project(form.projectId);
+    var fields = '<div class="form-section-label">申请信息</div><div class="form-field wide"><label>单据类型</label><div class="type-switch">' + ['报销', '付款'].map(function (t) { return '<button type="button" data-action="form-type" data-type="' + t + '" class="' + (form.type === t ? 'active' : '') + '">' + t + '申请</button>'; }).join('') + '</div></div>' +
+      '<div class="form-field wide"><label for="field-project" class="required">关联项目</label><select id="field-project" data-form="projectId">' + state.projects.map(function (x) { return '<option value="' + x.id + '"' + (x.id === p.id ? ' selected' : '') + '>' + x.code + ' · ' + x.name + '</option>'; }).join('') + '</select><div class="field-hint" id="project-period">项目周期 ' + p.start + ' 至 ' + p.end + '</div></div>' +
+      '<div class="form-field"><label for="form-dept">归属部门</label><input id="form-dept" readonly value="' + p.dept + '"><div class="field-hint">由项目自动带出</div></div>' +
+      formField('费用发生日期', 'date', 'date', form.date, false, true, '按此日期匹配预算年度，可体验跨年') +
+      '<div class="form-field"><label for="field-category">费用类别</label><select id="field-category" data-form="category">' + ['外包服务', '差旅费', '人力成本', '办公费', '其他费用'].map(function (x) { return '<option' + (form.category === x ? ' selected' : '') + '>' + x + '</option>'; }).join('') + '</select></div>' +
+      formField(form.type === '报销' ? '报销人' : '收款方', 'payee', 'text', form.payee, false, false) +
+      formField('申请金额（元）', 'amount', 'text', form.amount, true, true, '当前为综合费用预算，费用类别用于后续归集') +
+      '<div class="form-field wide"><label for="field-purpose" class="required">费用事由</label><textarea id="field-purpose" data-form="purpose" required>' + esc(form.purpose) + '</textarea></div>';
+    mountOverlay('<section class="drawer" role="dialog" aria-modal="true" aria-labelledby="form-title"><div class="drawer-head"><div><h2 id="form-title">新建' + form.type + '申请</h2><p>一张申请，同步检查年度与项目预算</p></div><button class="close" data-action="close" aria-label="关闭申请">×</button></div><div class="drawer-scroll"><div class="drawer-scenarios">' + scenarioPills() + '</div><div class="form-layout"><div class="form-fields" id="request-form">' + fields + '</div><div id="budget-check" class="check-panel" aria-live="polite"></div></div></div><div class="drawer-foot"><span class="foot-note">提交后冻结额度；本操作仅影响演示数据</span>' + button('取消', 'close') + '<button type="button" class="button primary" id="submit-request" data-action="submit">提交申请并冻结预算</button></div></section>');
+    updateCheck();
+  }
+  function checkCard(name, period, b, amount, pass, enabled) {
+    if (!b) return '<div class="check-card fail"><div class="check-head">' + name + '<span class="badge error">未编制</span></div><p class="small red">未找到对应年度预算，无法提交。</p></div>';
+    return '<div class="check-card ' + (enabled ? (pass ? 'pass' : 'fail') : '') + '"><div class="check-head">' + name + '<span class="badge ' + (enabled ? (pass ? 'success' : 'error') : '') + '">' + (enabled ? (pass ? '✓ 通过' : '余额不足') : '未启用') + '</span></div><div class="check-period">' + esc(period) + '</div><div class="check-row"><span>预算总额</span><strong>' + money(b.limit) + '</strong></div><div class="check-row"><span>已用 / 冻结</span><strong>' + m(b.used) + ' / ' + m(b.reserved) + '</strong></div><div class="check-row"><span>当前可用</span><strong>' + money(b.available) + '</strong></div><div class="check-row"><span>本次申请</span><strong>− ' + money(amount || 0) + '</strong></div><div class="check-row after"><span>' + (enabled ? '若提交，剩余' : '不占用年度额度') + '</span><strong>' + money(b.available - (enabled ? (amount || 0) : 0)) + '</strong></div></div>';
+  }
+  function updateCheck() {
+    if (!form || !document.getElementById('budget-check')) return;
+    var r = E.evaluate(state, form), p = r.project;
+    var html = '<div class="check-title">实时预算校验 <span>提交前再校验一次</span></div>' +
+      checkCard('01 · 部门年度预算', (p ? p.dept : '') + ' · ' + (r.year || '请选择日期') + ' 年度', r.annualBalance, r.amount, r.annualPass, state.settings.dual) +
+      checkCard('02 · 项目全周期预算', p ? p.name + ' · 全周期持续累计' : '', r.projectBalance, r.amount, r.projectPass, true);
+    if (state.settings.receipt) html += '<div class="check-card ' + (r.receiptPass ? 'pass' : 'fail') + '"><div class="check-head">额外约束 · 按实收释放<span class="badge ' + (r.receiptPass ? 'success' : 'error') + '">' + (r.receiptPass ? '通过' : '不足') + '</span></div><div class="check-row"><span>已释放且未使用额度</span><strong>' + money(r.receiptAvailable) + '</strong></div></div>';
+    html += r.ok ? '<div class="check-result">✓ 预算校验通过，提交将' + (state.settings.dual ? '同时冻结两层额度' : '仅冻结项目额度') + '。</div>' : '<div class="check-result error" role="alert"><strong>暂不能提交</strong><ul>' + r.errors.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></div>';
+    html += '<div class="check-caption">任意已启用的规则不足即整体拦截，不会先扣一层再失败。审批通过只改变单据状态，确认支付时将冻结转为已用。</div><div class="budget-route"><span>发生日期 → ' + (r.year || '—') + ' 年度</span><span>项目编码 → 全周期预算</span></div>';
+    document.getElementById('budget-check').innerHTML = html;
+    document.getElementById('submit-request').disabled = !r.ok || !form.purpose.trim();
+    if (p) { document.getElementById('form-dept').value = p.dept; document.getElementById('project-period').textContent = '项目周期 ' + p.start + ' 至 ' + p.end; }
+  }
+  function showDoc(id, refresh) {
+    var d = state.docs.find(function (x) { return x.id === id; }); if (!d) return;
+    var p = project(d.projectId), frozen = d.status === 'pending' || d.status === 'approved', paid = d.status === 'paid';
+    drawer = { kind: 'doc', id: id };
+    var occ = function (label, sub, enabled) { return '<div class="occupancy-row"><div>' + label + '<small>' + sub + '</small></div><div style="text-align:right"><b class="mono ' + (frozen ? 'orange' : paid ? 'green' : 'muted') + '">' + (enabled ? money(d.amount) : '未纳入') + '</b><small>' + (enabled ? (frozen ? '冻结中' : paid ? '已转已用' : '已释放，不再占用') : '提交时仅控制项目') + '</small></div></div>'; };
+    var actions = '';
+    if (d.status === 'pending') actions = button('驳回', 'transition', 'data-id="' + d.id + '" data-kind="reject"', 'danger') + button('撤回申请', 'transition', 'data-id="' + d.id + '" data-kind="withdraw"') + button('审批通过', 'transition', 'data-id="' + d.id + '" data-kind="approve"', 'primary');
+    if (d.status === 'approved') actions = button('撤回申请', 'transition', 'data-id="' + d.id + '" data-kind="withdraw"') + button('确认支付', 'transition', 'data-id="' + d.id + '" data-kind="pay"', 'primary');
+    if (d.status === 'rejected' || d.status === 'withdrawn') actions = button('修改后重新申请', 'reapply', 'data-id="' + d.id + '"', 'primary');
+    if (d.status === 'paid') actions = button('完成', 'close', '', 'primary');
+    var snapshot = d.snapshot ? '<div class="detail-note">提交校验快照：年度提交前可用 ' + money(d.snapshot.annual && d.snapshot.annual.available) + '；项目提交前可用 ' + money(d.snapshot.project.available) + '。所有已启用规则通过后才创建此单据。</div>' : '';
+    var html = '<section class="drawer narrow" role="dialog" aria-modal="true" aria-labelledby="doc-title"><div class="drawer-head"><div><h2 id="doc-title">' + d.type + '申请详情</h2><p>' + d.id + ' · ' + p.code + '</p></div><button class="close" data-action="close" aria-label="关闭单据详情">×</button></div><div class="drawer-scroll"><div class="request-summary"><div><div class="summary-label">申请金额</div><div class="summary-amount">' + money(d.amount) + '</div></div>' + statusBadge(d.status) + '</div><div class="request-info"><div><label>关联项目</label>' + esc(p.name) + '</div><div><label>归属部门</label>' + d.dept + '</div><div><label>费用发生日期 / 年度</label>' + d.date + ' / ' + d.year + '</div><div><label>费用类别</label>' + esc(d.category) + '</div><div><label>' + (d.type === '报销' ? '报销人' : '收款方') + '</label>' + esc(d.payee) + '</div><div><label>单据类型</label>' + d.type + '申请</div><div class="full"><label>费用事由</label>' + esc(d.purpose) + '</div></div><h3 class="inner-title">同一单据的两层占用</h3><div class="occupancy">' + occ('部门年度预算', d.year + ' 年度 · ' + d.dept, d.dual) + occ('项目全周期预算', p.name, true) + '</div>' + snapshot + (paid ? '<div class="hint-strip" style="margin-top:15px">已生成 1 笔 ' + money(d.amount) + ' 的支付记录。两套预算用于不同维度的执行分析，不产生两笔支出。</div>' : '') + '<h3 class="inner-title">流转记录</h3><div class="timeline">' + d.history.map(function (h) { return '<div class="timeline-item">' + esc(h.title) + '<small>' + esc(h.time) + '</small></div>'; }).join('') + '</div></div><div class="drawer-foot"><span class="foot-note">' + (frozen ? '已冻结额度将保留至支付、驳回或撤回' : '本操作仅影响演示数据') + '</span>' + actions + '</div></section>';
+    if (refresh) { var active = document.activeElement; document.getElementById('overlay').innerHTML = html; var c = document.querySelector('#overlay .close'); if (c && (!active || !document.contains(active))) c.focus(); } else mountOverlay(html);
+  }
+  function openAdjustment(scope, id) {
+    var item = (scope === 'annual' ? state.annual : state.projects).find(function (x) { return x.id === id; });
+    var b = E.balance(state, scope, id); drawer = { kind: 'adjust', scope: scope, id: id };
+    mountOverlay('<div class="modal-wrap"><section class="modal" role="dialog" aria-modal="true" aria-labelledby="adjust-title"><div class="drawer-head"><h2 id="adjust-title">调整' + (scope === 'annual' ? '年度' : '项目') + '预算</h2><button class="close" data-action="close" aria-label="关闭预算调整">×</button></div><div class="drawer-scroll"><div class="detail-note" style="margin:0 0 18px">' + esc(scope === 'annual' ? item.year + ' 年度 · ' + item.dept : item.name) + '<br>已用与冻结合计 ' + money(b.used + b.reserved) + '</div><div class="form-field"><label for="adjust-amount">调整后的预算总额（元）</label><input id="adjust-amount" type="text" inputmode="decimal" value="' + (b.limit / 100).toFixed(2) + '"></div><div class="form-field"><label for="adjust-reason">调整原因</label><textarea id="adjust-reason" placeholder="例如：新增项目带来的年度费用安排"></textarea></div><div class="micro muted">本原型按预算调整审批通过后的结果演示，不包含正式审批链。</div><div id="adjust-error" class="small red" role="alert"></div></div><div class="drawer-foot">' + button('取消', 'close') + button('模拟审批通过并生效', 'apply-adjust', '', 'primary') + '</div></section></div>');
+  }
+  function resetModal() {
+    drawer = { kind: 'reset' };
+    mountOverlay('<div class="modal-wrap"><section class="modal" role="dialog" aria-modal="true" aria-labelledby="reset-title"><div class="drawer-head"><h2 id="reset-title">重置演示数据</h2><button class="close" data-action="close" aria-label="取消重置">×</button></div><div class="drawer-scroll small muted">清除这份原型中新增的申请、调整和状态变化，恢复 3 条初始在途示例。现有业务系统不受影响。</div><div class="drawer-foot">' + button('取消', 'close') + button('恢复初始演示', 'confirm-reset', '', 'primary') + '</div></section></div>');
+  }
+  document.addEventListener('click', function (event) {
+    var target = event.target.closest('[data-action]'); if (!target) return;
+    var action = target.dataset.action, id = target.dataset.id;
+    if (action === 'close') return closeOverlay();
+    if (action === 'navigate') { closeOverlay(); ui.view = target.dataset.view; render(); window.scrollTo(0, 0); return; }
+    if (action === 'select-project') { closeOverlay(); ui.project = id; ui.view = 'projects'; render(); window.scrollTo(0, 0); return; }
+    if (action === 'choose-project') { ui.project = id; render(); return; }
+    if (action === 'scenario') return openForm('付款', id);
+    if (action === 'new') return openForm(target.dataset.type);
+    if (action === 'form-type') { form.type = target.dataset.type; form.category = form.type === '报销' ? '差旅费' : '外包服务'; form.payee = form.type === '报销' ? '示例项目经办人' : '示例技术服务商'; drawForm(); return; }
+    if (action === 'submit') {
+      target.disabled = true;
+      var r = E.submit(state, form, formKey);
+      if (!r.ok) { updateCheck(); toast(r.errors.join(' '), true); return; }
+      state = r.state; save(); ui.year = r.doc.year; ui.filter = 'all'; ui.query = ''; ui.view = 'bills'; ui.project = r.doc.projectId; closeOverlay(); render(); showDoc(r.doc.id); toast('申请已提交，' + (r.doc.dual ? '两层预算已同时冻结 ' : '项目预算已冻结 ') + money(r.doc.amount)); return;
+    }
+    if (action === 'detail') return showDoc(id);
+    if (action === 'transition') {
+      var result = E.transition(state, id, target.dataset.kind);
+      if (!result.ok) return toast(result.error, true);
+      state = result.state; save(); render();
+      var labels = { approve: '审批已通过，冻结金额保持不变。', pay: '支付已确认，冻结转已用；支出只统计一次。', reject: '已驳回，冻结额度已释放。', withdraw: '已撤回，冻结额度已释放。' };
+      toast(labels[target.dataset.kind]); return;
+    }
+    if (action === 'filter') { ui.filter = id; render(); return; }
+    if (action === 'adjust') return openAdjustment(target.dataset.scope, id);
+    if (action === 'apply-adjust') {
+      var changed = E.adjust(state, drawer.scope, drawer.id, document.getElementById('adjust-amount').value, document.getElementById('adjust-reason').value);
+      if (!changed.ok) { document.getElementById('adjust-error').textContent = changed.error; return; }
+      state = changed.state; save(); closeOverlay(); render(); toast('预算调整已按审批通过后生效演示，已保留记录。'); return;
+    }
+    if (action === 'reapply') {
+      var d = state.docs.find(function (x) { return x.id === id; });
+      openForm(d.type, null, { projectId: d.projectId, date: d.date, amount: (d.amount / 100).toFixed(2), category: d.category, payee: d.payee, purpose: d.purpose }); return;
+    }
+    if (action === 'confirm-reset') { state = E.seed(); save(); ui.year = 2026; ui.project = 'A'; ui.filter = 'all'; ui.query = ''; closeOverlay(); render(); toast('已恢复初始演示数据。'); }
+  });
+  document.addEventListener('input', function (event) {
+    var el = event.target;
+    if (el.dataset.form) { form[el.dataset.form] = el.value; updateCheck(); }
+    if (el.id === 'bill-search') { ui.query = el.value; document.getElementById('bill-table').innerHTML = billsTable(); }
+  });
+  document.addEventListener('change', function (event) {
+    var el = event.target;
+    if (el.id === 'year-select') { ui.year = Number(el.value); render(); }
+    if (el.id === 'relation-project') { ui.project = el.value; render(); }
+    if (el.dataset.form) { form[el.dataset.form] = el.value; updateCheck(); }
+    if (el.id === 'dual-setting' || el.id === 'receipt-setting') {
+      state.settings[el.id === 'dual-setting' ? 'dual' : 'receipt'] = el.checked; save(); render(); toast('规则已更新，仅影响后续新建申请。');
+    }
+  });
+  document.addEventListener('keydown', function (event) {
+    var overlay = document.getElementById('overlay'); if (overlay.hidden) return;
+    if (event.key === 'Escape') { event.preventDefault(); closeOverlay(); return; }
+    if (event.key === 'Tab') {
+      var focusable = Array.from(overlay.querySelectorAll('button:not(:disabled),input:not(:disabled),select:not(:disabled),textarea:not(:disabled),a[href]')).filter(function (x) { return x.offsetParent !== null; });
+      var first = focusable[0], last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+    }
+  });
+  document.getElementById('reset-demo').addEventListener('click', resetModal);
+  document.getElementById('overlay').addEventListener('click', function (event) { if (event.target.id === 'overlay') closeOverlay(); });
+  render();
+})();
+</script>
+</body>
+</html>

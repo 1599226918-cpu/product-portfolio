@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data: blob:; connect-src 'none'; form-action 'none'; base-uri 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>智能客服 · 项目信息系统交互原型</title>
+<style>
+:root{--ink:#14263a;--muted:#53667a;--line:#dce5ee;--paper:#fff;--canvas:#f2f5f8;--nav:#101e30;--accent:#087864;--accent-dark:#056151;--tint:#e6f5ef;--quiet:#f6f8fb;--shadow:0 8px 25px #15293f0a;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;color:var(--ink);font-size:14px}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas)}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+button:disabled{cursor:wait;opacity:.55}
+button:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+button,input,textarea{border-radius:8px}
+button{border:1px solid transparent;background:none}
+[hidden]{display:none!important}
+.ico{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.65;stroke-linecap:round;stroke-linejoin:round;flex:none;vertical-align:middle}
+.shell{display:grid;grid-template-columns:214px minmax(0,1fr);min-height:100dvh}
+.sidebar{background:var(--nav);color:#c0cedf;display:flex;flex-direction:column;padding:25px 15px 18px;gap:27px}
+.brand,.side-item,.profile,.row{display:flex;align-items:center;gap:10px}
+.brand{padding:0 7px;color:#fff}
+.brand strong{font-size:15px;letter-spacing:.02em}
+.brand small,.profile small{display:block;margin-top:4px;font-size:11px;color:#aec0d3}
+.brand-icon,.project-icon,.bot-icon,.type-icon,.avatar{display:grid;place-items:center;flex:none}
+.brand-icon{width:37px;height:37px;border-radius:10px;background:#c7f5e5;color:#095b4e}
+.brand-icon .ico{width:21px;height:21px}
+.side-label{font-size:11px;letter-spacing:.12em;color:#a0b4ca;margin:0 0 10px 10px}
+.side-item{margin:4px 0;padding:11px 12px;font-size:13px;border-radius:8px}
+.side-item.active{background:#243a50;color:white}
+.side-item.active .ico{color:#83e2c4}
+.side-item.secondary{font-size:12px;padding-left:38px;color:#a7e7d1}
+.profile{margin-top:auto;border-top:1px solid #344457;padding:17px 4px 1px;color:#eff5ff}
+.avatar{width:34px;height:34px;border-radius:50%;background:#283f56;color:#e0ebfa;font-size:12px}
+.top{height:62px;display:flex;align-items:center;justify-content:space-between;gap:12px;background:#fff;border-bottom:1px solid var(--line);padding:0 26px;color:var(--muted);font-size:13px}
+.crumb{display:flex;align-items:center;gap:9px;min-width:0}
+.crumb .ico{width:14px}
+.crumb b{color:var(--ink);font-weight:600}
+.pill{display:inline-flex;align-items:center;gap:6px;border-radius:999px;white-space:nowrap;padding:4px 9px;font-size:11px;font-weight:650;line-height:1.35;background:var(--tint);color:var(--accent-dark)}
+.pill.demo{background:#fff4dc;color:#805217}
+.pill.neutral{background:#edf2f7;color:#435b73}
+.dot{width:6px;height:6px;background:currentColor;border-radius:50%}
+.wrap{max-width:1700px;margin:auto;padding:24px 26px}
+.project{display:flex;align-items:center;gap:14px;margin:0 0 20px}
+.project-icon{width:51px;height:51px;border:1px solid #d5e6ef;background:#e7f0f7;color:#335d83;border-radius:12px}
+.project-icon .ico{width:24px;height:24px}
+h1,h2,h3,p{margin:0}
+h1{font-size:24px;letter-spacing:-.03em}
+.project-meta{color:var(--muted);font-size:12px;margin-top:6px}
+.primary{background:var(--accent);color:white;padding:9px 13px;display:inline-flex;align-items:center;justify-content:center;gap:7px;white-space:nowrap;font-weight:650}
+.primary:hover{background:var(--accent-dark)}
+#toggle{margin-left:auto}
+.cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(380px,44%);gap:18px;align-items:start}
+.cols.closed{grid-template-columns:minmax(0,1fr)}
+.content{min-width:0}
+.card,.assistant{background:var(--paper);border:1px solid var(--line);border-radius:13px;box-shadow:var(--shadow)}
+.tabs{display:flex;gap:20px;padding:0 17px;border-bottom:1px solid var(--line)}
+.tabs button{border:0;border-radius:0;padding:14px 3px;color:var(--muted);border-bottom:2px solid transparent;white-space:nowrap}
+.tabs button[aria-selected="true"]{border-bottom-color:var(--accent);color:var(--accent-dark);font-weight:700}
+.section{padding:17px}
+.section-header{display:flex;align-items:start;justify-content:space-between;gap:8px}
+h2{font-size:17px}
+.section-header p,.modal-sub{color:var(--muted);font-size:12px;margin-top:6px;line-height:1.6}
+.scope-note{display:flex;gap:9px;align-items:flex-start;background:#eef7f4;border:1px solid #daeee7;border-radius:8px;color:#305d53;font-size:12px;line-height:1.6;padding:10px;margin-top:14px}
+.scope-note .ico{width:15px;height:15px;margin-top:2px}
+.file-head,.file-row{display:grid;grid-template-columns:minmax(0,1fr) 76px;gap:10px;align-items:center}
+.file-head{margin-top:17px;padding:8px 0;color:var(--muted);font-size:11px}
+.file-row{border-top:1px solid #e7edf2;padding:13px 0}
+.file-title{display:flex;align-items:center;text-align:left;gap:10px;padding:0;min-width:0;width:100%}
+.file-title:hover .filename{text-decoration:underline}
+.filename{font-weight:630;font-size:13px;overflow-wrap:anywhere}
+.file-meta{font-size:11px;color:var(--muted);margin-top:4px}
+.type-icon{width:32px;height:36px;border-radius:7px;font-size:9px;font-weight:750;background:#e9f0fb;color:#315681}
+.type-icon.pdf{background:#fff0ec;color:#9d4433}
+.type-icon.xlsx{background:#e5f5eb;color:#22734e}
+.type-icon.docx{background:#e8effc;color:#335b9e}
+.faded{color:#708196}
+.status{font-size:11px;color:var(--accent-dark);display:flex;align-items:center;gap:5px}
+.status.waiting{color:#805217}
+.legend{border-top:1px solid var(--line);font-size:11px;color:var(--muted);line-height:1.7;padding-top:12px;margin-top:4px}
+.aside-note{display:flex;align-items:start;gap:9px;margin-top:14px;color:var(--muted);font-size:12px;line-height:1.75;padding:0 3px}
+.aside-note .ico{width:15px;margin-top:2px}
+.kv{display:grid;grid-template-columns:100px 1fr;gap:16px 10px;margin:20px 0;font-size:13px}
+.kv dt{color:var(--muted)}.kv dd{margin:0}
+.assistant{display:flex;flex-direction:column;min-width:0;min-height:550px;height:clamp(550px,calc(100dvh - 168px),790px);overflow:hidden}
+.chat-head{padding:13px 14px;display:flex;align-items:center;gap:10px}
+.bot-icon{width:36px;height:36px;border-radius:10px;background:var(--accent);color:white}
+.bot-icon.small{width:27px;height:27px;border-radius:8px}.bot-icon.small .ico{width:15px}
+.chat-title{flex:1;min-width:0}
+.chat-title p{font-size:11px;color:var(--muted);margin-top:4px}
+.chat-actions{display:flex;gap:3px}
+.icon-button{width:30px;height:30px;display:grid;place-items:center;padding:0;color:var(--muted)}
+.icon-button:hover{background:#edf3f6;color:var(--ink)}
+.runtime{display:flex;gap:7px;align-items:center;justify-content:space-between;padding:9px 14px;background:#f7fafb;border-block:1px solid var(--line);font-size:11px}
+.runtime .row{gap:5px;color:#456176}.runtime .ico{width:14px;height:14px}
+.runtime button{padding:0;border:0;color:var(--accent-dark);text-decoration:underline;text-underline-offset:2px}
+.transcript{overflow:auto;padding:16px 14px 13px;flex:1;min-height:0;scrollbar-width:thin;overscroll-behavior:contain}
+.thread-mark{color:var(--muted);font-size:10px;text-align:center;display:flex;align-items:center;gap:9px;margin:0 0 13px}
+.thread-mark:before,.thread-mark:after{content:"";height:1px;background:var(--line);flex:1}
+.turn-user{margin:0 0 13px auto;background:var(--tint);border:1px solid #d5eee4;border-radius:11px 11px 3px 11px;width:fit-content;max-width:91%;padding:8px 11px;font-size:13px;line-height:1.55;overflow-wrap:anywhere;white-space:pre-wrap}
+.turn-bot{display:flex;align-items:flex-start;gap:8px;margin:0 0 13px}
+.response{min-width:0;flex:1}
+.sender{font-size:11px;font-weight:650;margin:4px 0 7px}
+.answer{background:#f7f9fc;border:1px solid #e6edf3;border-radius:2px 11px 11px;padding:10px 11px;font-size:13px;line-height:1.65;overflow-wrap:anywhere}
+.answer ol{margin:6px 0 0;padding-left:19px}.answer li+li{margin-top:4px}
+.ref{font-size:10px;border:0;background:#def0e8;color:var(--accent-dark);padding:1px 4px;margin-left:4px;font-weight:700;border-radius:4px}
+.sources{margin-top:9px}
+.sources-title{font-size:11px;color:var(--muted);margin-bottom:5px}
+.source{width:100%;border:1px solid var(--line);padding:7px 8px;display:flex;align-items:center;text-align:left;gap:8px;margin-top:5px}
+.source:hover{border-color:#92c7b7;background:#f6fcfa}
+.source .ico{width:14px;color:var(--accent-dark)}
+.source-index{background:#edf3f6;color:#486477;font-size:10px;border-radius:4px;padding:3px 5px}
+.source-name{flex:1;min-width:0;font-size:11px;font-weight:600;overflow-wrap:anywhere}.source-loc{font-size:10px;color:var(--muted);margin-top:3px;display:block;font-weight:400}
+.composer{padding:10px 14px 11px;border-top:1px solid var(--line);background:#fff}
+.prompts{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px}
+.prompt{padding:4px 7px;background:var(--quiet);border-color:#e2e9f0;font-size:11px;color:#36536a}
+.prompt:hover{color:var(--accent-dark);border-color:#9dcebf}
+.input-shell{display:flex;gap:5px;align-items:flex-end;padding:5px;border:1px solid #bdcdda;border-radius:9px}
+.input-shell:focus-within{border-color:var(--accent)}
+textarea{border:0;background:none;resize:none;outline:0!important;padding:6px 5px;min-height:34px;flex:1;min-width:0;font-size:13px;line-height:20px}
+textarea::placeholder{color:#64788d}
+.send{width:33px;height:33px;padding:0}
+.composer-foot{font-size:10px;color:var(--muted);margin-top:6px;display:flex;gap:6px;justify-content:space-between}
+dialog{padding:0;border:1px solid var(--line);border-radius:14px;width:min(550px,calc(100% - 28px));max-height:calc(100dvh - 28px);color:var(--ink);box-shadow:0 20px 80px #12253b44}
+dialog::backdrop{background:#10233766}
+.modal-head{padding:15px 17px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:start;gap:10px}
+.modal-head h2{overflow-wrap:anywhere}
+.modal-body{padding:17px;font-size:13px;line-height:1.75}
+.excerpt{padding:12px;margin-top:12px;border-left:3px solid var(--accent);background:#edf7f3;border-radius:3px 8px 8px 3px;white-space:pre-line}
+.chain{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin:10px 0 14px}
+.chain span{padding:5px 7px;background:var(--quiet);border:1px solid var(--line);border-radius:6px;font-size:12px}
+#pipeline ul{padding-left:20px;margin:10px 0 0}#pipeline li+li{margin-top:6px}
+@media(max-width:1200px){.shell{grid-template-columns:175px minmax(0,1fr)}.wrap{padding:20px 18px}.top{padding:0 18px}.cols{gap:13px;grid-template-columns:minmax(0,1fr) minmax(360px,46%)}}
+@media(max-width:970px){.shell{grid-template-columns:minmax(0,1fr)}.sidebar{display:none}.cols{grid-template-columns:minmax(0,1fr) minmax(350px,48%)}}
+@media(max-width:735px){.top{height:50px;padding:0 12px}.wrap{padding:14px 11px}.cols,.cols.closed{grid-template-columns:minmax(0,1fr)}.assistant{grid-row:1;height:clamp(510px,calc(100dvh - 126px),690px);min-height:0}.project{margin-bottom:12px;gap:8px}.project-icon{width:37px;height:37px}.project-icon .ico{width:18px;height:18px}h1{font-size:17px}.project-meta{font-size:10px}#toggle{font-size:11px;padding:7px}.crumb .system-name,.crumb .root-arrow{display:none}.composer-foot span:last-child{display:none}}
+</style>
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute" aria-hidden="true">
+<symbol id="building" viewBox="0 0 24 24"><path d="M3 21h18M5 21V6l9-3v18m0-13h5v13M8 8h3M8 12h3M8 16h3"/></symbol>
+<symbol id="dashboard" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></symbol>
+<symbol id="folder" viewBox="0 0 24 24"><path d="M3 8V6a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></symbol>
+<symbol id="file" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6zM14 3v5h4M9 12h6m-6 4h6"/></symbol>
+<symbol id="spark" viewBox="0 0 24 24"><path d="M11 3l2.2 6.8L20 12l-6.8 2.2L11 21l-2.2-6.8L2 12l6.8-2.2L11 3zm8 0v6m-3-3h6"/></symbol>
+<symbol id="chevron" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></symbol>
+<symbol id="close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+<symbol id="plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+<symbol id="lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 1 1 8 0v3m-4 4v3"/></symbol>
+<symbol id="cpu" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="2"/><rect x="9" y="9" width="6" height="6" rx="1"/><path d="M9 2v3m6-3v3M9 19v3m6-3v3M2 9h3m-3 6h3m14-6h3m-3 6h3"/></symbol>
+<symbol id="send" viewBox="0 0 24 24"><path d="M12 20V4m-7 7 7-7 7 7"/></symbol>
+<symbol id="info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5m0-8h.01"/></symbol>
+</svg>
+<div class="shell">
+  <aside class="sidebar" aria-label="项目信息系统界面示意">
+    <div class="brand"><span class="brand-icon"><svg class="ico"><use href="#building"/></svg></span><div><strong>项目信息系统</strong></div></div>
+    <div><p class="side-label">工作空间</p>
+      <div class="side-item"><svg class="ico"><use href="#dashboard"/></svg>工作台</div>
+      <div class="side-item active"><svg class="ico"><use href="#folder"/></svg>项目管理</div>
+      <div class="side-item secondary">我的项目</div>
+      <div class="side-item"><svg class="ico"><use href="#file"/></svg>资料管理</div>
+    </div>
+    <div class="profile"><span class="avatar">演</span><div>演示成员<small>项目成员视角</small></div></div>
+  </aside>
+  <div>
+    <header class="top">
+      <div class="crumb"><span class="system-name">项目信息系统</span><svg class="ico root-arrow"><use href="#chevron"/></svg><span>我的项目</span><svg class="ico"><use href="#chevron"/></svg><b>项目空间</b></div>
+      <span class="pill demo"><span class="dot"></span>交互原型 · 示例数据</span>
+    </header>
+    <main class="wrap">
+      <div class="project">
+        <span class="project-icon"><svg class="ico"><use href="#building"/></svg></span>
+        <div><h1>示例园区改造项目</h1><p class="project-meta">示例项目 · DEMO-2026-017</p></div>
+        <button class="primary" id="toggle" type="button" aria-controls="assistant" aria-expanded="true"><svg class="ico"><use href="#spark"/></svg>智能客服</button>
+      </div>
+      <div class="cols" id="columns">
+        <div class="content">
+          <div class="card">
+            <div class="tabs" role="tablist" aria-label="项目空间">
+              <button id="overview-tab" role="tab" aria-selected="false" aria-controls="overview" tabindex="-1">项目信息</button>
+              <button id="files-tab" role="tab" aria-selected="true" aria-controls="files">文件库</button>
+            </div>
+            <section class="section" id="files" role="tabpanel" aria-labelledby="files-tab">
+              <div class="section-header"><div><h2>项目文件库</h2><p>当前项目已上传文件 · 示例</p></div><span class="pill neutral" id="file-count"></span></div>
+              <div class="scope-note"><svg class="ico"><use href="#lock"/></svg><span>客服仅检索当前项目中你有权查看、且已完成索引的文件。</span></div>
+              <div class="file-head"><span>文件名称</span><span>索引状态</span></div>
+              <div id="file-list"></div>
+              <p class="legend">待解析文件暂不参与问答。查看答案引用可定位到示例文件的页码、章节或表格行。</p>
+            </section>
+            <section class="section" id="overview" role="tabpanel" aria-labelledby="overview-tab" hidden>
+              <div class="section-header"><div><h2>项目基本信息</h2><p>用于演示智能客服的项目空间</p></div><span class="pill demo">示例</span></div>
+              <dl class="kv"><dt>项目名称</dt><dd>示例园区改造项目</dd><dt>项目编号</dt><dd>DEMO-2026-017</dd><dt>项目类型</dt><dd>园区改造</dd><dt>资料来源</dt><dd>当前项目已上传文件</dd></dl>
+              <button class="primary" id="view-files" type="button"><svg class="ico"><use href="#folder"/></svg>查看项目文件</button>
+            </section>
+          </div>
+          <p class="aside-note"><svg class="ico"><use href="#info"/></svg><span>原型内的项目、文件和回答均为演示内容。</span></p>
+        </div>
+        <section class="assistant" id="assistant" aria-labelledby="assistant-title">
+          <header class="chat-head">
+            <span class="bot-icon"><svg class="ico"><use href="#spark"/></svg></span>
+            <div class="chat-title"><h2 id="assistant-title">智能客服</h2><p>根据已上传的项目资料回答与检索</p></div>
+            <div class="chat-actions">
+              <button class="icon-button" type="button" id="reset" aria-label="新对话" title="新对话"><svg class="ico"><use href="#plus"/></svg></button>
+              <button class="icon-button" type="button" id="close-chat" aria-label="关闭客服" title="关闭客服"><svg class="ico"><use href="#close"/></svg></button>
+            </div>
+          </header>
+          <div class="runtime"><div class="row"><svg class="ico"><use href="#cpu"/></svg><span>Ollama / Qwen · 模拟</span></div><button id="show-pipeline" type="button">查看接入流程</button></div>
+          <div class="transcript" id="transcript" role="log" aria-live="polite" aria-label="客服对话"></div>
+          <form class="composer" id="composer">
+            <div class="prompts" aria-label="示例问题">
+              <button class="prompt" type="button" data-question="开工报审需要提交哪些资料？">开工报审资料</button>
+              <button class="prompt" type="button" data-question="本周有哪些例会待办？">查找例会待办</button>
+              <button class="prompt" type="button" data-question="项目竣工验收日期是哪天？">试问资料未覆盖的问题</button>
+            </div>
+            <div class="input-shell">
+              <textarea id="question" rows="1" maxlength="400" aria-label="输入项目资料问题" placeholder="输入问题，例如：现场巡检有哪些要求？"></textarea>
+              <button class="primary send" id="send-question" type="submit" aria-label="发送问题"><svg class="ico"><use href="#send"/></svg></button>
+            </div>
+            <div class="composer-foot"><span>检索范围 · 当前项目可查看文件</span><span>Enter 发送 · Shift + Enter 换行</span></div>
+          </form>
+        </section>
+      </div>
+    </main>
+  </div>
+</div>
+
+<dialog id="preview" aria-labelledby="preview-title">
+  <div class="modal-head"><div><h2 id="preview-title"></h2><p class="modal-sub" id="preview-location"></p></div><form method="dialog"><button class="icon-button" aria-label="关闭文件预览"><svg class="ico"><use href="#close"/></svg></button></form></div>
+  <div class="modal-body"><span class="pill demo">示例文件预览</span><div class="excerpt" id="preview-text"></div></div>
+</dialog>
+<dialog id="pipeline" aria-labelledby="pipeline-title">
+  <div class="modal-head"><div><h2 id="pipeline-title">正式接入流程</h2><p class="modal-sub">设计示意 · 当前页面模拟检索和回答</p></div><form method="dialog"><button class="icon-button" aria-label="关闭接入流程"><svg class="ico"><use href="#close"/></svg></button></form></div>
+  <div class="modal-body">
+    <b>资料索引</b>
+    <div class="chain"><span>OA 已上传文件</span> → <span>解析与分段</span> → <span>本地检索索引</span></div>
+    <b>客服问答</b>
+    <div class="chain"><span>OA 校验项目和文件权限</span> → <span>本地 Agent 检索片段</span> → <span>Ollama · Qwen</span> → <span>返回回答与引用</span></div>
+    <ul><li>检索前按项目、文件权限过滤，打开原文时由 OA 再次鉴权。</li><li>文件更新或删除后，对应旧片段停止参与检索。</li><li>引用保留原文件和位置。资料不足时说明缺口。</li></ul>
+  </div>
+</dialog>
+<script>
+const files = [
+  {id:'plan',name:'监理实施细则.pdf',type:'PDF',category:'监理资料',version:'V2',date:'2026-11-02',where:'第 6 页 · §3.2 开工条件',
+    excerpt:'开工报审应附施工组织设计审批记录、施工单位项目管理人员及特种作业人员资格资料、现场开工条件核查记录。'},
+  {id:'checklist',name:'开工报审资料清单.docx',type:'DOCX',category:'报审资料',version:'V1',date:'2026-11-03',where:'第 2 节 · 报审表及签章',
+    excerpt:'报审时提交开工报审表，由施工单位项目负责人签字并加盖单位章。开工报审表和支撑材料一并报送监理审核。'},
+  {id:'meeting',name:'第 03 次监理例会纪要.pdf',type:'PDF',category:'会议纪要',version:'V1',date:'2026-11-04',where:'第 2 页 · 会议待办',
+    excerpt:'施工单位于 11 月 6 日前提交调整后的施工计划。监理组于 11 月 7 日前复核临时用电整改记录。'},
+  {id:'inspection',name:'现场巡检记录.xlsx',type:'XLSX',category:'巡检记录',version:'V1',date:'2026-11-04',where:'巡检要求 · 第 3–4 行',
+    excerpt:'巡检记录应包含检查部位、问题描述和现场照片。存在整改项时，登记责任人、整改时限及复查结果。'},
+  {id:'drawing',name:'现场总平面图（扫描件）.pdf',type:'PDF',category:'图纸',version:'V1',date:'2026-11-04',where:'待解析',
+    excerpt:'此示例文件尚未完成文字提取，因此暂时无法提供可检索的原文片段。'}
+];
+const topics = [
+  {terms:['开工报审','开工','报审','施工组织设计','特种作业'], intro:'示例文件列出了以下开工报审资料。', lines:[
+    ['开工报审表，由施工单位项目负责人签字并加盖单位章。','checklist'],
+    ['施工组织设计审批记录、人员资格资料和现场开工条件核查记录。','plan']
+  ]},
+  {terms:['例会','纪要','待办','施工计划','临时用电'], intro:'第 03 次监理例会纪要记录了两项待办。', lines:[
+    ['施工单位于 11 月 6 日前提交调整后的施工计划。','meeting'],
+    ['监理组于 11 月 7 日前复核临时用电整改记录。','meeting']
+  ]},
+  {terms:['巡检','巡查','现场照片','复查结果'], intro:'巡检记录中列出的填写要求如下。', lines:[
+    ['记录检查部位、问题描述和现场照片。','inspection'],
+    ['如有整改项，登记责任人、整改时限和复查结果。','inspection']
+  ]}
+];
+const $ = id => document.getElementById(id);
+const icon = name => '<svg class="ico" aria-hidden="true"><use href="#' + name + '"/></svg>';
+const fileById = id => files.find(file => file.id === id);
+$('file-count').textContent = files.length + ' 份文件';
+for (const file of files) {
+  const row = document.createElement('div');
+  row.className = 'file-row';
+  row.innerHTML = '<button class="file-title" type="button" data-source="' + file.id + '"><span class="type-icon ' + file.type.toLowerCase() + '">' + file.type + '</span><span><span class="filename">' + file.name + '</span><span class="file-meta" style="display:block">' + file.category + ' · ' + file.version + ' · ' + file.date + '</span></span></button><span class="status' + (file.id === 'drawing' ? ' waiting' : '') + '"><span class="dot"></span>' + (file.id === 'drawing' ? '待解析' : '已索引') + '</span>';
+  $('file-list').append(row);
+}
+
+function showTab(tab, focus = false) {
+  for (const name of ['overview','files']) {
+    const selected = tab === name;
+    $(name).hidden = !selected;
+    $(name + '-tab').setAttribute('aria-selected', selected);
+    $(name + '-tab').tabIndex = selected ? 0 : -1;
+  }
+  if (focus) $(tab + '-tab').focus();
+}
+for (const name of ['overview','files']) {
+  $(name + '-tab').addEventListener('click', () => showTab(name));
+  $(name + '-tab').addEventListener('keydown', event => {
+    if (!['ArrowLeft','ArrowRight','Home','End'].includes(event.key)) return;
+    event.preventDefault();
+    showTab(event.key === 'Home' ? 'overview' : event.key === 'End' ? 'files' : name === 'overview' ? 'files' : 'overview', true);
+  });
+}
+$('view-files').addEventListener('click', () => showTab('files', true));
+
+function toggleChat(open) {
+  $('assistant').hidden = !open;
+  $('columns').classList.toggle('closed', !open);
+  $('toggle').setAttribute('aria-expanded', open);
+  $(open ? 'question' : 'toggle').focus({preventScroll:true});
+}
+$('toggle').addEventListener('click', () => toggleChat($('assistant').hidden));
+$('close-chat').addEventListener('click', () => toggleChat(false));
+$('show-pipeline').addEventListener('click', () => $('pipeline').showModal());
+document.addEventListener('click', event => {
+  const id = event.target.closest('[data-source]')?.dataset.source;
+  if (!id) return;
+  const file = fileById(id);
+  $('preview-title').textContent = file.name;
+  $('preview-location').textContent = file.version + ' · ' + file.where;
+  $('preview-text').textContent = file.excerpt;
+  $('preview').showModal();
+});
+
+function addUser(question) {
+  const message = document.createElement('div');
+  message.className = 'turn-user';
+  message.textContent = question;
+  $('transcript').append(message);
+}
+function addBot() {
+  const message = document.createElement('div');
+  message.className = 'turn-bot';
+  message.innerHTML = '<span class="bot-icon small">' + icon('spark') + '</span><div class="response"><p class="sender">智能客服</p><div class="answer"></div></div>';
+  $('transcript').append(message);
+  return message;
+}
+function renderAnswer(message, topic) {
+  const answer = message.querySelector('.answer');
+  answer.textContent = topic.intro;
+  if (!topic.lines?.length) return;
+  const sources = [...new Set(topic.lines.map(([,id]) => id))];
+  const list = document.createElement('ol');
+  for (const [line, id] of topic.lines) {
+    const item = document.createElement('li');
+    item.textContent = line;
+    const ref = document.createElement('button');
+    ref.type = 'button';
+    ref.className = 'ref';
+    ref.dataset.source = id;
+    ref.setAttribute('aria-label', '查看引用 ' + (sources.indexOf(id) + 1));
+    ref.textContent = '[' + (sources.indexOf(id) + 1) + ']';
+    item.append(ref);
+    list.append(item);
+  }
+  answer.append(list);
+  const links = document.createElement('div');
+  links.className = 'sources';
+  links.innerHTML = '<p class="sources-title">引用来源 · ' + sources.length + ' 份文件</p>';
+  sources.forEach((id, index) => {
+    const file = fileById(id);
+    const link = document.createElement('button');
+    link.type = 'button';
+    link.className = 'source';
+    link.dataset.source = id;
+    link.innerHTML = '<span class="source-index">' + (index + 1) + '</span><span class="source-name">' + file.name + '<span class="source-loc">' + file.version + ' · ' + file.where + '</span></span>' + icon('chevron');
+    links.append(link);
+  });
+  message.querySelector('.response').append(links);
+}
+function findTopic(question) {
+  if (/总平面|扫描件|图纸/.test(question)) {
+    return {intro:'相关的《现场总平面图（扫描件）》仍待解析，当前无法根据图纸回答。你可以在文件库中查看该文件的索引状态。'};
+  }
+  if (/竣工|验收日期|审批进度|审批状态|通过了吗|是否完成|最新状态/.test(question)) {
+    return {intro:'当前项目可检索的示例资料未提供这项信息，暂时无法确认。'};
+  }
+  const match = topics.find(topic => topic.terms.some(term => question.includes(term)));
+  return match || {intro:'当前项目可检索的示例资料中没有找到相关内容。可以补充文件名称或资料关键词后再试。'};
+}
+let pending;
+function clearConversation() {
+  clearTimeout(pending);
+  pending = undefined;
+  setBusy(false);
+  $('question').value = '';
+  $('transcript').innerHTML = '<div class="thread-mark">当前项目 · 示例问答</div>';
+}
+function setBusy(busy) {
+  $('send-question').disabled = busy;
+  document.querySelectorAll('.prompt').forEach(button => { button.disabled = busy; });
+}
+function scrollToLatest() {
+  $('transcript').scrollTop = $('transcript').scrollHeight;
+}
+function ask(value) {
+  const question = value.trim();
+  if (!question || pending !== undefined) return;
+  $('question').value = '';
+  addUser(question);
+  const message = addBot();
+  message.querySelector('.answer').textContent = '正在检索示例资料…';
+  scrollToLatest();
+  setBusy(true);
+  pending = setTimeout(() => {
+    renderAnswer(message, findTopic(question));
+    pending = undefined;
+    setBusy(false);
+    scrollToLatest();
+  }, 340);
+}
+$('composer').addEventListener('submit', event => { event.preventDefault(); ask($('question').value); });
+$('question').addEventListener('keydown', event => {
+  if (event.key === 'Enter' && !event.shiftKey && !event.isComposing && event.keyCode !== 229) {
+    event.preventDefault();
+    $('composer').requestSubmit();
+  }
+});
+document.querySelectorAll('.prompt').forEach(button => button.addEventListener('click', () => ask(button.dataset.question)));
+$('reset').addEventListener('click', () => {
+  clearConversation();
+  renderAnswer(addBot(), {intro:'可以问我当前项目的文件内容。试试开工报审资料、例会待办或现场巡检要求。'});
+  $('question').focus();
+});
+clearConversation();
+addUser('开工报审需要提交哪些资料？');
+renderAnswer(addBot(), topics[0]);
+</script>
+</body>
+</html>

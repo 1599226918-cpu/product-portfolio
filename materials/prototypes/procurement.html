@@ -1,0 +1,1792 @@
+<!DOCTYPE html>
+<html lang="zh-CN" style="--pc: #7C3AED;" data-theme="light"><head>
+<meta charset="UTF-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data: blob:; connect-src 'none'; form-action 'none'; base-uri 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>项目采购 · 全端口页面原型</title>
+<style>
+  :root{
+    --blue:#2563EB; --blue-d:#1E40AF;
+    --blue-l:#EFF6FF; --blue-l2:#DBEAFE;
+    --gold:#D97706; --gold-d:#B45309;
+    --purple:#7C3AED;
+    --grey:#6B7280;
+    --bg:#F8FAFC; --panel:#FFFFFF;
+    --line:#E2E8F0; --txt:#0F172A; --txt-2:#64748B;
+    --green:#059669; --red:#DC2626; --amber:#D97706; --teal:#0E9488;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  body{margin:0;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+    background:var(--bg);
+    color:var(--txt);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:18px 12px 40px;}
+  .topbar{width:100%;max-width:960px;display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;flex-wrap:wrap;}
+  .topbar h1{font-size:18px;margin:0;font-weight:700;letter-spacing:.5px;color:var(--txt);}
+  .topbar .sub{font-size:12px;color:var(--txt-2);margin-top:2px;}
+  .modeswitch{display:flex;background:#fff;border:1px solid var(--line);border-radius:50px;padding:3px;box-shadow:0 1px 3px rgba(0,0,0,.04);}
+  .modeswitch button{background:transparent;border:0;color:var(--txt-2);padding:7px 18px;border-radius:50px;font-size:13px;cursor:pointer;transition:.15s;}
+  .modeswitch button.on{background:linear-gradient(135deg,#2563EB,#1E40AF);color:#fff;box-shadow:0 3px 10px rgba(37,99,235,.35);}
+
+  .persons{width:100%;max-width:960px;display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap;}
+  .person{flex:1;min-width:160px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:11px 13px;cursor:pointer;transition:.15s;position:relative;box-shadow:0 1px 3px rgba(0,0,0,.04);}
+  .person:hover{border-color:var(--pc,var(--blue));box-shadow:0 2px 8px rgba(0,0,0,.06);}
+  .person.on{border-color:var(--pc,var(--blue));box-shadow:0 0 0 2px color-mix(in srgb,var(--pc,var(--blue)) 25%,transparent),0 2px 8px rgba(0,0,0,.06);background:#fff;}
+  .person .role{font-size:12px;color:var(--pc,var(--txt-2));font-weight:700;}
+  .person .name{font-size:15px;font-weight:700;margin-top:3px;color:var(--txt);}
+  .person .desc{font-size:11px;color:var(--txt-2);margin-top:4px;line-height:1.4;}
+  .person .dot{position:absolute;top:12px;right:12px;width:9px;height:9px;border-radius:50%;background:var(--pc,var(--grey));}
+
+  .navbar{width:100%;max-width:960px;display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;align-items:center;}
+  .navbar .lab{font-size:12px;color:var(--txt-2);white-space:nowrap;}
+  .pchip{background:#fff;border:1px solid var(--line);border-radius:50px;padding:6px 15px;font-size:12.5px;color:var(--txt-2);cursor:pointer;box-shadow:0 1px 2px rgba(0,0,0,.03);}
+  .pchip.on{background:var(--pc,var(--blue));color:#fff;border-color:transparent;font-weight:700;}
+
+  .phone{width:390px;max-width:100%;background:var(--panel);border-radius:34px;border:8px solid #1E3A5F;
+    box-shadow:0 20px 50px rgba(37,99,235,.1),0 4px 12px rgba(0,0,0,.06);overflow:hidden;display:flex;flex-direction:column;min-height:780px;position:relative;}
+  .statusbar{height:28px;background:var(--blue);display:flex;align-items:center;justify-content:space-between;padding:0 18px;color:#fff;font-size:12px;}
+  .statusbar .right{display:flex;align-items:center;}
+  .statusbar .bars{display:inline-flex;gap:2px;align-items:flex-end;margin-right:8px;height:11px;}
+  .statusbar .bars i{width:3px;background:#fff;opacity:.85;border-radius:2px;}
+  .appbar{background:var(--blue);color:#fff;padding:9px 16px 13px;display:flex;align-items:center;justify-content:space-between;}
+  .appbar .t{font-size:15px;font-weight:700;}
+  .appbar .p{font-size:11px;opacity:.92;}
+  .appbar .flowbtn{background:rgba(255,255,255,.18);border:0;color:#fff;font-size:12px;padding:5px 12px;border-radius:50px;cursor:pointer;}
+
+  .screen{flex:1;background:#F1F5F9;overflow-y:auto;padding:12px 12px 18px;}
+  .screen::-webkit-scrollbar{width:0;}
+  .card{background:#fff;border-radius:20px;padding:12px;margin-bottom:10px;box-shadow:0 1px 3px rgba(20,30,60,.06);}
+  .head-tip{font-size:12px;color:#fff;background:var(--pc,var(--blue));border-radius:50px;padding:9px 16px;margin-bottom:10px;font-weight:600;}
+  .empty{text-align:center;color:var(--txt-2);font-size:13px;padding:36px 0;}
+
+  .i-name{font-size:15px;font-weight:700;color:var(--txt);}
+  .i-meta{font-size:12px;color:var(--txt-2);margin-top:4px;}
+  .i-foot{display:flex;justify-content:space-between;align-items:center;margin-top:8px;font-size:12px;color:var(--txt-2);}
+  .i-amount{font-size:14px;font-weight:700;color:var(--txt);}
+  .tag{font-size:11px;padding:3px 10px;border-radius:50px;font-weight:700;white-space:nowrap;}
+  .tag.PENDING_PM{background:#E7EEFD;color:var(--blue);}
+  .tag.PENDING_ADMIN{background:#EFE7FB;color:var(--purple);}
+  .tag.PENDING_LEAD{background:#FCEEDA;color:var(--gold);}
+  .tag.PENDING_RECEIPT{background:#E0F7FA;color:#0891B2;}
+  .tag.APPROVED{background:#Dcf3e6;color:var(--green);}
+  .tag.REJECTED{background:#FBE3E3;color:var(--red);}
+  .tag.CANCELED{background:#EEF1F7;color:var(--grey);}
+  .tag-h{display:flex;justify-content:space-between;align-items:flex-start;}
+
+  .btn-row{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;}
+  .btn{flex:1;border:0;border-radius:50px;padding:10px 0;font-size:13.5px;font-weight:700;cursor:pointer;min-width:90px;transition:.18s;}
+  .btn.pass{background:linear-gradient(135deg,#059669,#047857);color:#fff;box-shadow:0 4px 14px rgba(5,150,105,.35),0 1px 3px rgba(0,0,0,.08);border:1px solid #047857;}
+  .btn.pass:hover{background:linear-gradient(135deg,#047857,#065F46);box-shadow:0 6px 20px rgba(5,150,105,.45),0 2px 6px rgba(0,0,0,.1);transform:translateY(-1px);}
+  .btn.rej{background:#fff;color:var(--red);border:2px solid #FECACA;box-shadow:0 1px 4px rgba(220,38,38,.08);}
+  .btn.rej:hover{background:#FEF2F2;border-color:var(--red);box-shadow:0 2px 8px rgba(220,38,38,.15);}
+  .btn.stock{background:var(--purple);color:#fff;box-shadow:0 3px 10px rgba(124,58,237,.3);}
+  .btn.ghost{background:var(--blue-l);color:var(--blue-d);border:1px solid var(--blue-l2);}
+  .btn.ghost:hover{background:var(--blue-l2);}
+  .btn.cancel{background:#F1F5F9;color:var(--grey);}
+  .btn.cancel:hover{background:#E2E8F0;}
+  .btn:disabled{opacity:.5;cursor:not-allowed;}
+  .btn-primary{background:var(--blue);color:#fff;border:0;border-radius:50px;padding:0 18px;font-size:13px;font-weight:700;cursor:pointer;box-shadow:0 3px 10px rgba(37,99,235,.3);transition:.15s;}
+  .btn-primary:hover{background:var(--blue-d);box-shadow:0 4px 14px rgba(37,99,235,.4);}
+
+  .form-label{font-size:12px;color:var(--txt-2);font-weight:600;display:block;margin-bottom:5px;}
+  .fi{margin-bottom:12px;}
+  .picker{background:#F8FAFC;border:1px solid var(--line);border-radius:14px;padding:11px 14px;font-size:14px;color:var(--txt);display:flex;justify-content:space-between;align-items:center;cursor:pointer;}
+  .picker.ph{color:var(--txt-2);}
+  .input{width:100%;background:#F8FAFC;border:1px solid var(--line);border-radius:14px;padding:11px 14px;font-size:14px;color:var(--txt);outline:none;transition:.15s;}
+  .input:focus{border-color:var(--blue);background:#fff;box-shadow:0 0 0 3px rgba(37,99,235,.1);}
+  textarea.input{height:64px;resize:none;}
+  .add-link{font-size:12px;color:var(--blue);margin-top:6px;cursor:pointer;display:inline-block;}
+  .chips{display:flex;gap:8px;}
+  .chip{flex:1;text-align:center;padding:9px 0;border:1px solid var(--line);border-radius:50px;font-size:13px;color:var(--txt-2);background:#F8FAFC;cursor:pointer;}
+  .chip.active{background:var(--blue-l);border-color:var(--blue);color:var(--blue);font-weight:700;}
+  .amount{margin:6px 0 4px;font-size:13px;color:var(--txt-2);}
+  .amount b{color:var(--txt);font-size:16px;}
+  .over{color:var(--red);font-size:12px;margin-left:6px;}
+  .hint{font-size:11px;color:var(--txt-2);line-height:1.5;margin-top:8px;}
+  .submit{width:100%;background:linear-gradient(135deg,#2563EB,#1E40AF);color:#fff;border:0;border-radius:50px;padding:14px 0;font-size:15.5px;font-weight:800;margin-top:6px;cursor:pointer;box-shadow:0 5px 18px rgba(37,99,235,.4),0 1px 3px rgba(0,0,0,.08);transition:.18s;letter-spacing:.5px;}
+  .submit:hover{background:linear-gradient(135deg,#1E40AF,#1E3A8A);box-shadow:0 7px 24px rgba(37,99,235,.5),0 2px 6px rgba(0,0,0,.1);transform:translateY(-1px);}
+  .submit:active{transform:scale(.98);}
+
+  .budget-mini{background:var(--blue-l);border-radius:14px;padding:9px 11px;font-size:12px;color:var(--blue-d);margin-bottom:10px;display:flex;justify-content:space-between;border:1px solid var(--blue-l2);}
+  /* 跨项目分摊编辑器 */
+  .ccr-wrap{background:#F1F5F9;border:1px solid var(--line);border-radius:16px;padding:10px;margin-top:4px}
+  .ccr-mode{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+  .ccr-row{border-bottom:1px dashed var(--line);padding:8px 0}
+  .ccr-h{display:flex;justify-content:space-between;font-size:13px;font-weight:600;color:var(--txt)}
+  .ccr-bal{font-size:11px;color:var(--txt-2);font-weight:400}
+  .ccr-in{display:flex;align-items:center;gap:6px;margin-top:6px}
+  .cc-in{width:90px;flex:0 0 90px;text-align:right}
+  .ccr-u{font-size:12px;color:var(--txt-2)}
+  .ccr-amt{font-size:12px;color:var(--blue-d);font-weight:600}
+  .ccr-del{margin-left:auto;font-size:11px;color:#D9534F;background:none;border:none;cursor:pointer}
+  .ccr-add{display:flex;gap:6px;margin-top:8px}
+  .ccr-add .input{flex:1}
+  .ccr-sum{display:flex;justify-content:space-between;font-size:13px;font-weight:700;margin-top:8px}
+  .ccr-sum .ok{color:#1F9D55}
+  .ccr-sum .bad{color:#D9534F}
+  .ccr-warn{font-size:11px;color:#D9534F;margin-top:4px}
+  .src-tag{font-size:10px;padding:1px 8px;border-radius:50px;margin-left:6px;vertical-align:middle}
+  .src-est{background:#FFF4E0;color:#B7791F}
+  .src-set{background:#E6F6EC;color:#1F9D55}
+
+  .timeline{margin-top:6px;border-left:2px solid var(--line);padding-left:12px;}
+  .tl-item{position:relative;padding:0 0 12px 4px;}
+  .tl-item::before{content:"";position:absolute;left:-19px;top:3px;width:9px;height:9px;border-radius:50%;background:var(--blue);}
+  .tl-item.rej::before{background:var(--red);}
+  .tl-item.pass::before{background:var(--green);}
+  .tl-t{font-size:13px;color:var(--txt);font-weight:600;}
+  .tl-d{font-size:11px;color:var(--txt-2);margin-top:2px;}
+
+  /* 首页 */
+  .header{background:var(--blue);color:#fff;padding:16px;border-radius:0;}
+  .greet{font-size:18px;font-weight:700;}
+  .role{font-size:12px;opacity:.9;margin-top:3px;}
+  .stats{display:flex;background:#fff;border-radius:20px;padding:12px 6px;margin-top:-10px;margin-bottom:10px;box-shadow:0 1px 3px rgba(20,30,60,.06);}
+  .stat{flex:1;text-align:center;}
+  .stat .num{font-size:20px;font-weight:800;color:var(--blue);}
+  .stat .num.warn{color:var(--red);}
+  .stat .num.good{color:var(--green);}
+  .stat .label{font-size:11px;color:var(--txt-2);margin-top:2px;}
+  .section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+  .section-title{font-size:14px;font-weight:700;color:var(--txt);}
+  .section-more{font-size:12px;color:var(--blue);}
+  .proj-item{display:flex;flex-direction:column;gap:5px;}
+  .pi-top{display:flex;justify-content:space-between;align-items:center;}
+  .pi-name{font-size:14px;font-weight:700;color:var(--txt);}
+  .demo-tag{font-size:10px;background:#EEE;border:1px solid #ddd;color:#888;padding:1px 7px;border-radius:50px;margin-left:5px;}
+  .pi-sub{font-size:12px;color:var(--txt-2);}
+  .prog{height:7px;background:#EEF1F7;border-radius:50px;overflow:hidden;margin-top:4px;}
+  .prog-bar{height:100%;background:var(--blue);border-radius:50px;}
+  .flow .flow-line{display:flex;align-items:center;flex-wrap:wrap;gap:2px;font-size:12px;color:var(--txt);}
+  .flow-step{background:#E7EEFD;color:var(--blue-d);padding:4px 10px;border-radius:50px;}
+  .flow-arrow{color:var(--txt-2);padding:0 2px;}
+  .flow-note{font-size:11px;color:var(--txt-2);margin-top:8px;line-height:1.5;}
+
+  /* 搜索/筛选 */
+  .search-bar{margin-bottom:10px;}
+  .search-input{display:flex;background:#fff;border:1px solid var(--line);border-radius:50px;overflow:hidden;}
+  .search-input input{flex:1;border:0;outline:none;padding:10px 12px;font-size:14px;background:transparent;}
+  .search-btn{background:var(--blue);color:#fff;padding:0 16px;display:flex;align-items:center;font-size:13px;cursor:pointer;}
+  .filter-row{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;}
+  .filter-row .chip{flex:none;padding:6px 12px;font-size:12px;}
+
+  .proj{border-left:3px solid var(--blue);}
+  .proj-head{display:flex;justify-content:space-between;align-items:center;}
+  .proj-name{font-size:14px;font-weight:700;color:var(--txt);}
+  .proj-code{font-size:11px;color:var(--txt-2);}
+  .proj-meta{font-size:12px;color:var(--txt-2);margin-top:3px;}
+  .proj-foot{display:flex;justify-content:space-between;font-size:11px;color:var(--txt-2);margin-top:6px;}
+  .level{font-weight:700;}
+  .level-normal{color:var(--green);} .level-warn{color:var(--amber);} .level-over{color:var(--red);}
+
+  /* 申请列表/详情 */
+  .tabs{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap;}
+  .tabs .tab{font-size:12px;padding:5px 13px;border-radius:50px;background:#EEF1F7;color:var(--txt-2);cursor:pointer;}
+  .tabs .tab.active{background:var(--blue);color:#fff;font-weight:700;}
+  .proj-filter{margin-bottom:10px;}
+  .proj-scroll{display:flex;gap:8px;overflow-x:auto;}
+  .pf-chip{flex:none;font-size:12px;padding:6px 14px;border-radius:50px;background:#EEF1F7;color:var(--txt-2);cursor:pointer;white-space:nowrap;}
+  .pf-chip.active{background:#E7EEFD;color:var(--blue);font-weight:700;}
+  .item .row1{display:flex;justify-content:space-between;align-items:center;}
+  .item .name{font-size:14px;font-weight:700;color:var(--txt);}
+  .item .row2{font-size:12px;color:var(--txt-2);margin-top:4px;}
+  .item .row3{font-size:12px;color:var(--txt-2);margin-top:3px;}
+  .item .row4{display:flex;justify-content:space-between;font-size:11px;color:var(--txt-2);margin-top:5px;}
+
+  .info-row{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--line);font-size:13px;}
+  .info-row:last-child{border-bottom:0;}
+  .info-row .k{color:var(--txt-2);white-space:nowrap;}
+  .info-row .v{color:var(--txt);text-align:right;}
+  .info-row .v.amount{font-weight:700;}
+  .info-row.col{flex-direction:column;gap:4px;}
+  .reason{color:var(--txt);font-size:13px;line-height:1.5;}
+  .att-link{color:var(--blue);}
+  .act-btn{padding:10px 0;}
+
+  /* 登录 */
+  .brand{text-align:center;padding:34px 0 22px;}
+  .logo{width:60px;height:60px;border-radius:20px;background:var(--blue);color:#fff;font-size:30px;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;}
+  .title{font-size:22px;font-weight:800;color:var(--txt);}
+  .subtitle{font-size:12px;color:var(--txt-2);margin-top:6px;}
+  .lookup{font-size:12px;margin-top:6px;padding:7px 12px;border-radius:50px;}
+  .lookup.ok{background:#E7F7EE;color:var(--green);}
+  .lookup.miss{background:#FBE3E3;color:var(--red);}
+  .tip{font-size:11px;color:var(--txt-2);line-height:1.5;margin-top:10px;}
+  .demo-title{font-size:13px;font-weight:700;color:var(--txt);margin-bottom:8px;}
+  .demo-chip{display:inline-block;font-size:12px;padding:6px 12px;background:var(--blue-l);border-radius:50px;color:var(--blue-d);cursor:pointer;}
+
+  /* 通知/分类/员工/我的 */
+  .notice .n-title{font-size:14px;font-weight:700;color:var(--txt);}
+  .notice .n-meta{font-size:11px;color:var(--txt-2);margin-top:3px;}
+  .n-content{font-size:12.5px;color:var(--txt);line-height:1.6;margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);}
+  .n-ops{margin-top:8px;display:flex;gap:14px;}
+  .n-ops .n-edit{color:var(--blue);cursor:pointer;} .n-ops .n-del{color:var(--red);cursor:pointer;}
+  .add-row{display:flex;gap:8px;align-items:center;}
+  .add-input{flex:1;}
+  .add-btn{padding:0 18px;height:42px;}
+  .cat{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--line);}
+  .cat:last-child{border-bottom:0;}
+  .cat-name{font-size:14px;color:var(--txt);font-weight:600;}
+  .cat-ops .op{font-size:12px;color:var(--blue);margin-left:14px;cursor:pointer;}
+  .cat-ops .op.del{color:var(--red);}
+  .u{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--line);}
+  .u:last-child{border-bottom:0;}
+  .u-left{display:flex;align-items:center;gap:10px;}
+  .u-avatar{width:38px;height:38px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;}
+  .u-name{font-size:14px;font-weight:700;color:var(--txt);}
+  .u-meta{font-size:11px;color:var(--txt-2);margin-top:2px;}
+  .u-ops .op{font-size:12px;color:var(--blue);margin-left:12px;cursor:pointer;}
+  .u-ops .op.del{color:var(--red);}
+  .profile{display:flex;align-items:center;gap:12px;}
+  .avatar{width:52px;height:52px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;}
+  .profile .name{font-size:17px;font-weight:700;color:var(--txt);}
+  .profile .meta{font-size:12px;color:var(--txt-2);margin-top:3px;}
+  .menu .menu-item{display:flex;justify-content:space-between;align-items:center;padding:13px 2px;border-bottom:1px solid var(--line);font-size:14px;color:var(--txt);cursor:pointer;}
+  .menu .menu-item:last-child{border-bottom:0;}
+  .menu .arrow{color:var(--txt-2);}
+  .btn-danger{width:100%;background:#fff;color:var(--red);border:1px solid #f0c4c4;border-radius:50px;padding:11px 0;font-size:14px;font-weight:700;cursor:pointer;}
+
+  .summary .sum-label{font-size:12px;color:var(--txt-2);}
+  .summary .sum-num{font-size:22px;font-weight:800;color:var(--blue);margin:4px 0;}
+  .summary .sum-sub{font-size:11px;color:var(--txt-2);}
+
+  /* 底部导航 */
+  .tabbar{display:flex;background:#fff;border-top:1px solid var(--line);padding:6px 0 8px;}
+  .tabbar .tb{flex:1;text-align:center;font-size:11px;color:var(--txt-2);cursor:pointer;padding-top:2px;line-height:1.3;}
+  .tabbar .tb.on{color:var(--blue);font-weight:700;}
+  .tabbar .tb .ic{display:block;font-size:13px;font-weight:700;margin-bottom:2px;letter-spacing:1px;}
+  .tabbar .tb.on .ic{color:var(--blue);}
+
+  /* 采购清单 */
+  .catsec{margin-bottom:4px;}
+  .catsec .catt{font-size:13px;font-weight:700;color:var(--blue-d);padding:10px 2px 6px;position:sticky;top:0;background:#F1F5F9;z-index:1;}
+  .citem{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);}
+  .citem:last-child{border-bottom:0;}
+  .citem .ci-main{flex:1;min-width:0;}
+  .citem .ci-name{font-size:13px;color:var(--txt);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .citem .ci-price{font-size:12px;color:var(--txt-2);margin-top:3px;}
+  .citem .ci-add{width:30px;height:30px;border-radius:50%;border:1px solid var(--blue);color:var(--blue);background:#fff;font-size:18px;font-weight:700;display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none;}
+  .citem .ci-add.on{background:var(--blue);color:#fff;}
+  .citem .ci-qty{font-size:11px;color:var(--blue);min-width:18px;text-align:center;}
+  .citem .ci-spec{font-size:11px;color:var(--txt-2);margin-top:2px;}
+  .citem.valu{background:rgba(217,71,71,.08);border-radius:14px;padding-left:8px;padding-right:8px;}
+  .valu-badge{display:inline-block;background:var(--red);color:#fff;font-size:10px;font-weight:700;border-radius:50px;padding:1px 7px;margin-left:6px;vertical-align:middle;}
+  .sub2{font-size:13px;}
+  .ds-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--line);}
+  .ds-row:last-child{border-bottom:0;}
+  .ds-name{font-size:14px;font-weight:700;color:var(--txt);}
+  .ds-sub{font-size:11px;color:var(--txt-2);margin-top:2px;}
+  .ds-right{text-align:right;flex:none;}
+  .ds-right b{font-size:14px;}
+  .btn-ghost.sm{font-size:11px;padding:3px 10px;margin-left:8px;border-radius:50px;}
+  .cart-fab{position:absolute;right:16px;bottom:62px;height:54px;padding:0 18px;border-radius:27px;background:linear-gradient(135deg,#2563EB,#1E40AF);color:#fff;font-size:14px;font-weight:700;display:flex;align-items:center;gap:8px;box-shadow:0 6px 20px rgba(37,99,235,.45),0 2px 6px rgba(0,0,0,.1);cursor:pointer;z-index:5;transition:.18s;}
+  .cart-fab:hover{box-shadow:0 8px 26px rgba(37,99,235,.55),0 2px 8px rgba(0,0,0,.12);transform:translateY(-2px);}
+  .cart-fab .badge{background:#fff;color:var(--blue);border-radius:50px;font-size:12px;font-weight:800;padding:1px 8px;min-width:20px;text-align:center;}
+  /* 结算清单 */
+  .co-item{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--line);}
+  .co-item:last-child{border-bottom:0;}
+  .co-item .co-name{font-size:13px;color:var(--txt);font-weight:600;}
+  .co-item .co-sub{font-size:11px;color:var(--txt-2);margin-top:2px;}
+  .co-item .co-amt{font-size:13px;font-weight:700;color:var(--txt);}
+  .co-readonly{font-size:11px;color:var(--amber);margin-top:6px;}
+
+  .flow-wrap{width:100%;max-width:960px;display:none;}
+  .flow-wrap.on{display:block;}
+  .phone.hidden{display:none;}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;margin:6px 0 16px;font-size:12px;color:var(--txt-2);}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .legend i{width:12px;height:12px;border-radius:50%;display:inline-block;}
+  svg{width:100%;height:auto;display:block;background:#fff;border:1px solid var(--line);border-radius:20px;padding:8px;}
+  .toast{position:fixed;left:50%;bottom:40px;transform:translateX(-50%);background:#1E3A5F;color:#fff;padding:10px 18px;border-radius:50px;font-size:13px;opacity:0;transition:.25s;pointer-events:none;z-index:50;box-shadow:0 4px 14px rgba(37,99,235,.2);}
+  .toast.on{opacity:1;}
+  .mtip{width:100%;max-width:960px;font-size:12px;color:var(--txt-2);margin:0 0 10px;}
+
+  /* ===== v3：详情弹窗 / 月度汇总概览 / 成本分摊状态 ===== */
+  .detail-mask{position:absolute;inset:0;background:rgba(30,58,95,.45);z-index:40;display:flex;align-items:flex-end;backdrop-filter:blur(3px);}
+  .detail-sheet{width:100%;max-height:88%;background:#fff;border:1px solid var(--line);border-bottom:none;border-radius:24px 24px 0 0;display:flex;flex-direction:column;overflow:hidden;animation:sheetUp .22s ease;box-shadow:0 -8px 30px rgba(0,0,0,.1);}
+  @keyframes sheetUp{from{transform:translateY(40px);opacity:.4}to{transform:none;opacity:1}}
+  .detail-head{display:flex;justify-content:space-between;align-items:center;padding:14px 16px 10px;border-bottom:1px solid var(--line);}
+  .detail-title{font-size:16px;font-weight:800;color:var(--txt);}
+  .detail-id{font-size:10px;color:var(--txt-2);margin-top:2px;font-family:ui-monospace,monospace;}
+  .detail-close{width:28px;height:28px;border-radius:50%;background:var(--bg);color:var(--txt-2);display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;}
+  .detail-body{padding:12px 14px 22px;overflow-y:auto;background:#F8FAFC;}
+  .detail-body .card{margin-bottom:10px;}
+  .detail-body .co-item{font-size:12px;}
+  .ovw{border:1px solid var(--line);background:#fff;}
+  .ovw-row{display:flex;gap:6px;}
+  .ovw-cell{flex:1;text-align:center;padding:8px 2px;}
+  .ovw-num{font-size:16px;font-weight:800;color:var(--txt);}
+  .ovw-num.ok{color:var(--green);}
+  .ovw-num.warn{color:var(--amber);}
+  .ovw-lab{font-size:10px;color:var(--txt-2);margin-top:2px;}
+  .fin-in{width:92px;display:inline-block;padding:4px 8px;font-size:13px;}
+  .tag-line{display:inline-block;padding:1px 8px;border-radius:999px;font-size:10.5px;font-weight:600;line-height:1.7;}
+  .tag-line.ok{background:rgba(5,150,105,.12);color:var(--green);}
+  .tag-line.rej{background:rgba(220,38,38,.12);color:var(--red);}
+  .tag-line.wait{background:rgba(217,119,6,.12);color:var(--amber);}
+  .over{color:var(--red);}
+  .under{color:var(--green);}
+  .section-title.smt{margin-top:10px;}
+  .btn-ghost.pass{color:var(--green);border-color:rgba(5,150,105,.4);background:rgba(5,150,105,.06);}
+  .btn-ghost.rej{color:var(--red);border-color:rgba(220,38,38,.4);background:rgba(220,38,38,.06);}
+  .hint.warn{color:var(--amber);}
+  .hint.ok{color:var(--green);}
+
+  /* 月度抽屉 */
+  .fin-month{margin-bottom:10px;border:1px solid var(--line);border-radius:20px;overflow:hidden;background:#fff;box-shadow:0 1px 3px rgba(20,30,60,.06);}
+  .fin-month-h{display:flex;justify-content:space-between;align-items:center;padding:14px 15px;cursor:pointer;transition:.15s;}
+  .fin-month-h:hover{background:#F8FAFC;}
+  .fin-month-h.open{background:var(--blue-l);border-bottom:1px solid var(--blue-l2);}
+  .fm-left{display:flex;align-items:center;gap:8px;}
+  .fm-month{font-size:15px;font-weight:800;color:var(--txt);}
+  .fm-status{font-size:10.5px;padding:2px 10px;border-radius:50px;font-weight:700;}
+  .fm-status.done{background:#Dcf3e6;color:var(--green);}
+  .fm-status.pending{background:#FCEEDA;color:var(--gold);}
+  .fm-sub{font-size:11px;color:var(--txt-2);}
+  .fm-right{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--txt-2);}
+  .fm-amt{color:var(--blue);font-weight:800;font-size:14px;}
+  .fm-arrow{transition:.2s;font-size:12px;color:var(--txt-2);}
+  .fin-month-h.open .fm-arrow{transform:rotate(180deg);}
+  .fin-month-body{display:none;padding:12px 12px 14px;}
+  .fin-month-body.open{display:block;animation:finExpand .22s ease;}
+  @keyframes finExpand{from{opacity:0;transform:translateY(-6px);}to{opacity:1;transform:none;}}
+  .fin-sync-card{background:var(--blue-l);border:1px solid var(--blue-l2);border-radius:16px;padding:10px 12px;margin-top:8px;}
+  .fin-sync-card .fs-title{font-size:12px;font-weight:700;color:var(--blue-d);display:flex;align-items:center;gap:6px;}
+  .fin-sync-card .fs-row{display:flex;justify-content:space-between;font-size:12px;padding:5px 0;border-bottom:1px dashed var(--blue-l2);}
+  .fin-sync-card .fs-row:last-child{border-bottom:0;}
+  .fin-sync-card .fs-row .k{color:var(--txt-2);}
+  .fin-sync-card .fs-row .v{font-weight:700;color:var(--blue-d);}
+  .fin-drawer{background:#fff;border:1px solid var(--line);border-radius:20px;margin-bottom:10px;overflow:hidden;transition:box-shadow .2s,border-color .2s;cursor:pointer;}
+  .fin-drawer:hover{border-color:var(--blue-l2);box-shadow:0 2px 12px rgba(37,99,235,.08);}
+  .fin-drawer-open{border-color:var(--blue-l2);box-shadow:0 2px 12px rgba(37,99,235,.1);}
+  .fin-drawer-head{display:flex;align-items:center;gap:10px;padding:14px 16px;}
+  .fin-drawer-month{font-size:16px;font-weight:800;color:var(--blue-d);margin-right:8px;}
+  .fin-drawer-count{font-size:11px;color:var(--txt-2);background:var(--bg);padding:2px 8px;border-radius:50px;margin-right:6px;}
+  .fin-drawer-arrow{font-size:14px;color:var(--blue);font-weight:700;flex-shrink:0;}
+  .fin-drawer-body{padding:0 16px 16px;animation:finExpand .25s ease;}</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div>
+      <h1>项目采购 · 全端口页面原型</h1>
+      <div class="sub">作品集交互演示 · 示例数据 · 团队负责人(待定)/部门经理(示例经理)/财务(示例财务)/行政(示例行政)/其他(员工) 全页面</div>
+    </div>
+    <div class="modeswitch">
+      <button id="mApp" class="on" onclick="setMode('app')">原型演示</button>
+      <button id="mFlow" onclick="setMode('flow')" class="">审批流程图</button>
+    </div>
+  </div>
+
+  <div class="mtip">说明：采购审批链路：团队负责人→部门经理(示例经理)→行政(示例行政)审批→示例收货员(综合管理部)收货确认→流程结束；流程结束后行政进行价格回填及各项目成本分摊，财务(示例财务)负责最终核对并入账各项目。新建项目立项审批：团队负责人→部门经理(示例经理，终审)，通过后员工可继续发起采购申请。</div>
+
+  <div class="persons" id="persons">
+    <div class="person " style="--pc:#6B7280" onclick="pickPort('employee')">
+      <span class="dot"></span><div class="role">其他 · 员工</div><div class="name">（普通员工）</div><div class="desc">发起采购、从采购清单结算、跟踪自己的单据</div>
+    </div>
+    <div class="person " style="--pc:#1F9E8F" onclick="pickPort('teamlead')">
+      <span class="dot"></span><div class="role">团队负责人</div><div class="name">（待定）</div><div class="desc">审批本团队提交的采购需求</div>
+    </div>
+    <div class="person " style="--pc:#2B5BD7" onclick="pickPort('pm')">
+      <span class="dot"></span><div class="role">部门经理</div><div class="name">示例经理</div><div class="desc">部门经理审批（含新建项目立项）</div>
+    </div>
+    <div class="person on" style="--pc:#7C3AED" onclick="pickPort('admin')">
+      <span class="dot"></span><div class="role">行政</div><div class="name">示例行政</div><div class="desc">行政审批、统一处理采购、成本分摊、公告/分类/员工管理</div>
+    </div>
+    <div class="person " style="--pc:#0891B2" onclick="pickPort('receipt')">
+      <span class="dot"></span><div class="role">收货确认</div><div class="name">示例收货员</div><div class="desc">综合管理部·确认采购物品到货签收</div>
+    </div>
+    <div class="person " style="--pc:#D98324" onclick="pickPort('finance')">
+      <span class="dot"></span><div class="role">财务主管</div><div class="name">示例财务</div><div class="desc">最终核对行政分摊结果并入账各项目</div>
+    </div></div>
+  <div class="navbar" id="navbar"><span class="lab">本端口页面：</span>
+    <span class="pchip " style="--pc:#7C3AED" onclick="goPage('home')">首页</span>
+    <span class="pchip on" style="--pc:#7C3AED" onclick="goPage('approval')">审批(行政审批)</span>
+    <span class="pchip " style="--pc:#7C3AED" onclick="goPage('monthly')">成本分摊</span>
+    <span class="pchip " style="--pc:#7C3AED" onclick="goPage('deptsum')">部门汇总</span>
+    <span class="pchip " style="--pc:#7C3AED" onclick="goPage('catalog')">采购清单</span>
+    <span class="pchip " style="--pc:#7C3AED" onclick="goPage('notice')">通知公告</span>
+    <span class="pchip " style="--pc:#7C3AED" onclick="goPage('category')">分类管理</span>
+    <span class="pchip " style="--pc:#7C3AED" onclick="goPage('users')">员工管理</span>
+    <span class="pchip " style="--pc:#7C3AED" onclick="goPage('mine')">我的</span></div>
+
+  <div class="phone" id="phone">
+    <div class="statusbar"><span>9:41</span><span class="right"><span class="bars"><i style="height:5px"></i><i style="height:7px"></i><i style="height:9px"></i><i style="height:11px"></i></span>100%</span></div>
+    <div class="appbar">
+      <div><div class="t" id="appTitle">项目采购</div><div class="p" id="appPerson">行政 · 示例行政</div></div>
+      <button class="flowbtn" onclick="setMode('flow')">流程图</button>
+    </div>
+    <div class="screen" id="screen"><div class="head-tip">示例行政 · 行政：行政审批 · 统一处理采购</div><div class="card">
+      <div class="tag-h"><div class="i-name">防水涂料</div><div class="tag PENDING_ADMIN">待行政审批</div></div>
+      <div class="i-meta">项目：示例社区改造项目</div>
+      <div class="i-meta">采购金额：<b>¥2,240</b> · 预算余 ¥99,800</div>
+      <div class="i-meta">来源：已有项目直达</div>
+
+      <div class="btn-row"><button class="btn pass" onclick="doAct('A109','adminApprove')">通过</button><button class="btn rej" onclick="doAct('A109','adminRej')">驳回</button></div>
+    </div></div>
+    <div class="tabbar" id="tabbar">
+    <div class="tb " onclick="goPage('home')">
+      <span class="ic">首页</span>
+    </div>
+    <div class="tb on" onclick="goPage('approval')">
+      <span class="ic">审批</span>
+    </div>
+    <div class="tb " onclick="goPage('monthly')">
+      <span class="ic">分摊</span>
+    </div>
+    <div class="tb " onclick="goPage('catalog')">
+      <span class="ic">采购</span>
+    </div>
+    <div class="tb " onclick="goPage('mine')">
+      <span class="ic">我的</span>
+    </div></div>
+  </div>
+
+  <div class="flow-wrap" id="flowWrap">
+    <div class="legend">
+      <span><i style="background:#6B7280"></i>其他(员工)</span>
+      <span><i style="background:#1F9E8F"></i>团队负责人(待定)</span>
+      <span><i style="background:#2B5BD7"></i>部门经理(示例经理)</span>
+      <span><i style="background:#0891B2"></i>收货确认(示例收货员)</span>
+      <span><i style="background:#D98324"></i>财务(示例财务)</span>
+      <span><i style="background:#7C3AED"></i>行政(示例行政)</span>
+    </div>
+    <div id="flowSvg"><svg viewBox="0 0 760 660" xmlns="http://www.w3.org/2000/svg" style="font-family:inherit">
+    <rect x="215" y="22" width="170" height="52" rx="12" fill="#64748B" stroke="rgba(255,255,255,.5)" stroke-width="1"></rect>
+    <text x="300" y="43" fill="#0F172A" font-size="14" font-weight="700" text-anchor="middle">员工提交采购申请</text>
+    <text x="300" y="60" fill="rgba(15,23,42,.6)" font-size="11" font-weight="500" text-anchor="middle">其他(普通员工)</text>
+    <rect x="215" y="116" width="170" height="52" rx="12" fill="#D97706" stroke="rgba(255,255,255,.5)" stroke-width="1"></rect>
+    <text x="300" y="137" fill="#0F172A" font-size="13" font-weight="700" text-anchor="middle">团队负责人审批</text>
+    <text x="300" y="154" fill="rgba(15,23,42,.6)" font-size="11" font-weight="500" text-anchor="middle">本团队(占位待定)</text>
+    <rect x="215" y="210" width="170" height="52" rx="12" fill="#2563EB" stroke="rgba(255,255,255,.5)" stroke-width="1"></rect>
+    <text x="300" y="231" fill="#0F172A" font-size="13" font-weight="700" text-anchor="middle">部门经理(示例经理)</text>
+    <text x="300" y="248" fill="rgba(15,23,42,.6)" font-size="11" font-weight="500" text-anchor="middle">采购审批 / 立项终审</text>
+    <rect x="215" y="304" width="170" height="52" rx="12" fill="#7C3AED" stroke="rgba(255,255,255,.5)" stroke-width="1"></rect>
+    <text x="300" y="325" fill="#0F172A" font-size="13" font-weight="700" text-anchor="middle">行政(示例行政)</text>
+    <text x="300" y="342" fill="rgba(15,23,42,.6)" font-size="11" font-weight="500" text-anchor="middle">行政审批·统一采购</text>
+    <rect x="215" y="398" width="170" height="52" rx="12" fill="#0891B2" stroke="rgba(255,255,255,.5)" stroke-width="1"></rect>
+    <text x="300" y="419" fill="#0F172A" font-size="13" font-weight="700" text-anchor="middle">收货确认(示例收货员)</text>
+    <text x="300" y="436" fill="rgba(15,23,42,.6)" font-size="11" font-weight="500" text-anchor="middle">综合管理部·到货签收</text>
+    <rect x="215" y="492" width="170" height="52" rx="12" fill="#059669" stroke="rgba(255,255,255,.5)" stroke-width="1"></rect>
+    <text x="300" y="513" fill="#0F172A" font-size="13" font-weight="700" text-anchor="middle">流程结束</text>
+    <text x="300" y="530" fill="rgba(15,23,42,.6)" font-size="11" font-weight="500" text-anchor="middle">审批完成</text>
+    <rect x="560" y="200" width="150" height="52" rx="12" fill="#FEF2F2" stroke="rgba(255,255,255,.5)" stroke-width="1"></rect>
+    <text x="635" y="221" fill="#0F172A" font-size="13" font-weight="700" text-anchor="middle">已驳回</text>
+    <text x="635" y="238" fill="rgba(15,23,42,.6)" font-size="11" font-weight="500" text-anchor="middle">可改后重提</text>
+    <rect x="560" y="492" width="150" height="52" rx="12" fill="#7C3AED" stroke="rgba(255,255,255,.5)" stroke-width="1"></rect>
+    <text x="635" y="513" fill="#0F172A" font-size="12" font-weight="700" text-anchor="middle">价格回填·成本分摊</text>
+    <text x="635" y="530" fill="rgba(15,23,42,.6)" font-size="11" font-weight="500" text-anchor="middle">行政(示例行政)</text>
+    <rect x="560" y="586" width="150" height="52" rx="12" fill="#D97706" stroke="rgba(255,255,255,.5)" stroke-width="1"></rect>
+    <text x="635" y="607" fill="#0F172A" font-size="13" font-weight="700" text-anchor="middle">财务(示例财务)</text>
+    <text x="635" y="624" fill="rgba(15,23,42,.6)" font-size="11" font-weight="500" text-anchor="middle">最终核对并入账</text><line x1="300" y1="74" x2="300" y2="114" stroke="#64748B" stroke-width="2"></line><polygon points="300,116 294,107 306,107" fill="#64748B"></polygon><line x1="300" y1="168" x2="300" y2="208" stroke="#D97706" stroke-width="2"></line><polygon points="300,210 294,201 306,201" fill="#D97706"></polygon><line x1="300" y1="262" x2="300" y2="302" stroke="#2563EB" stroke-width="2"></line><polygon points="300,304 294,295 306,295" fill="#2563EB"></polygon><line x1="300" y1="356" x2="300" y2="396" stroke="#7C3AED" stroke-width="2"></line><polygon points="300,398 294,389 306,389" fill="#7C3AED"></polygon><line x1="300" y1="450" x2="300" y2="490" stroke="#0891B2" stroke-width="2"></line><polygon points="300,492 294,483 306,483" fill="#0891B2"></polygon><line x1="385" y1="518" x2="550" y2="518" stroke="#7C3AED" stroke-width="2"></line><polygon points="552,518 543,512 543,524" fill="#7C3AED"></polygon><line x1="552" y1="518" x2="562" y2="518" stroke="#7C3AED" stroke-width="2"></line><polygon points="560,518 569,512 569,524" fill="#7C3AED"></polygon><line x1="635" y1="544" x2="635" y2="584" stroke="#D97706" stroke-width="2"></line><polygon points="635,586 629,577 641,577" fill="#D97706"></polygon><line x1="385" y1="142" x2="538" y2="142" stroke="#64748B" stroke-width="2"></line><polygon points="540,142 531,136 531,148" fill="#64748B"></polygon><line x1="540" y1="142" x2="540" y2="210" stroke="#64748B" stroke-width="2"></line><polygon points="540,212 534,203 546,203" fill="#64748B"></polygon><line x1="540" y1="212" x2="558" y2="212" stroke="#64748B" stroke-width="2"></line><polygon points="560,212 551,206 551,218" fill="#64748B"></polygon><line x1="385" y1="236" x2="538" y2="236" stroke="#64748B" stroke-width="2"></line><polygon points="540,236 531,230 531,242" fill="#64748B"></polygon><line x1="540" y1="236" x2="540" y2="214" stroke="#64748B" stroke-width="2"></line><polygon points="540,212 534,221 546,221" fill="#64748B"></polygon><line x1="540" y1="212" x2="558" y2="212" stroke="#64748B" stroke-width="2"></line><polygon points="560,212 551,206 551,218" fill="#64748B"></polygon><line x1="385" y1="330" x2="538" y2="330" stroke="#64748B" stroke-width="2"></line><polygon points="540,330 531,324 531,336" fill="#64748B"></polygon><line x1="540" y1="330" x2="540" y2="214" stroke="#64748B" stroke-width="2"></line><polygon points="540,212 534,221 546,221" fill="#64748B"></polygon><line x1="540" y1="212" x2="558" y2="212" stroke="#64748B" stroke-width="2"></line><polygon points="560,212 551,206 551,218" fill="#64748B"></polygon>
+    <rect x="291" y="84" width="42" height="22" rx="11" fill="#fff" stroke="#64748B" stroke-width="1.2"></rect>
+    <text x="312" y="99" fill="#64748B" font-size="11.5" font-weight="600" text-anchor="middle">提交</text>
+    <rect x="291" y="178" width="42" height="22" rx="11" fill="#fff" stroke="#D97706" stroke-width="1.2"></rect>
+    <text x="312" y="193" fill="#D97706" font-size="11.5" font-weight="600" text-anchor="middle">通过</text>
+    <rect x="279" y="272" width="66" height="22" rx="11" fill="#fff" stroke="#2563EB" stroke-width="1.2"></rect>
+    <text x="312" y="287" fill="#2563EB" font-size="11.5" font-weight="600" text-anchor="middle">采购通过</text>
+    <rect x="291" y="366" width="42" height="22" rx="11" fill="#fff" stroke="#7C3AED" stroke-width="1.2"></rect>
+    <text x="312" y="381" fill="#7C3AED" font-size="11.5" font-weight="600" text-anchor="middle">通过</text>
+    <rect x="279" y="460" width="66" height="22" rx="11" fill="#fff" stroke="#0891B2" stroke-width="1.2"></rect>
+    <text x="312" y="475" fill="#0891B2" font-size="11.5" font-weight="600" text-anchor="middle">收货确认</text>
+    <rect x="243" y="267" width="114" height="22" rx="11" fill="#fff" stroke="#2563EB" stroke-width="1.2"></rect>
+    <text x="300" y="282" fill="#2563EB" font-size="11.5" font-weight="600" text-anchor="middle">新项目:立项终审</text>
+    <rect x="479" y="147" width="42" height="22" rx="11" fill="#fff" stroke="#64748B" stroke-width="1.2"></rect>
+    <text x="500" y="162" fill="#64748B" font-size="11.5" font-weight="600" text-anchor="middle">驳回</text>
+    <rect x="479" y="209" width="42" height="22" rx="11" fill="#fff" stroke="#64748B" stroke-width="1.2"></rect>
+    <text x="500" y="224" fill="#64748B" font-size="11.5" font-weight="600" text-anchor="middle">驳回</text>
+    <rect x="479" y="335" width="42" height="22" rx="11" fill="#fff" stroke="#64748B" stroke-width="1.2"></rect>
+    <text x="500" y="350" fill="#64748B" font-size="11.5" font-weight="600" text-anchor="middle">驳回</text>
+    <rect x="479" y="429" width="42" height="22" rx="11" fill="#fff" stroke="#0891B2" stroke-width="1.2"></rect>
+    <text x="500" y="444" fill="#0891B2" font-size="11.5" font-weight="600" text-anchor="middle">退回</text>
+    <rect x="467" y="469" width="186" height="22" rx="11" fill="#fff" stroke="#7C3AED" stroke-width="1.2"></rect>
+    <text x="560" y="484" fill="#7C3AED" font-size="11.5" font-weight="600" text-anchor="middle">价格回填·成本分摊(非前置)</text>
+    <rect x="497" y="643" width="126" height="22" rx="11" fill="#fff" stroke="#D97706" stroke-width="1.2"></rect>
+    <text x="560" y="658" fill="#D97706" font-size="11.5" font-weight="600" text-anchor="middle">核对入账(非前置)</text>
+    <rect x="18" y="210" width="158" height="52" rx="12" fill="#EFF6FF" stroke="rgba(255,255,255,.5)" stroke-width="1"></rect>
+    <text x="97" y="231" fill="#0F172A" font-size="12" font-weight="700" text-anchor="middle">新项目立项完成</text>
+    <text x="97" y="248" fill="rgba(15,23,42,.6)" font-size="11" font-weight="500" text-anchor="middle">可继续发起采购</text><line x1="215" y1="236" x2="184" y2="236" stroke="#2563EB" stroke-width="2" stroke-dasharray="5,3"></line><polygon points="176,236 184,231 184,241" fill="#2563EB"></polygon>
+    <rect x="162.5" y="210" width="66" height="22" rx="11" fill="#fff" stroke="#2563EB" stroke-width="1.2"></rect>
+    <text x="195.5" y="225" fill="#2563EB" font-size="11.5" font-weight="600" text-anchor="middle">仅新项目</text></svg></div>
+  </div>
+
+  <div class="toast" id="toast">已生成月度采购汇总表单，财务可查看成本分摊</div>
+
+<script>
+/* ============ 采购物品清单（来自 资料/办公用品领用清单.xlsx，6大类66项） ============ */
+const CATALOG=[
+  {cat:"文具类",items:[{name:"得力(deli)0.5mm按动中性笔办公签字笔 子弹头黑色水笔12支/盒S01",price:24.5},{name:"得力(deli)0.5mm办公中性笔 水笔签字笔 12支/盒黑色34567/蓝色/红色",price:9.9},{name:"得力(deli)6本A5/40张牛皮纸缝线软抄本 办公记事本文具笔记本子33457-6",price:17.0},{name:"史泰博 PBN540 40页胶装笔记本 148*210mm A5 阳光橙色",price:2.5},{name:"晨光 K41财务记账专用中性笔0.3mm黑色水性笔针管笔 12支/盒/蓝色/红色",price:24.0},{name:"马培德 742557CH 六色荧光笔 （袋装）",price:24.0},{name:"晨光 0.5mm MP-1190 自动铅笔 50支/盒",price:2.0},{name:"真彩 铅笔芯1417A--HB,0.5毫米（60管/盒）",price:1.6},{name:"晨光(M&G)优品系列0.35mm黑色全针管中性笔签字笔水笔 12支/盒AGPA1704",price:29.0},{name:"得力(deli)黑色双头多用油性记号笔签字笔 勾线笔会议笔马克笔12支/盒6824",price:13.9}]},
+  {cat:"清洁用品",items:[{name:"京惠思创 JH0087 大号商用物业办公加厚平口垃圾袋 100*110cm黑色1包50只装",price:59.8},{name:"齐心(Comix) 办公生活 加厚中号垃圾袋 150只 5卷45*50cm L101E",price:26.0},{name:"快乐猫（KLM）中号金属网垃圾桶 厨房卫生间家用清洁桶 办公环保纸篓φ235mm 9L TS102",price:10.9},{name:"家杰 旋转拖把桶拖布双驱动好神拖懒人免手洗墩布家用吸水地拖8字桶 JJ-A6",price:69.9},{name:"威猛先生 深层净力洁厕啫喱 柠檬草香 双包装(500g+100g)*2 洁厕液 洁厕灵 洁厕精 【新老包装随机发货】",price:18.9},{name:"五月花 海绵百洁布 海绵擦 特惠16片装 强力去油污易清洗 洗碗巾 抹布WYH-CF201",price:13.9},{name:"威露士（Walch）健康抑菌洗手液(倍护滋润)525ml",price:16.9}]},
+  {cat:"A4纸",items:[{name:"Double A A4 复印纸 80g 500张/包 5包/箱",price:171.0}]},
+  {cat:"一次性用品",items:[{name:"佳驰 家用 野营 快餐 卫生筷 一次性筷子 100双装 每双附牙签1支",price:19.5},{name:"Edo 一次性碗 户外烧烤 野炊用品 350ml火锅汤碗可降解（50只装）餐具派对纸碗YD2420",price:28.5},{name:"维达(Vinda) 抽纸 超韧3层150抽软抽纸巾*24包(中规格) 整箱销售",price:79.8},{name:"百草园（bicoy）一次性杯子 9盎司增厚上品纸杯1000只装",price:179.0}]},
+  {cat:"办公用品类",items:[{name:"得力 0325 12号订书机 24页 随机色",price:9.6},{name:"史泰博 230克 牛皮纸档案袋 A4 牛皮纸色 25个/封",price:30.4},{name:"益而高 1008 订书针 24/6",price:1.23},{name:"得力 7283 卡通修正液 15ml 混色",price:2.7},{name:"汉高百特 PKA5D 胶水 50ML",price:4.7},{name:"远生 US-B55 双色拉链袋B5 300MM*225MM 黑色",price:6.0},{name:"史泰博 A4 网格拉链袋 330*242mm 颜色随机",price:5.8},{name:"史泰博 102582 18 橡皮筋 18# 本色",price:12.5},{name:"惠达 HD-75 自粘性标签 14*25mm 红框 白色",price:3.5},{name:"得力 8556 筒装彩色长尾票夹 15MM 彩色 彩色",price:13.5},{name:"史泰博 NP1040 五色抽杆夹（5个一包） A4 白色",price:8.7},{name:"史泰博 10666 筒装长尾夹 15mm 3/5寸 黑色 60个/筒",price:10.8},{name:"史泰博 10008 筒装长尾夹 25mm 黑色 48个/筒",price:14.9},{name:"易达 10125 长尾夹 4# 25mm 1寸 黑色",price:4.73},{name:"史泰博 PC1004 回形针200枚/筒 28 mm 金属银色",price:4.5},{name:"史泰博 NP1058 PVC包胶纸板文件夹-双强力夹 A4 1寸 黑色",price:14.6},{name:"益而高 EG-1284 卷尺 5m（12把/盒）",price:12.4},{name:"N次贴 32025 超傎包便条纸 6本/包 3\"×2\" 模造四色 48包/件 多本组合，更经济更超值",price:13.8},{name:"史泰博 1534 莹彩组合便条纸",price:3.9},{name:"史泰博 PC1002 镀镍回形针 28mm 金属银色 100枚/盒",price:1.7},{name:"史泰博 ST15558 11孔透明保护套A4,0.07mm厚度 透明100个/包",price:37.5},{name:"史泰博 三格组合文件栏 25.5*24.5*26CM 黑色",price:29.9},{name:"史泰博 P2013 三层铁质文件盘 350 x 295 x 265 mm 黑色",price:45.0},{name:"史泰博 6CM 牛皮纸档案盒 A4 牛皮纸色 5个/封",price:23.5},{name:"史泰博 5CM 牛皮纸档案盒 A4 牛皮纸色 5个/封",price:22.7},{name:"恒峰 64K 100 工作手册簿本",price:1.6},{name:"得力 5548 塑料装订夹 80MM 混色",price:8.5},{name:"惠普 803C号 墨盒（F6V20AA） 165页 彩色 （适用 Deskjet 1112/Deskjet 2132新老包装交替发货）",price:164.0},{name:"惠普 CZ107AA 678号墨盒 480页 黑色 （适用 HP Deskjet 2515/3515 ）",price:77.0},{name:"得力 30405 双面胶 12MM*10Y",price:1.54},{name:"雷柏 M216 无线鼠标 黑色",price:36.0},{name:"史泰博 DC2001 桌面计算器 12位小号 黑色 20个/盒，120个/箱",price:14.5},{name:"超霸 GP24AU-2IB20 电池 7号-碱性 耐久的电量，输出稳定",price:45.6},{name:"超霸 GP15AU-2IB20 电池 5号-碱性 耐久的电量，输出稳定",price:47.0},{name:"得力 18mm大号美工刀200-3（24把/盒）",price:5.0},{name:"史泰博 NP1034 资料册 A4 100页 黑色",price:36.9},{name:"创乘 CC115 护腕鼠标垫 240*190mm 黑色 天然硅胶，柔软带记忆",price:24.4},{name:"得力(deli)180mm办公家用生活剪刀套装 (2把装 红黑组合) 33215",price:9.0},{name:"AUCS 强磁力白板专用磁扣磁钉磁粒磁贴吸铁石 35粒装/28mm",price:9.9},{name:"得力(deli)高品质高透明封箱胶带/打包胶带 60mm*100y*50um(91.4m/卷) 单卷装 30369",price:9.9},{name:"史泰博 NP1011 档案盒 A4-55mm 黑色 12个/中箱，36个/箱",price:16.0}]},
+  {cat:"茶叶类",items:[{name:"立顿Lipton 茶叶 绿茶100包200g 袋泡茶茶包 办公室休闲下午茶（新旧包装随机发货）",price:42.9},{name:"雀巢（Nestle）咖啡 速溶 1+2 原味 微研磨 冲调饮品 100条1500g",price:102.0},{name:"雀巢（Nestle）醇品 速溶 黑咖啡 无蔗糖 冲调饮品 盒装（48包*1.8克）",price:39.9}]}
+];
+
+/* ============ 物料规格/型号/品牌/贵重品 元数据（会议要求：物料须写规格型号品牌，贵重品单独管控） ============ */
+/* 说明：原型用覆盖式元数据，名单/历史库到位后由行政统一维护；valu 标记贵重品需单独管控 */
+const ITEM_META = {
+  '得力 8556 筒装彩色长尾票夹 15MM 彩色 彩色':{spec:'15mm',model:'8556',brand:'得力'},
+  '史泰博 10666 筒装长尾夹 15mm 3/5寸 黑色 60个/筒':{spec:'15mm/60个',model:'10666',brand:'史泰博'},
+  '史泰博 10008 筒装长尾夹 25mm 黑色 48个/筒':{spec:'25mm/48个',model:'10008',brand:'史泰博'},
+  '得力 30405 双面胶 12MM*10Y':{spec:'12mm×10Y',model:'30405',brand:'得力'},
+  '惠普 803C号 墨盒（F6V20AA） 165页 彩色 （适用 Deskjet 1112/Deskjet 2132新老包装交替发货）':{spec:'165页/彩色',model:'803C/F6V20AA',brand:'惠普',valu:true},
+  '惠普 CZ107AA 678号墨盒 480页 黑色 （适用 HP Deskjet 2515/3515 ）':{spec:'480页/黑色',model:'CZ107AA/678',brand:'惠普',valu:true},
+  '雷柏 M216 无线鼠标 黑色':{spec:'2.4G无线',model:'M216',brand:'雷柏'},
+  '得力 0325 12号订书机 24页 随机色':{spec:'12号/24页',model:'0325',brand:'得力'},
+};
+
+/* ============ 端口与页面配置 ============ */
+const PERSONS = [
+  {port:'employee', role:'其他 · 员工', name:'（普通员工）', desc:'发起采购、从采购清单结算、跟踪自己的单据', pc:'#6B7280'},
+  {port:'teamlead', role:'团队负责人', name:'（待定）', desc:'审批本团队提交的采购需求', pc:'#1F9E8F'},
+  {port:'pm',       role:'部门经理', name:'示例经理', desc:'部门经理审批（含新建项目立项）', pc:'#2B5BD7'},
+  {port:'admin',    role:'行政', name:'示例行政', desc:'行政审批、统一处理采购、成本分摊、公告/分类/员工管理', pc:'#7C3AED'},
+  {port:'receipt',  role:'收货确认', name:'示例收货员', desc:'综合管理部·确认采购物品到货签收', pc:'#0891B2'},
+  {port:'finance',  role:'财务主管', name:'示例财务', desc:'最终核对行政分摊结果并入账各项目', pc:'#D98324'},
+];
+
+const PORT_PAGES = {
+  employee:[
+    {k:'login',t:'登录'},    {k:'home',t:'首页'},{k:'project',t:'项目列表'},{k:'projectDetail',t:'项目详情'},
+    {k:'catalog',t:'采购清单'},{k:'apply',t:'我的申请'},{k:'applyCreate',t:'发起申请'},{k:'checkout',t:'购物车结算'},{k:'newProject',t:'申请新增项目'},{k:'applyDetail',t:'申请详情'},
+    {k:'notice',t:'通知公告'},{k:'mine',t:'我的'},
+  ],
+  teamlead:[
+    {k:'home',t:'首页'},{k:'approval',t:'审批(本团队)'},{k:'apply',t:'申请列表'},{k:'applyDetail',t:'申请详情'},
+    {k:'project',t:'项目列表'},{k:'notice',t:'通知公告'},{k:'mine',t:'我的'},
+  ],
+  pm:[
+    {k:'home',t:'首页'},{k:'project',t:'项目列表'},{k:'projectDetail',t:'项目详情'},
+    {k:'approval',t:'审批(部门经理)'},{k:'apply',t:'申请列表'},{k:'applyDetail',t:'申请详情'},
+    {k:'catalog',t:'采购清单'},{k:'notice',t:'通知公告'},{k:'mine',t:'我的'},
+  ],
+  admin:[
+    {k:'home',t:'首页'},{k:'approval',t:'审批(行政审批)'},{k:'monthly',t:'成本分摊'},{k:'deptsum',t:'部门汇总'},
+    {k:'catalog',t:'采购清单'},{k:'notice',t:'通知公告'},{k:'category',t:'分类管理'},{k:'users',t:'员工管理'},{k:'mine',t:'我的'},
+  ],
+  receipt:[
+    {k:'login',t:'登录'},
+    {k:'home',t:'首页'},{k:'project',t:'项目列表'},{k:'projectDetail',t:'项目详情'},
+    {k:'catalog',t:'采购清单'},{k:'apply',t:'我的申请'},{k:'applyCreate',t:'发起申请'},{k:'checkout',t:'购物车结算'},{k:'newProject',t:'申请新增项目'},{k:'applyDetail',t:'申请详情'},
+    {k:'approval',t:'收货确认'},{k:'notice',t:'通知公告'},{k:'mine',t:'我的'},
+  ],
+  finance:[
+    {k:'home',t:'首页'},{k:'reimburse',t:'核对入账'},{k:'applyDetail',t:'申请详情'},
+    {k:'catalog',t:'采购清单'},{k:'notice',t:'通知公告'},{k:'mine',t:'我的'},
+  ],
+};
+
+// 手机内底部导航（每端口最多5个，均含“采购”）
+const TABBAR = {
+  employee:['home','project','catalog','apply','mine'],
+  teamlead:['home','approval','apply','project','mine'],
+  pm:['home','project','approval','apply','mine'],
+  admin:['home','approval','monthly','catalog','mine'],
+  receipt:['home','catalog','apply','approval','mine'],
+  finance:['home','reimburse','catalog','mine'],
+};
+const TAB_LABEL = {
+  employee:{home:'首页',project:'项目',catalog:'采购',apply:'申请',mine:'我的'},
+  teamlead:{home:'首页',approval:'审批',apply:'申请',project:'项目',mine:'我的'},
+  pm:{home:'首页',project:'项目',approval:'审批',apply:'申请',mine:'我的'},
+  admin:{home:'首页',approval:'审批',monthly:'分摊',catalog:'采购',mine:'我的'},
+  receipt:{home:'首页',catalog:'采购',apply:'申请',approval:'收货',mine:'我的'},
+  finance:{home:'首页',reimburse:'核对',catalog:'采购',mine:'我的'},
+};
+const DEFAULT_PAGE = {employee:'home', teamlead:'approval', pm:'home', admin:'approval', receipt:'home', finance:'reimburse'};
+
+/* ============ 状态与数据 ============ */
+const STATUS_TEXT = {
+  PENDING_LEAD:'待团队负责人审批', PENDING_PM:'待部门经理审批', PENDING_ADMIN:'待行政审批',
+  PENDING_RECEIPT:'待收货确认', APPROVED:'审批完成', REJECTED:'已驳回', CANCELED:'已撤销'
+};
+
+let projects = [
+  {id:'P1',name:'示例道路维修项目',code:'GC-2026-001',manager:'佟伟',team:'T_SZ',owners:['员工丙'],profit:500000,budget:150000,budgetPhysical:150000,used:480,usedPhysical:480,locked:0,demo:true,profitSource:'estimated'},
+  {id:'P2',name:'示例景观项目',code:'GC-2026-002',manager:'钟涛',team:'T_GC',owners:['员工甲','员工丙'],profit:420000,budget:126000,budgetPhysical:126000,used:6590,usedPhysical:6590,locked:0,demo:true,profitSource:'estimated'},
+  {id:'P3',name:'示例社区改造项目',code:'GC-2026-003',manager:'陆虹章',team:'T_XGC',owners:['员工乙'],profit:380000,budget:114000,budgetPhysical:114000,used:14200,usedPhysical:14200,locked:0,demo:true,profitSource:'estimated'},
+];
+let seq=100; const nid=()=>'A'+(++seq);
+
+let apps = [
+  {id:nid(),applicant:'员工甲',type:'existing',projectId:'P1',projectName:'示例道路维修项目',
+   items:[{cat:'劳保用品',name:'安全帽',price:45,qty:20}],amount:900,
+   status:'PENDING_PM',categoryName:'劳保用品',reason:'现场施工人员安全帽损耗补充',apportionText:'',
+   logs:[{action:'员工 提交采购申请（已有项目）',name:'员工甲',roleText:'员工',timeText:'08-19 09:12'},
+         {action:'团队负责人 审批通过',name:'（团队负责人待定）',roleText:'团队负责人',timeText:'08-19 09:30',cls:'pass'},
+         {action:'系统路由：→送部门经理(示例经理)审批',name:'系统',roleText:'系统',timeText:'08-19 09:30'}]},
+  {id:nid(),applicant:'员工乙',type:'new',fromNew:true,newCode:'GC-2026-004',projectName:'示例停车项目',profit:null,pmBudget:null,
+   items:[{cat:'设备',name:'道闸主机',price:6800,qty:2}],amount:13600,
+   status:'PENDING_PM',categoryName:'设备',reason:'新增立体车库设备采购',apportionText:'',
+   logs:[{action:'员工 提交新建项目申请（编号 GC-2026-004）',name:'员工乙',roleText:'员工',timeText:'08-19 10:02'},
+         {action:'团队负责人 审批通过',name:'（团队负责人待定）',roleText:'团队负责人',timeText:'08-19 10:20',cls:'pass'},
+         {action:'系统路由：→送部门经理(示例经理)立项终审（不转行政）',name:'系统',roleText:'系统',timeText:'08-19 10:20'}]},
+  {id:nid(),applicant:'员工丙',type:'existing',projectId:'P2',projectName:'示例景观项目',
+   items:[{cat:'建材',name:'防腐木',price:120,qty:50}],amount:6000,
+   status:'APPROVED',categoryName:'建材',reason:'滨江栈道铺设',apportionText:'',
+   recordedFinal:5750,accounted:true,accountDiff:-250,finMarked:true,finAccounted:true,
+   logs:[{action:'员工 提交（已有项目）',name:'员工丙',roleText:'员工',timeText:'08-18 14:20'},
+         {action:'团队负责人 审批通过',name:'（团队负责人待定）',roleText:'团队负责人',timeText:'08-18 14:30',cls:'pass'},
+         {action:'示例经理 部门经理审批通过',name:'示例经理',roleText:'部门经理',timeText:'08-18 14:35',cls:'pass'},
+         {action:'系统路由：→送行政(示例行政)行政审批',name:'系统',roleText:'系统',timeText:'08-18 14:35'},
+         {action:'示例行政 行政审批通过·转示例收货员收货确认',name:'示例行政',roleText:'行政',timeText:'08-18 14:40',cls:'pass'},
+         {action:'系统路由：→送示例收货员(综合管理部)收货确认',name:'系统',roleText:'系统',timeText:'08-18 14:40'},
+         {action:'示例收货员 收货确认通过·物品已签收，流程结束',name:'示例收货员',roleText:'收货确认',timeText:'08-18 15:00',cls:'pass'},
+         {action:'示例行政 行政录入实际采购价 ¥5,750（估价 ¥6,000，差额 -¥250）',name:'示例行政',roleText:'行政',timeText:'08-19 10:00',cls:'pass'},
+         {action:'示例财务 财务核对：确认此笔（实价 ¥5,750）',name:'示例财务',roleText:'财务',timeText:'08-19 16:20',cls:'pass'}]},
+  {id:nid(),applicant:'员工甲',type:'existing',projectId:'P2',projectName:'示例景观项目',
+   items:[{cat:'劳保用品',name:'安全帽',price:45,qty:20}],amount:900,
+   status:'APPROVED',categoryName:'劳保用品',reason:'现场施工人员安全帽损耗补充',apportionText:'',
+   recordedFinal:840,accounted:true,accountDiff:-60,finAccounted:true,
+   logs:[{action:'员工 提交（已有项目）',name:'员工甲',roleText:'员工',timeText:'08-19 09:00'},
+         {action:'团队负责人 审批通过',name:'（团队负责人待定）',roleText:'团队负责人',timeText:'08-19 09:10',cls:'pass'},
+         {action:'示例经理 部门经理审批通过',name:'示例经理',roleText:'部门经理',timeText:'08-19 09:15',cls:'pass'},
+         {action:'系统路由：→送行政(示例行政)行政审批',name:'系统',roleText:'系统',timeText:'08-19 09:15'},
+         {action:'示例行政 行政审批通过·转示例收货员收货确认',name:'示例行政',roleText:'行政',timeText:'08-19 09:20',cls:'pass'},
+         {action:'系统路由：→送示例收货员(综合管理部)收货确认',name:'系统',roleText:'系统',timeText:'08-19 09:20'},
+         {action:'示例收货员 收货确认通过·物品已签收，流程结束',name:'示例收货员',roleText:'收货确认',timeText:'08-19 09:40',cls:'pass'},
+         {action:'示例行政 行政录入实际采购价 ¥840（估价 ¥900，差额 -¥60）',name:'示例行政',roleText:'行政',timeText:'08-19 10:05',cls:'pass'}]},
+  {id:nid(),applicant:'员工乙',type:'existing',projectId:'P3',projectName:'示例社区改造项目',
+   items:[{cat:'设备',name:'道闸主机',price:6800,qty:2}],amount:13600,
+   status:'APPROVED',categoryName:'设备',reason:'小区出入口道闸更换',apportionText:'',
+   recordedFinal:14200,accounted:true,accountDiff:600,finAccounted:true,
+   logs:[{action:'员工 提交（已有项目）',name:'员工乙',roleText:'员工',timeText:'08-19 11:00'},
+         {action:'团队负责人 审批通过',name:'（团队负责人待定）',roleText:'团队负责人',timeText:'08-19 11:10',cls:'pass'},
+         {action:'示例经理 部门经理审批通过',name:'示例经理',roleText:'部门经理',timeText:'08-19 11:15',cls:'pass'},
+         {action:'系统路由：→送行政(示例行政)行政审批',name:'系统',roleText:'系统',timeText:'08-19 11:15'},
+         {action:'示例行政 行政审批通过·转示例收货员收货确认',name:'示例行政',roleText:'行政',timeText:'08-19 11:20',cls:'pass'},
+         {action:'系统路由：→送示例收货员(综合管理部)收货确认',name:'系统',roleText:'系统',timeText:'08-19 11:20'},
+         {action:'示例收货员 收货确认通过·物品已签收，流程结束',name:'示例收货员',roleText:'收货确认',timeText:'08-19 11:40',cls:'pass'},
+         {action:'示例行政 行政录入实际采购价 ¥14,200（估价 ¥13,600，差额 +¥600）',name:'示例行政',roleText:'行政',timeText:'08-19 11:30',cls:'pass'}]},
+  {id:nid(),applicant:'员工丙',type:'existing',projectId:'P1',projectName:'示例道路维修项目',
+   items:[{cat:'劳保用品',name:'劳保手套',price:15,qty:30}],amount:450,
+   status:'APPROVED',categoryName:'劳保用品',reason:'施工班组手套补充',apportionText:'',
+   recordedFinal:480,accounted:true,accountDiff:30,finAccounted:true,
+   logs:[{action:'员工 提交（已有项目）',name:'员工丙',roleText:'员工',timeText:'08-19 15:00'},
+         {action:'团队负责人 审批通过',name:'（团队负责人待定）',roleText:'团队负责人',timeText:'08-19 15:10',cls:'pass'},
+         {action:'示例经理 部门经理审批通过',name:'示例经理',roleText:'部门经理',timeText:'08-19 15:15',cls:'pass'},
+         {action:'系统路由：→送行政(示例行政)行政审批',name:'系统',roleText:'系统',timeText:'08-19 15:15'},
+         {action:'示例行政 行政审批通过·转示例收货员收货确认',name:'示例行政',roleText:'行政',timeText:'08-19 15:20',cls:'pass'},
+         {action:'系统路由：→送示例收货员(综合管理部)收货确认',name:'系统',roleText:'系统',timeText:'08-19 15:20'},
+         {action:'示例收货员 收货确认通过·物品已签收，流程结束',name:'示例收货员',roleText:'收货确认',timeText:'08-19 15:40',cls:'pass'},
+         {action:'示例行政 行政录入实际采购价 ¥480（估价 ¥450，差额 +¥30）',name:'示例行政',roleText:'行政',timeText:'08-19 15:30',cls:'pass'}]},
+  {id:nid(),applicant:'员工甲',type:'existing',projectId:'P1',projectName:'示例道路维修项目',
+   items:[{cat:'建材',name:'路面修补剂',price:320,qty:10}],amount:3200,
+   status:'PENDING_RECEIPT',categoryName:'建材',reason:'路面裂缝修补材料采购',apportionText:'',
+   logs:[{action:'员工 提交（已有项目）',name:'员工甲',roleText:'员工',timeText:'08-26 08:30'},
+         {action:'团队负责人 审批通过',name:'（团队负责人待定）',roleText:'团队负责人',timeText:'08-26 08:45',cls:'pass'},
+         {action:'示例经理 部门经理审批通过',name:'示例经理',roleText:'部门经理',timeText:'08-26 09:00',cls:'pass'},
+         {action:'系统路由：→送行政(示例行政)行政审批',name:'系统',roleText:'系统',timeText:'08-26 09:00'},
+         {action:'示例行政 行政审批通过·转示例收货员收货确认',name:'示例行政',roleText:'行政',timeText:'08-26 09:10',cls:'pass'},
+         {action:'系统路由：→送示例收货员(综合管理部)收货确认',name:'系统',roleText:'系统',timeText:'08-26 09:10'}]},
+  {id:nid(),applicant:'员工丙',type:'existing',projectId:'P2',projectName:'示例景观项目',
+   items:[{cat:'设备',name:'太阳能路灯',price:1800,qty:5}],amount:9000,
+   status:'PENDING_RECEIPT',categoryName:'设备',reason:'滨江步道照明改造',apportionText:'',
+   logs:[{action:'员工 提交（已有项目）',name:'员工丙',roleText:'员工',timeText:'08-26 10:15'},
+         {action:'团队负责人 审批通过',name:'（团队负责人待定）',roleText:'团队负责人',timeText:'08-26 10:30',cls:'pass'},
+         {action:'示例经理 部门经理审批通过',name:'示例经理',roleText:'部门经理',timeText:'08-26 10:45',cls:'pass'},
+         {action:'系统路由：→送行政(示例行政)行政审批',name:'系统',roleText:'系统',timeText:'08-26 10:45'},
+         {action:'示例行政 行政审批通过·转示例收货员收货确认',name:'示例行政',roleText:'行政',timeText:'08-26 10:55',cls:'pass'},
+         {action:'系统路由：→送示例收货员(综合管理部)收货确认',name:'系统',roleText:'系统',timeText:'08-26 10:55'}]},
+  {id:nid(),applicant:'员工乙',type:'existing',projectId:'P3',projectName:'示例社区改造项目',
+   items:[{cat:'建材',name:'防水涂料',price:280,qty:8}],amount:2240,
+   status:'PENDING_ADMIN',categoryName:'建材',reason:'小区外墙防水修缮',apportionText:'',
+   logs:[{action:'员工 提交（已有项目）',name:'员工乙',roleText:'员工',timeText:'08-26 11:00'},
+         {action:'团队负责人 审批通过',name:'（团队负责人待定）',roleText:'团队负责人',timeText:'08-26 11:15',cls:'pass'},
+         {action:'示例经理 部门经理审批通过',name:'示例经理',roleText:'部门经理',timeText:'08-26 11:30',cls:'pass'},
+         {action:'系统路由：→送行政(示例行政)行政审批',name:'系统',roleText:'系统',timeText:'08-26 11:30'}]},
+];
+
+let employees = [
+  {id:1,username:'138****0001',name:'示例财务',role:'finance',roleText:'财务',dept:'财务部',post:'财务主管'},
+  {id:2,username:'138****0002',name:'示例经理',role:'pm',roleText:'部门经理',dept:'项目部',post:'项目经理'},
+  {id:3,username:'138****0003',name:'示例行政',role:'admin',roleText:'行政',dept:'行政部',post:'行政主管'},
+  {id:7,username:'138****0007',name:'示例收货员',role:'receipt',roleText:'收货确认',dept:'综合管理部',post:'收货管理'},
+  {id:4,username:'138****0004',name:'员工甲',role:'employee',roleText:'员工',dept:'工程乙组',post:'施工员',team:'T_GC'},
+  {id:5,username:'138****0005',name:'员工乙',role:'employee',roleText:'员工',dept:'工程甲组',post:'施工员',team:'T_XGC'},
+  {id:6,username:'138****0006',name:'员工丙',role:'employee',roleText:'员工',dept:'市政项目组',post:'施工员',team:'T_SZ'},
+];
+let notices = [
+  {id:'N1',title:'关于采购单超1000元需附总经理签字审批单的通知',authorName:'示例行政',timeText:'08-15 09:00',content:'根据公司规定，单次采购金额超过1000元的单据，须在提交时上传总经理签字审批单或其他审批凭证，由财务在线下核验后审批。请各位同事知悉并配合执行。'},
+  {id:'N2',title:'8月办公用品集中采购计划',authorName:'示例行政',timeText:'08-12 16:30',content:'本月办公用品集中采购定于8月25日截止汇总，请各部门于截止日前在系统中提交申请。'},
+];
+let categories = [
+  {id:'C1',name:'劳保用品'},{id:'C2',name:'建材'},{id:'C3',name:'设备'},{id:'C4',name:'办公用品'},{id:'C5',name:'五金工具'},
+];
+
+// ⚠️ 团队 / 团队负责人为占位示例数据，待业务方提供真实名单后，仅需替换下方 TEAMS 数组即可
+const TEAMS = [
+  {id:'T_GC',  name:'工程乙组',   lead:'(团队负责人待定)', leadPhone:'138****00XX', members:['员工甲','员工丙']},
+  {id:'T_XGC', name:'工程甲组', lead:'(团队负责人待定)', leadPhone:'138****00XX', members:['员工乙']},
+  {id:'T_SZ',  name:'市政项目组', lead:'(团队负责人待定)', leadPhone:'138****00XX', members:['员工丙']},
+];
+// 演示用：当前登录员工(员工甲)，用于"发起采购"时项目下拉按"本人负责的项目"过滤
+const EMP_TEAM = 'T_GC';
+const EMP_NAME = (employees.find(e=>e.team===EMP_TEAM)||{}).name || '员工甲';
+// 团队没有专属项目：项目按"负责的员工"归属（一个人负责多个项目，项目可被多人共同负责）
+function myProjects(){const me=EMP_NAME;return projects.filter(p=>!p.owners||p.owners.includes(me));}
+function ownerText(p){return (p.owners&&p.owners.length)?p.owners.join('、'):(p.manager||'—');}
+
+let apportionTables=[]; // 行政月度采购汇总表单（采购完成后由行政制表，按项目大类归集）
+// 演示种子：预置一张行政已提交的月度采购汇总表单（财务「成本分摊」页打开即有明细可看）
+(function(){
+  const done=apps.filter(a=>a.status==='APPROVED'&&!a.fromNew);
+  if(done.length){
+    apportionTables.push({month:'2026-08',timeText:'08-19 16:00',status:'待分摊',submittedBy:'示例行政',
+      items:done.map(a=>({id:a.id,project:a.projectName,applicant:a.applicant,team:teamOfName(a.applicant),amount:finOf(a)}))});
+  }
+})();
+
+let state = {
+  port:'employee', page:'home',
+  draft:{projectMode:'',projectId:'',newCode:'',newName:'',newProfit:'',
+         cat:'',itemSelect:'',itemCustom:'',priceCustom:'',qty:'',reason:'',
+         apportionMode:'single',crossIds:[],crossMap:{},crossTotal:0},
+  selProject:'P1', selApp:'A101', expandedNotice:'',
+  cart:[], catFilter:'', detailApp:null, monthlyFilter:'all', pmTab:'pur', finDrawer:0
+};
+
+/* ============ 工具 ============ */
+const $=id=>document.getElementById(id);
+const fmt=n=>'¥'+Number(n||0).toLocaleString();
+function toast(m){const t=$('toast');t.textContent=m;t.classList.add('on');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('on'),1600);}
+function projById(id){return projects.find(p=>p.id===id);}
+function appById(id){return apps.find(a=>a.id===id);}
+function projLevel(p){const u=p.budget?p.used/p.budget*100:0;return u<70?'正常':(u<100?'预警':'超支');}
+function projUsage(p){return p.budget?Math.round(p.used/p.budget*100)+'%':'0%';}
+function appTitle(a){if(a.fromNew)return '新建项目申请：'+a.projectName+(a.newCode?('（'+a.newCode+'）'):'');if(!a.items||!a.items.length)return a.item||'(无物品)';return a.items.length===1?a.items[0].name:(a.items[0].name+' 等'+a.items.length+'项');}
+function itemsTotal(a){return (a.items||[]).reduce((s,i)=>s+(i.price||0)*(i.qty||1),0);}
+function setBudget(id,v){const a=appById(id);a.pmBudget=(v===''||v==null)?null:Number(v);}
+function catItems(cat){const c=CATALOG.find(x=>x.cat===cat);return c?c.items:[];}
+function itemMeta(name){return ITEM_META[name]||{};}
+function teamOfName(n){const e=employees.find(x=>x.name===n)||{};const t=TEAMS.find(y=>y.id===e.team);return t?t.name:(e.dept||'—');}
+function finOf(a){return a.recordedFinal!=null?a.recordedFinal:a.amount;}
+function projExhausted(p){return projLevel(p)==='超支' || (p.budget-p.used-p.locked)<=0;}
+
+/* —— 跨项目分摊 与 暂估利润 辅助 —— */
+const EST_RATE = 0.25; // 合同金额 → 暂估利润率（预估，按项目类型可配）
+function ensureCrossDraft(){const d=state.draft;if(!d.crossIds)d.crossIds=[];if(!d.crossMap)d.crossMap={};if(d.crossTotal==null)d.crossTotal=0;}
+function toggleCross(id){
+  ensureCrossDraft();const d=state.draft;
+  const i=d.crossIds.indexOf(id);
+  if(i>=0){d.crossIds.splice(i,1);delete d.crossMap[id];}
+  else{ d.crossIds.push(id);
+    const total=d.crossTotal||0,n=d.crossIds.length;
+    d.crossIds.forEach(pid=>{const ratio=Math.round((100/n)*100)/100;d.crossMap[pid]={ratio,amount:Math.round(total*ratio/100)};});
+  }
+  renderAll();
+}
+function addCrossFromPick(){ensureCrossDraft();const sel=$('crossPick');if(!sel||!sel.value)return;toggleCross(sel.value);}
+function setCrossAmount(id,v){ensureCrossDraft();const d=state.draft;const total=d.crossTotal||0;let a=parseFloat(v)||0;if(a<0)a=0;const r=total>0?a/total*100:0;d.crossMap[id]={ratio:Math.round(r*100)/100,amount:Math.round(a*100)/100};renderAll();}
+function crossSum(){const d=state.draft;let s=0;d.crossIds.forEach(id=>s+=(d.crossMap[id]?d.crossMap[id].amount:0));return s;}
+function crossApportionEditor(total){
+  ensureCrossDraft();state.draft.crossTotal=total;const d=state.draft;
+  const rowsHtml = d.crossIds.map(id=>{
+    const p=projById(id)||{name:id,budget:0,used:0,locked:0};
+    const m=d.crossMap[id]||{ratio:0,amount:0};
+    const amount=m.amount||0;const ratio=total>0?amount/total*100:0;
+    return `<div class="ccr-row">
+      <div class="ccr-h"><span>${p.name}</span><span class="ccr-bal">预算余 ${fmt(p.budget-p.used-p.locked)}</span></div>
+      <div class="ccr-in"><input class="input cc-in" type="number" value="${amount}" oninput="setCrossAmount('${id}',this.value)"><span class="ccr-u">元</span><span class="ccr-amt">${ratio.toFixed(1)}%</span></div>
+      <button class="ccr-del" onclick="toggleCross('${id}')">移除</button>
+    </div>`;
+  }).join('');
+  const sumAmt=crossSum();const sumRatio=total>0?sumAmt/total*100:0;const balanced=Math.abs(sumAmt-total)<0.01;
+  const pool=projects.filter(p=>!d.crossIds.includes(p.id));
+  const pickHtml = pool.length? `<div class="ccr-add"><select class="input" id="crossPick"><option value="">+ 添加分摊项目</option>${pool.map(p=>`<option value="${p.id}">${p.name}</option>`).join('')}</select><button class="btn-ghost" onclick="addCrossFromPick()">添加</button></div>`:'<div class="hint">已选全部项目</div>';
+  return `<div class="ccr-wrap">
+    ${rowsHtml}${pickHtml}
+    <div class="ccr-sum"><span>分摊合计</span><span class="${balanced?'ok':'bad'}">${fmt(sumAmt)} / ${fmt(total)}（${sumRatio.toFixed(1)}%）</span></div>
+    ${balanced?'':'<div class="ccr-warn">合计需等于采购总额，请调整后再提交</div>'}
+  </div>`;
+}
+function inCart(cat,name){return state.cart.find(x=>x.cat===cat&&x.name===name);}
+function toggleCart(cat,name,price){
+  const i=inCart(cat,name);
+  if(i){state.cart=state.cart.filter(x=>!(x.cat===cat&&x.name===name));}
+  else{state.cart.push({cat,name,price:price==null?0:price,qty:1});}
+  renderAll();
+}
+
+/* ============ 渲染骨架 ============ */
+function renderPersons(){
+  $('persons').innerHTML = PERSONS.map(p=>`
+    <div class="person ${state.port===p.port?'on':''}" style="--pc:${p.pc}" onclick="pickPort('${p.port}')">
+      <span class="dot"></span><div class="role">${p.role}</div><div class="name">${p.name}</div><div class="desc">${p.desc}</div>
+    </div>`).join('');
+}
+function pickPort(k){state.port=k;state.page=DEFAULT_PAGE[k];renderAll();}
+function renderNavbar(){
+  const pages=PORT_PAGES[state.port];
+  $('navbar').innerHTML = '<span class="lab">本端口页面：</span>' + pages.map(p=>`
+    <span class="pchip ${state.page===p.k?'on':''}" style="--pc:${PERSONS.find(x=>x.port===state.port).pc}" onclick="goPage('${p.k}')">${p.t}</span>`).join('');
+}
+function goPage(k){state.page=k;renderAll();}
+function setMode(m){
+  $('mApp').classList.toggle('on',m==='app');
+  $('mFlow').classList.toggle('on',m==='flow');
+  $('phone').classList.toggle('hidden',m==='flow');
+  $('flowWrap').classList.toggle('on',m==='flow');
+}
+function renderTabBar(){
+  const keys=TABBAR[state.port]||[];
+  $('tabbar').innerHTML = keys.map(k=>`
+    <div class="tb ${state.page===k?'on':''}" onclick="goPage('${k}')">
+      <span class="ic">${TAB_LABEL[state.port][k]}</span>
+    </div>`).join('');
+}
+function renderAll(){
+  const p=PERSONS.find(x=>x.port===state.port);
+  $('appPerson').textContent = p.role+' · '+p.name;
+  document.documentElement.style.setProperty('--pc',p.pc);
+  renderPersons();renderNavbar();renderTabBar();
+  $('screen').innerHTML = renderPage() + (state.detailApp?renderDetail():'');
+}
+
+function renderPage(){
+  const f = PAGES[state.port+'/'+state.page] || PAGES['_/'+state.page];
+  return f ? f() : '<div class="empty">页面建设中</div>';
+}
+
+/* —— 采购单详情弹窗（行政/财务共用，财务含成本分摊专用区）—— */
+function openDetail(id){state.detailApp=id;renderAll();}
+function closeDetail(){state.detailApp=null;renderAll();}
+function renderDetail(){
+  const a=appById(state.detailApp); if(!a) return '';
+  const fin=finOf(a), diff=fin-a.amount;
+  const p=a.projectId?projById(a.projectId):null;
+  const itemsHtml=(a.items||[]).map(i=>{const m=itemMeta(i.name);return `<div class="co-item">
+      <div><div class="co-name">${i.name}${m.valu?'<span class="valu-badge">贵重</span>':''}</div>
+      <div class="co-sub">${i.cat}${m.brand?' · '+m.brand:''}${m.spec?' · 规格 '+m.spec:''}</div></div>
+      <div class="co-amt">${fmt(i.price)}×${i.qty}</div>
+    </div>`;}).join('');
+  const finRow = state.port==='finance'
+    ? `<div class="card"><div class="section-title">财务成本分摊</div>
+        <div class="info-row"><span class="k">分摊状态</span><span class="v">${a.finMarked?'<span class="tag-line ok">已确认</span>':(a.finReturned?'<span class="tag-line rej">已退回</span>':'<span class="tag-line wait">待完成</span>')}</span></div>
+        <div class="info-row"><span class="k">入账金额</span><span class="v amount">${fmt(fin)}</span></div>
+        <div class="info-row"><span class="k">扣减项目</span><span class="v">${a.projectName||'—'}</span></div>
+        <div class="info-row"><span class="k">扣减科目</span><span class="v">物理成本</span></div>
+        <div class="btn-row">
+          ${a.finMarked?'<button class="btn pass" disabled>已确认</button>':`<button class="btn pass" onclick="finMark('${a.id}')">确认此笔</button>`}
+          <button class="btn rej" onclick="finReturn('${a.id}')">退回行政补录</button>
+        </div></div>`
+    : '';
+  return `<div class="detail-mask" onclick="closeDetail()"><div class="detail-sheet" onclick="event.stopPropagation()">
+    <div class="detail-head"><div><div class="detail-title">采购单详情</div><div class="detail-id">${a.id}</div></div><div class="detail-close" onclick="closeDetail()">✕</div></div>
+    <div class="detail-body">
+      <div class="card">
+        <div class="info-row"><span class="k">归属项目</span><span class="v">${a.projectName||'未关联'}</span></div>
+        <div class="info-row"><span class="k">团队 · 成员</span><span class="v">${teamOfName(a.applicant)} · ${a.applicant}</span></div>
+        <div class="info-row"><span class="k">采购时间</span><span class="v">${a.timeText||'—'}</span></div>
+        <div class="info-row col"><span class="k">申请理由</span><span class="reason">${a.reason||'—'}</span></div>
+      </div>
+      <div class="card"><div class="section-title">采购明细</div>${itemsHtml}
+        <div class="info-row" style="margin-top:6px"><span class="k">预估总金额</span><span class="v amount">${fmt(a.amount)}</span></div>
+      </div>
+      <div class="card"><div class="section-title">价格对比</div>
+        <div class="info-row"><span class="k">估价参考</span><span class="v">${fmt(a.amount)}</span></div>
+        <div class="info-row"><span class="k">实际成交</span><span class="v">${a.recordedFinal!=null?fmt(a.recordedFinal):'<span class="tag-line wait">待行政录入</span>'}</span></div>
+        <div class="info-row"><span class="k">差额</span><span class="v ${diff>=0?'over':'under'}">${diff>=0?'+':''}${fmt(diff)}（${diff>=0?'超支':'节省'}）</span></div>
+      </div>
+      ${p?`<div class="card"><div class="section-title">项目预算</div>
+        <div class="info-row"><span class="k">物理成本 预算余</span><span class="v">${fmt(p.budgetPhysical-p.usedPhysical)}</span></div>
+      </div>`:''}
+      <div class="card"><div class="section-title">审批记录</div>
+        <div class="timeline">${a.logs.map(l=>`<div class="tl-item ${l.cls||''}"><div class="tl-t">${l.action}</div><div class="tl-d">${l.name}（${l.roleText}）· ${l.timeText}</div></div>`).join('')}</div>
+      </div>
+      ${finRow}
+    </div>
+  </div></div>`;
+}
+
+/* ============ 各端口页面对照表 ============ */
+const PAGES = {};
+
+/* —— 登录（所有端口共用外观）—— */
+PAGES['_/login'] = ()=>`
+  <div class="brand"><div class="logo">采</div><div class="title">项目采购</div><div class="subtitle">采购申请 · 在线审批 · 财务终审</div></div>
+  <div class="card">
+    <div class="form-label">手机号</div>
+    <input class="input" placeholder="请输入本人手机号" value="138****0004" />
+    <div class="lookup ok">员工甲 · 工程乙组 · 施工员</div>
+    <button class="submit" style="margin-top:12px" onclick="toast('演示：手机号一键登录')">手机号一键登录</button>
+    <div class="tip">此页面演示登录界面。使用顶部角色切换即可体验审批、收货和财务核对。</div>
+  </div>`;
+
+/* —— 首页 —— */
+PAGES['employee/home']=PAGES['pm/home']=PAGES['finance/home']=PAGES['admin/home']=PAGES['receipt/home']=()=>{
+  const c=counts();
+  const roleNote = state.port==='teamlead'?'团队负责人待办：本团队采购需求审批'
+    : state.port==='pm'?'部门经理(示例经理)待办：采购审批 / 新建项目立项'
+    : state.port==='receipt'?'收货确认待办：行政审批通过的采购单待签收'
+    : state.port==='finance'?'财务待办：核对行政分摊结果并入账各项目'
+    : state.port==='admin'?'行政待办：行政审批 · 统一处理采购 · 成本分摊':'';
+  return `
+  <div class="header"><div class="greet">你好，${PERSONS.find(x=>x.port===state.port).name}</div><div class="role">${PERSONS.find(x=>x.port===state.port).role}</div></div>
+  <div class="stats">
+    <div class="stat"><div class="num ${c.todo?'':'warn'}">${c.todo}</div><div class="label">待审批</div></div>
+    <div class="stat"><div class="num">${c.minePending}</div><div class="label">我的在途</div></div>
+    <div class="stat"><div class="num warn">${c.mineRejected}</div><div class="label">被驳回</div></div>
+    <div class="stat"><div class="num good">${c.projectCount}</div><div class="label">参与项目</div></div>
+  </div>
+  <div class="card"><div class="btn-row"><button class="btn pass" style="flex:1" onclick="goPage('applyCreate')">发起采购申请</button><button class="btn" style="flex:1" onclick="goPage('newProject')">申请新增项目</button></div></div>
+  ${roleNote?`<div class="card" style="border-left:3px solid var(--blue);background:var(--blue-l);">
+    <div class="section-title" style="color:var(--blue-d);font-size:13px;">待办提醒</div>
+    <div style="font-size:12px;color:var(--txt);margin-top:4px;line-height:1.6;">${roleNote}${c.todo?` · 当前待处理 <b style="color:var(--blue);">${c.todo}</b> 件`:''}</div>
+  </div>`:''}
+  <div class="card">
+    <div class="section-head"><span class="section-title">采购物品清单</span><span class="section-more" onclick="goPage('catalog')">去采购</span></div>
+    <div class="flow-note">常用办公用品已上架，可直接在“采购”页选择后一键结算审批。</div>
+  </div>
+  <div class="card">
+    <div class="section-head"><span class="section-title">我的项目（我负责）</span><span class="section-more" onclick="goPage('project')">查看全部</span></div>
+    ${myProjects().map(p=>`<div class="proj-item" style="margin-bottom:10px;cursor:pointer" onclick="state.selProject='${p.id}';goPage('projectDetail')">
+      <div class="pi-top"><div class="pi-name">${p.name}${p.demo?'<span class="demo-tag">测试</span>':''}</div><div class="tag ${projLevel(p)==='正常'?'APPROVED':projLevel(p)==='预警'?'PENDING_PROJECT':'REJECTED'}">${projLevel(p)}</div></div>
+      <div class="pi-sub">利润 ${p.profit!=null?fmt(p.profit):'待测算'} · 剩余 ${fmt(p.budget-p.used-p.locked)}</div>
+      <div class="prog"><div class="prog-bar" style="width:${projUsage(p)}"></div></div>
+    </div>`).join('')||'<div class="empty">暂无你负责的项目，可先「申请新增项目」立项</div>'}
+  </div>
+  <div class="card">
+    <div class="section-head"><span class="section-title">通知公告</span><span class="section-more" onclick="goPage('notice')">全部</span></div>
+    ${notices.map(n=>`<div style="padding:8px 0;border-bottom:1px solid var(--line)"><div style="font-size:14px;font-weight:700;color:var(--txt)">${n.title}</div><div style="font-size:11px;color:var(--txt-2);margin-top:3px">${n.authorName} · ${n.timeText}</div></div>`).join('')}
+  </div>`;
+};
+function counts(){
+  const me=EMP_NAME;
+  const my=apps.filter(a=>a.applicant===me);
+  return {
+    todo: state.port==='teamlead'?apps.filter(a=>a.status==='PENDING_LEAD').length
+        : state.port==='pm'?apps.filter(a=>a.status==='PENDING_PM').length
+        : state.port==='receipt'?apps.filter(a=>a.status==='PENDING_RECEIPT').length
+        : state.port==='finance'?(apportionTables.filter(t=>t.status==='已分摊'&&!t.finBooked).length)
+        : state.port==='admin'?apps.filter(a=>a.status==='PENDING_ADMIN').length:0,
+    minePending: my.filter(a=>['PENDING_LEAD','PENDING_PM','PENDING_ADMIN','PENDING_RECEIPT'].includes(a.status)).length,
+    mineRejected: my.filter(a=>a.status==='REJECTED'||a.status==='CANCELED').length,
+    projectCount: projects.length,
+  };
+}
+
+/* —— 项目列表（员工看自己负责的；管理端口看全部）—— */
+['employee','pm','finance','admin','receipt'].forEach(port=>{
+  PAGES[port+'/project']=()=>{
+    const list = port==='employee'?myProjects():projects;
+    return `
+    <div class="head-tip">${port==='employee'?'仅显示你负责的项目':''}</div>
+    ${port==='employee'?`<div style="font-size:11px;color:var(--txt-2);margin-bottom:10px;padding:0 4px;">没有找到项目？<span style="color:var(--blue);cursor:pointer;font-weight:600;" onclick="goPage('newProject')">申请新增项目 →</span></div>`:''}
+    <div class="search-bar"><div class="search-input"><input placeholder="搜索项目名称 / 编号" /><span class="search-btn" onclick="toast('演示：搜索')">搜索</span></div></div>
+    <div class="filter-row">
+      <span class="chip active">全部</span><span class="chip">预算充足</span><span class="chip">预算不足</span>
+    </div>
+    ${list.map(p=>`<div class="card proj" style="cursor:pointer" onclick="state.selProject='${p.id}';goPage('projectDetail')">
+      <div class="proj-head"><div class="proj-name">${p.name}${p.demo?'<span class="demo-tag">测试</span>':''}</div><div class="proj-code">${p.code}</div></div>
+      <div class="proj-meta">负责人:${ownerText(p)} · 利润 ${p.profit!=null?fmt(p.profit):'待测算'}</div>
+      <div class="prog"><div class="prog-bar level-${projLevel(p)}" style="width:${projUsage(p)}"></div></div>
+      <div class="proj-foot"><span>剩余 ${fmt(p.budget-p.used-p.locked)}</span><span class="level level-${projLevel(p)}">${projLevel(p)} ${projUsage(p)}</span></div>
+    </div>`).join('')||'<div class="empty">暂无你负责的项目，可先「申请新增项目」立项</div>'}`;
+  };
+});
+
+/* —— 项目详情 —— */
+['employee','pm','finance','admin','receipt'].forEach(port=>{
+  PAGES[port+'/projectDetail']=()=>{
+    const p=projById(state.selProject)||projects[0];
+    const recs=apps.filter(a=>a.projectId===p.id&&!a.fromNew);
+    return `
+    <div class="card">
+      <div class="pi-name" style="font-size:16px">${p.name}${p.demo?'<span class="demo-tag">测试</span>':''}</div>
+      <div class="i-meta">${p.code} · 经理:${p.manager} · 利润 ${p.profit!=null?fmt(p.profit):'待测算'}${p.profitSource==='estimated'?'<span class="src-tag src-est">暂估</span>':p.profitSource==='settled'?'<span class="src-tag src-set">结算</span>':''}</div>
+    </div>
+    <div class="card">
+      <div class="section-title">预算使用情况</div>
+      <div style="display:flex;gap:4px;text-align:center;margin:8px 0">
+        <div style="flex:1"><div style="font-size:16px;font-weight:800">${fmt(p.budget)}</div><div style="font-size:11px;color:var(--txt-2)">预算总额</div></div>
+        <div style="flex:1"><div style="font-size:16px;font-weight:800;color:var(--amber)">${fmt(p.used)}</div><div style="font-size:11px;color:var(--txt-2)">已用</div></div>
+        <div style="flex:1"><div style="font-size:16px;font-weight:800;color:var(--purple)">${fmt(p.locked)}</div><div style="font-size:11px;color:var(--txt-2)">冻结</div></div>
+        <div style="flex:1"><div style="font-size:16px;font-weight:800;color:var(--green)">${fmt(p.budget-p.used-p.locked)}</div><div style="font-size:11px;color:var(--txt-2)">剩余</div></div>
+      </div>
+      <div class="prog"><div class="prog-bar" style="width:${projUsage(p)}"></div></div>
+      <div class="i-meta" style="margin-top:6px">使用率 ${projUsage(p)}</div>
+      <div class="hint" style="margin-top:6px">说明：项目预算即物理成本（采购不涉及人力成本）</div>
+    </div>
+    ${(()=>{const finRecs=recs.filter(a=>a.finAccounted);if(!finRecs.length)return '';const totalDeduct=finRecs.reduce((s,a)=>s+finOf(a),0);const totalEst=finRecs.reduce((s,a)=>s+a.amount,0);const diff=totalDeduct-totalEst;return `<div class="fin-sync-card">
+      <div class="fs-title">✓ 财务成本分摊已同步扣减</div>
+      <div class="fs-row"><span class="k">分摊笔数</span><span class="v">${finRecs.length}笔</span></div>
+      <div class="fs-row"><span class="k">估价合计</span><span class="v">${fmt(totalEst)}</span></div>
+      <div class="fs-row"><span class="k">实价扣减</span><span class="v">${fmt(totalDeduct)}</span></div>
+      <div class="fs-row"><span class="k">差额</span><span class="v" style="color:${diff>=0?'var(--red)':'var(--green)'}">${diff>=0?'+':''}${fmt(diff)}</span></div>
+      <div class="fs-row"><span class="k">扣减后剩余预算</span><span class="v">${fmt(p.budgetPhysical-p.usedPhysical)}</span></div>
+    </div>`;})()}
+    <div class="card">
+      <div class="section-head"><span class="section-title">采购记录</span><span class="section-more" onclick="goPage('applyCreate')">发起采购</span></div>
+      ${recs.length?recs.map(a=>`<div style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line)">
+        <div><div style="font-size:14px;font-weight:700;color:var(--txt)">${appTitle(a)}</div><div style="font-size:11px;color:var(--txt-2)">${a.logs[0].timeText} · ${a.applicant}</div></div>
+        <div style="text-align:right"><div style="font-size:14px;font-weight:700">${fmt(a.amount)}</div><div class="tag ${a.status}">${STATUS_TEXT[a.status]}</div></div>
+      </div>`).join(''):'<div class="empty">暂无采购记录</div>'}
+    </div>`;
+  };
+});
+
+/* —— 采购清单（catalog）—— */
+PAGES['_/catalog']=()=>{
+  const cats = state.catFilter ? CATALOG.filter(c=>c.cat===state.catFilter) : CATALOG;
+  const onlyValu = state.catFilter==='__valu__';
+  const chips = ['全部',...CATALOG.map(c=>c.cat),'贵重品'].map(c=>{
+    const v = c==='全部'?'':(c==='贵重品'?'__valu__':c);
+    return `<span class="chip ${state.catFilter===v?'active':''}" onclick="state.catFilter='${v}';renderAll()">${c}</span>`;
+  }).join('');
+  const sections = cats.map(c=>`<div class="catsec">
+      <div class="catt">${c.cat}（${c.items.length}）</div>
+      ${c.items.map(it=>{const inc=inCart(c.cat,it.name);const m=itemMeta(it.name);const showValu = !onlyValu || m.valu;
+        if(onlyValu && !m.valu) return '';
+        return `
+        <div class="citem ${m.valu?'valu':''}">
+          <div class="ci-main">
+            <div class="ci-name">${it.name}${m.valu?`<span class="valu-badge">贵重</span>`:''}</div>
+            <div class="ci-price">单价 ${it.price!=null?fmt(it.price):'面议'}${inc?` · 已选 ${inc.qty}`:''}</div>
+            ${m.spec||m.brand?`<div class="ci-spec">${[m.brand,m.spec,m.model].filter(Boolean).join(' · ')}</div>`:''}
+          </div>
+          <div class="ci-add ${inc?'on':''}" onclick="toggleCart('${c.cat}','${it.name.replace(/'/g,"\\'")}',${it.price==null?'null':it.price})">${'+'}</div>
+        </div>`;}).join('')}
+    </div>`).join('');
+  return `
+    <div class="head-tip">采购物品清单 · 共 ${CATALOG.reduce((s,c)=>s+c.items.length,0)} 项</div>
+    <div class="search-bar"><div class="search-input"><input placeholder="搜索物品名称" /><span class="search-btn" onclick="toast('演示：搜索物品')">搜索</span></div></div>
+    <div class="filter-row">${chips}</div>
+    ${sections}
+    ${state.cart.length?`<div class="cart-fab" onclick="goPage('checkout')">购物车 <span class="badge">${state.cart.length}</span></div>`
+      :`<div class="cart-fab" onclick="toast('请先选择至少一个物品')">购物车 <span class="badge">0</span></div>`}`;
+};
+
+/* —— 购物车结算（checkout）—— */
+PAGES['employee/checkout']=PAGES['_/checkout']=()=>{
+  if(!state.cart.length){return `<div class="empty">购物车为空，请先到“采购”页选择物品</div><div class="card"><button class="submit" onclick="goPage('catalog')">去采购清单</button></div>`;}
+  const d=state.draft;
+  const amount=state.cart.reduce((s,i)=>s+i.price*(i.qty||1),0);
+  const showBudget=d.projectMode==='existing'&&d.projectId&&d.apportionMode!=='cross'?projById(d.projectId):null;
+  const projOpts=myProjects().map(p=>{const dis=projExhausted(p)?'disabled style="color:#888"':'';return `<option value="${p.id}" ${d.projectId===p.id?'selected':''} ${dis}>${p.name}${projExhausted(p)?'（预算已用尽·不可选）':'（预算余 '+fmt(p.budget-p.used-p.locked)+' · 负责人 '+ownerText(p)+'）'}</option>`;}).join('');
+  return `
+    <div class="head-tip">购物车结算 · 项目列表里没有？请先「申请新增项目」立项</div>
+    <div class="card">
+      <div class="section-title">已选物品（${state.cart.length}）</div>
+      ${state.cart.map(i=>`<div class="co-item">
+        <div><div class="co-name">${i.name}${itemMeta(i.name).valu?'<span class="valu-badge">贵重</span>':''}</div><div class="co-sub">${i.cat} · 单价 ${fmt(i.price)}（估价参考） · 数量 ${i.qty}${itemMeta(i.name).spec?' · '+[itemMeta(i.name).brand,itemMeta(i.name).spec].filter(Boolean).join('·'):''}</div></div>
+        <div class="co-amt">${fmt(i.price*i.qty)}</div>
+      </div>`).join('')}
+      <div style="text-align:right;font-weight:800;margin-top:8px">合计：${fmt(amount)}</div>
+    </div>
+    <div class="card">
+      <div class="fi"><div class="form-label">归属项目 *</div>
+        <div class="chips"><div class="chip active" onclick="state.draft.projectMode='existing';state.draft.apportionMode='single';state.draft.projectId='';renderAll()">已有项目</div></div>
+      </div>
+      ${(d.projectMode||'existing')==='existing'?`
+        <div class="fi"><div class="form-label">分摊方式</div>
+          <div class="chips"><div class="chip ${d.apportionMode!=='cross'?'active':''}" onclick="state.draft.apportionMode='single';renderAll()">单项目全额</div><div class="chip ${d.apportionMode==='cross'?'active':''}" onclick="state.draft.apportionMode='cross';renderAll()">跨项目分摊</div></div>
+        </div>
+        ${d.apportionMode!=='cross'
+          ? `<div class="fi"><select class="input" onchange="state.draft.projectId=this.value;renderAll()"><option value="">请选择项目</option>${projOpts}</select></div>
+             ${showBudget?`<div class="budget-mini"><span>预算余额</span><b>${fmt(showBudget.budget-showBudget.used-showBudget.locked)}</b></div>`:''}`
+          : `<div class="hint">跨项目分摊：勾选多个项目，按金额拆分，合计须等于采购总额</div>${crossApportionEditor(amount)}`
+        }`:''}
+      <div class="fi"><div class="form-label">申请理由</div><textarea class="input" placeholder="采购用途与必要性" oninput="state.draft.reason=this.value">${d.reason}</textarea></div>
+      <button class="submit" onclick="checkoutSubmit()">提交结算审批</button>
+    </div>`;
+};
+function checkoutSubmit(){
+  const d=state.draft;
+  if(!d.projectMode) d.projectMode='existing';
+  if(d.projectMode==='existing'&&d.apportionMode==='cross'){
+    if(!d.crossIds||d.crossIds.length<2){toast('跨项目分摊至少选择 2 个项目');return;}
+    const cartAmt=state.cart.reduce((s,i)=>s+i.price*(i.qty||1),0);
+    if(Math.abs(crossSum()-cartAmt)>0.01){toast('跨项目分摊合计需等于采购总额');return;}
+  }
+  if(d.projectMode==='existing'&&d.apportionMode!=='cross'&&!d.projectId){toast('请选择已有项目');return;}
+  createApp({projectMode:d.projectMode,projectId:d.projectId,
+    items:state.cart.map(i=>({...i})),reason:d.reason});
+  state.cart=[];
+  toast('已提交，送团队负责人审批');
+  state.draft={projectMode:'',projectId:'',newCode:'',newName:'',newProfit:'',cat:'',itemSelect:'',itemCustom:'',priceCustom:'',qty:'',reason:'',apportionMode:'single',crossIds:[],crossMap:{},crossTotal:0};
+  state.page='apply';renderAll();
+}
+
+/* —— 申请列表 —— */
+['employee','pm','finance','receipt'].forEach(port=>{
+  PAGES[port+'/apply']=()=>{
+    let list=apps.slice();
+    if(port==='employee') list=list.filter(a=>a.applicant==='（员工）');
+    const tabs=[{n:'全部',k:''},{n:'审批中',k:'P'},{n:'待收货',k:'PENDING_RECEIPT'},{n:'已通过',k:'APPROVED'},{n:'已驳回',k:'REJECTED'},{n:'已撤销',k:'CANCELED'}];
+    return `
+    <div class="tabs">${tabs.map((t,i)=>`<span class="tab ${i===0?'active':''}">${t.n}</span>`).join('')}</div>
+    <div class="proj-filter"><div class="proj-scroll"><span class="pf-chip active">全部项目</span>${projects.map(p=>`<span class="pf-chip">${p.name}</span>`).join('')}</div></div>
+    ${list.length?list.map(a=>`<div class="card item" style="cursor:pointer" onclick="state.selApp='${a.id}';goPage('applyDetail')">
+      <div class="row1"><div class="name">${appTitle(a)}</div><div class="tag ${a.status}">${STATUS_TEXT[a.status]}</div></div>
+      <div class="row2">${a.fromNew?('新建项目 '+a.newCode):(a.projectName||'未关联项目')}</div>
+      <div class="row3">${a.fromNew?(a.reason||'立项申请'):`${a.categoryName} · ${a.items?a.items.length+' 件':a.qty+' 件'} · ${fmt(a.amount)}`}</div>
+      <div class="row4"><span>${a.id} · ${a.applicant}</span><span>${a.logs[0].timeText}</span></div>
+      ${port==='employee'&&a.status==='APPROVED'&&a.fromNew&&a.projectId?`<div style="margin-top:8px;" onclick="event.stopPropagation()"><button class="btn-ghost sm pass" style="border-radius:50px;padding:6px 14px;font-size:12px;" onclick="continuePurchase('${a.projectId}')">为该项目发起采购 →</button></div>`:''}
+    </div>`).join(''):'<div class="empty">暂无采购单</div>'}
+    <div class="cart-fab" style="bottom:62px" onclick="goPage('catalog')">采购 <span class="badge">清单</span></div>`;
+  };
+});
+
+/* —— 发起申请（员工）：大类-具体物品级联 —— */
+PAGES['employee/newProject']=PAGES['receipt/newProject']=()=>{
+  const d=state.draft;
+  return `
+    <div class="head-tip">项目立项申请 · 经团队负责人→示例经理(终审)审批，通过后即可发起采购</div>
+    <div class="card">
+      <div class="fi"><div class="form-label">新增项目编号 *</div><input class="input" placeholder="如：GC-2026-004" value="${d.newCode}" oninput="state.draft.newCode=this.value"></div>
+      <div class="fi"><div class="form-label">新建项目名称 *</div><input class="input" placeholder="如：示例停车项目" value="${d.newName}" oninput="state.draft.newName=this.value"></div>
+      <div class="fi"><div class="form-label">立项用途说明</div><textarea class="input" placeholder="说明该项目背景/用途（便于审批）" oninput="state.draft.reason=this.value">${d.reason}</textarea></div>
+      <button class="submit" onclick="newProjectSubmit()">提交立项申请</button>
+      <div class="hint">提交后经团队负责人、部门经理(示例经理)终审，审批通过后即可为该项目发起采购申请。</div>
+    </div>`;
+};
+PAGES['employee/applyCreate']=PAGES['receipt/applyCreate']=()=>{
+  const d=state.draft;
+  const catOpts=CATALOG.map(c=>`<option value="${c.cat}" ${d.cat===c.cat?'selected':''}>${c.cat}</option>`).join('');
+  const isOther = d.cat==='其他（自定义）';
+  const itemOpts = d.cat && !isOther ? catItems(d.cat).map(it=>{const m=itemMeta(it.name);const spec=m.spec?`（${[m.brand,m.spec].filter(Boolean).join('·')} ${it.price!=null?fmt(it.price):'面议'}）`:`（${it.price!=null?fmt(it.price):'面议'}）`;return `<option value="${it.name}" ${d.itemSelect===it.name?'selected':''}>${it.name}${m.valu?'【贵重】':''}${spec}</option>`;}).join('') : '';
+  const selPrice = d.cat && !isOther && d.itemSelect && d.itemSelect!=='__custom__' ? (catItems(d.cat).find(it=>it.name===d.itemSelect)||{}).price : null;
+  const amount=(Number(d.qty)||0)*(Number(isOther||d.itemSelect==='__custom__'?d.priceCustom:selPrice)||0);
+  const showBudget=d.projectMode==='existing'&&d.projectId&&d.apportionMode!=='cross'?projById(d.projectId):null;
+  const projOpts=myProjects().map(p=>{const dis=projExhausted(p)?'disabled style="color:#888"':'';return `<option value="${p.id}" ${d.projectId===p.id?'selected':''} ${dis}>${p.name}${projExhausted(p)?'（预算已用尽·不可选）':'（预算余 '+fmt(p.budget-p.used-p.locked)+' · 负责人 '+ownerText(p)+'）'}</option>`;}).join('');
+  const crossRows = d.projectMode==='existing'&&d.apportionMode==='cross' ? crossApportionEditor(amount) : '';
+  const preSelectedProj = d.projectId ? projById(d.projectId) : null;
+  return `
+    <div class="head-tip">发起采购 · 仅可选择你负责的项目。新建项目请先到「项目」页申请立项</div>
+    ${preSelectedProj?`<div class="card" style="border:2px solid var(--blue);background:var(--blue-l);margin-bottom:10px;">
+      <div style="font-size:13px;font-weight:700;color:var(--blue-d);">✓ 已预选立项项目：${preSelectedProj.name}（${preSelectedProj.code}）</div>
+      <div style="font-size:11px;color:var(--txt-2);margin-top:3px;">预算余额 ${fmt(preSelectedProj.budgetPhysical-preSelectedProj.usedPhysical-preSelectedProj.locked)} · 继续填写采购物品并提交</div>
+    </div>`:''}
+    <div class="card">
+      <div class="fi"><div class="form-label">归属项目 *</div>
+        <div class="chips"><div class="chip active" onclick="state.draft.projectMode='existing';state.draft.apportionMode='single';state.draft.projectId='';renderAll()">已有项目</div></div>
+      </div>
+      ${(d.projectMode||'existing')==='existing'?`
+        <div class="fi"><div class="form-label">分摊方式</div>
+          <div class="chips"><div class="chip ${d.apportionMode!=='cross'?'active':''}" onclick="state.draft.apportionMode='single';renderAll()">单项目全额</div><div class="chip ${d.apportionMode==='cross'?'active':''}" onclick="state.draft.apportionMode='cross';renderAll()">跨项目分摊</div></div>
+        </div>
+        ${d.apportionMode!=='cross'
+          ? `<div class="fi"><select class="input" onchange="state.draft.projectId=this.value;renderAll()"><option value="">请选择项目</option>${projOpts}</select></div>
+             ${showBudget?`<div class="budget-mini"><span>预算余额</span><b>${fmt(showBudget.budget-showBudget.used-showBudget.locked)}</b></div>`:''}`
+          : `<div class="hint">跨项目分摊：勾选多个项目，按比例或按金额拆分，合计须等于采购总额</div>${crossRows}`
+        }`:''}
+    </div>
+    <div class="card">
+      <div class="fi"><div class="form-label">物品大类 *</div>
+        <select class="input" onchange="state.draft.cat=this.value;state.draft.itemSelect='';renderAll()"><option value="">请选择大类</option>${catOpts}<option value="其他（自定义）" ${isOther?'selected':''}>其他（自定义）</option></select>
+      </div>
+      ${d.cat?`
+        ${!isOther?`<div class="fi"><div class="form-label">具体物品 *</div>
+          <select class="input" onchange="state.draft.itemSelect=this.value;renderAll()"><option value="">请选择具体物品</option>${itemOpts}<option value="__custom__" ${d.itemSelect==='__custom__'?'selected':''}>列表中没有？自行添加</option></select></div>`:''}
+        ${(isOther||d.itemSelect==='__custom__')?`<div class="fi"><div class="form-label">物品名称 *</div><input class="input" placeholder="输入物品名称" value="${d.itemCustom}" oninput="state.draft.itemCustom=this.value"></div>
+          <div class="fi"><div class="form-label">单价(元) *</div><input class="input" type="number" placeholder="0.00" value="${d.priceCustom}" oninput="state.draft.priceCustom=this.value;renderAll()"></div>`:''}
+      `:''}
+      <div class="fi" style="display:flex;gap:10px"><div style="flex:1"><div class="form-label">数量</div><input class="input" type="number" placeholder="0" value="${d.qty}" oninput="state.draft.qty=this.value;renderAll()"></div></div>
+      <div class="amount">预估总金额：<b>${fmt(amount)}</b>${amount>1000?'<span class="over">超1000元需凭证</span>':''}</div>
+      <div class="fi"><div class="form-label">申请理由</div><textarea class="input" placeholder="采购用途与必要性" oninput="state.draft.reason=this.value">${d.reason}</textarea></div>
+      <button class="submit" onclick="applyCreateSubmit()">提交申请</button>
+    </div>`;
+};
+function applyCreateSubmit(){
+  const d=state.draft;
+  if(!d.projectMode) d.projectMode='existing';
+  if(d.projectMode==='existing'&&d.apportionMode==='cross'){
+    if(!d.crossIds||d.crossIds.length<2){toast('跨项目分摊至少选择 2 个项目');return;}
+    const isOther = d.cat==='其他（自定义）';
+    const selPrice = d.cat && !isOther && d.itemSelect && d.itemSelect!=='__custom__' ? (catItems(d.cat).find(it=>it.name===d.itemSelect)||{}).price : null;
+    const amount=(Number(d.qty)||0)*(Number(isOther||d.itemSelect==='__custom__'?d.priceCustom:selPrice)||0);
+    if(Math.abs(crossSum()-amount)>0.01){toast('跨项目分摊合计需等于采购总额');return;}
+  }
+  if(d.projectMode==='existing'&&d.apportionMode!=='cross'&&!d.projectId){toast('请选择已有项目');return;}
+  if(!d.cat){toast('请选择物品大类');return;}
+  let cat=d.cat, name, price;
+  if(d.cat==='其他（自定义）'){ name=d.itemCustom; price=Number(d.priceCustom); }
+  else if(d.itemSelect==='__custom__'){ name=d.itemCustom; price=Number(d.priceCustom); }
+  else { name=d.itemSelect; const it=catItems(d.cat).find(i=>i.name===d.itemSelect); price=it?it.price:0; }
+  if(!name||!d.qty||!(Number(d.qty)>0)){toast('请填写物品与数量');return;}
+  const items=[{cat,name,price:price==null?0:price,qty:Number(d.qty)}];
+  createApp({projectMode:d.projectMode,projectId:d.projectId,items,reason:d.reason});
+  toast('已提交，送团队负责人审批');
+  state.draft={projectMode:'',projectId:'',newCode:'',newName:'',newProfit:'',cat:'',itemSelect:'',itemCustom:'',priceCustom:'',qty:'',reason:'',apportionMode:'single',crossIds:[],crossMap:{},crossTotal:0};
+  state.page='apply';renderAll();
+}
+
+/* —— 通用：生成申请单并按项目类型路由 —— */
+function createApp(o){
+  const d=state.draft;
+  const amount=o.items.reduce((s,i)=>s+(i.price||0)*(i.qty||1),0);
+  const catName=o.items[0]?o.items[0].cat:'未分类';
+  const base={id:nid(),applicant:EMP_NAME,items:o.items.map(i=>({cat:i.cat,name:i.name,price:i.price||0,qty:i.qty||1})),
+    amount,categoryName:catName,reason:o.reason||'',apportionText:'',status:'',profitSource:null};
+  // 采购前置审批统一入口：团队负责人 → 部门经理(示例经理) → 行政(示例行政)
+  if(d.apportionMode==='cross' && d.crossIds && d.crossIds.length){
+    base.type='existing';base.projectName='跨项目分摊（'+d.crossIds.length+'项）';
+    base.apportion=d.crossIds.map(id=>{const m=d.crossMap[id]||{amount:0};const p=projById(id);return {projectId:id,projectName:p?p.name:id,amount:m.amount||0,ratio:amount>0?Math.round((m.amount||0)/amount*1000)/10:0};});
+    base.apportionText='跨项目分摊 · '+base.apportion.map(x=>x.projectName+' '+fmt(x.amount)).join(' / ');
+    base.status='PENDING_LEAD';
+    base.logs=[{action:'员工 提交采购申请（跨项目分摊）',name:'员工',roleText:'员工',timeText:'08-19 11:00'},
+               {action:'系统路由：跨项目分摊→送团队负责人审批',name:'系统',roleText:'系统',timeText:'08-19 11:00'}];
+  }else if(o.projectMode==='existing'){
+    const p=projById(o.projectId);
+    base.type='existing';base.projectId=p.id;base.projectName=p.name;base.profitSource=p.profitSource||null;base.status='PENDING_LEAD';
+    base.logs=[{action:'员工 提交采购申请（已有项目）',name:'员工',roleText:'员工',timeText:'08-19 11:00'},
+               {action:'系统路由：已有项目→送团队负责人审批',name:'系统',roleText:'系统',timeText:'08-19 11:00'}];
+  }
+  apps.unshift(base);
+}
+/* —— 独立的新建项目申请（与采购申请分开：只建项目，不买物品）—— */
+function createNewProjectApp(){
+  const d=state.draft;
+  if(!d.newCode){toast('请填写新增项目编号');return;}
+  if(!d.newName){toast('请填写新建项目名称');return;}
+  if(projects.some(p=>p.code===d.newCode)){toast('项目编号已存在，请更换');return;}
+  const base={id:nid(),applicant:EMP_NAME,type:'new',fromNew:true,newCode:d.newCode,projectName:d.newName,
+    items:[],amount:0,categoryName:'新建项目申请',reason:d.reason||'申请新增项目',apportionText:'',
+    profit:null,pmBudget:null,status:'PENDING_LEAD',
+    logs:[{action:'员工 提交新建项目申请（编号 '+d.newCode+'）',name:EMP_NAME,roleText:'员工',timeText:'08-19 11:00'},
+          {action:'系统路由：新建项目申请→送团队负责人审批',name:'系统',roleText:'系统',timeText:'08-19 11:00'}]};
+  apps.unshift(base);
+}
+function newProjectSubmit(){
+  const d=state.draft;
+  if(!d.newCode){toast('请填写新增项目编号');return;}
+  if(!d.newName){toast('请填写新建项目名称');return;}
+  createNewProjectApp();
+  state.draft={projectMode:'',projectId:'',newCode:'',newName:'',newProfit:'',cat:'',itemSelect:'',itemCustom:'',priceCustom:'',qty:'',reason:'',apportionMode:'single',crossIds:[],crossMap:{},crossTotal:0};
+  toast('已提交，送团队负责人审批');
+  state.page='apply';renderAll();
+}
+
+/* —— 申请详情（含审批动作）—— */
+  ['employee','teamlead','pm','finance','admin','receipt'].forEach(port=>{
+    PAGES[port+'/applyDetail']=()=>{
+      const a=appById(state.selApp)||apps[0];
+      const canLead = port==='teamlead'&&a.status==='PENDING_LEAD';
+      const canPM = port==='pm'&&a.status==='PENDING_PM';
+      const canAdmin = port==='admin'&&a.status==='PENDING_ADMIN';
+      const canReceipt = port==='receipt'&&a.status==='PENDING_RECEIPT';
+      const canFin = false;
+      const canCancel = port==='employee'&&['PENDING_LEAD','PENDING_PM','PENDING_ADMIN','PENDING_RECEIPT'].includes(a.status);
+      const canAdminFinal = port==='admin'&&a.status==='APPROVED'&&!a.fromNew;
+      const acts=[];
+      if(canLead){acts.push(['leadPass','通过(转部门经理)','pass']);acts.push(['leadRej','驳回','rej']);}
+      if(canReceipt){acts.push(['receiptConfirm','确认收货','pass']);acts.push(['receiptRej','退回','rej']);}
+      if(canPM){
+        if(a.type==='new'||a.fromNew){acts.push(['pmPass','立项通过','pass']);}
+        else{acts.push(['pmPass','通过','pass']);}
+        acts.push(['pmRej','驳回','rej']);
+      }
+      if(canAdmin){acts.push(['adminApprove','通过','pass']);acts.push(['adminRej','驳回','rej']);}
+      if(canCancel){acts.push(['cancelApp','撤销申请','cancel']);}
+    return `
+    <div class="card head" style="display:flex;justify-content:space-between;align-items:center">
+      <div><div style="font-size:16px;font-weight:800">${appTitle(a)}</div><div style="font-size:11px;color:var(--txt-2);margin-top:3px">${a.id}</div></div>
+      <div class="tag ${a.status}">${STATUS_TEXT[a.status]}</div>
+    </div>
+    <div class="card">
+      <div class="info-row"><span class="k">归属项目</span><span class="v">${a.fromNew?('新建项目申请：'+a.newCode+' '+a.projectName):(a.projectName||'未关联项目')}</span></div>
+      ${a.fromNew
+        ? `<div class="info-row"><span class="k">成本分摊</span><span class="v">—（立项申请，无采购物品）</span></div>`
+        : `${a.apportion&&a.apportion.length?`
+        <div class="info-row col"><span class="k">成本分摊</span><span class="v">跨项目分摊（${a.apportion.length} 项）</span></div>
+        ${a.apportion.map(x=>`<div class="info-row"><span class="k">· ${x.projectName}</span><span class="v">${fmt(x.amount)}（${x.ratio}%）</span></div>`).join('')}
+      `:`<div class="info-row"><span class="k">成本分摊</span><span class="v">单项目全额</span></div>`}`}
+      ${['pm','admin'].includes(port)&&a.fromNew?`<div class="info-row"><span class="k">项目预算</span><span class="v">${a.budget!=null?fmt(a.budget):'待立项填写'}</span></div>`:''}
+      ${a.fromNew?'':`<div class="info-row"><span class="k">物品分类</span><span class="v">${a.categoryName}</span></div>
+      ${(a.items||[]).map(i=>`<div class="info-row"><span class="k">${i.cat} / ${i.name}</span><span class="v">${i.qty}件 · ${fmt(i.price*i.qty)}</span></div>`).join('')}
+      <div class="info-row"><span class="k">预估总金额</span><span class="v amount">${fmt(a.amount)}</span></div>`}
+      <div class="info-row"><span class="k">申请人</span><span class="v">${a.applicant}</span></div>
+      <div class="info-row col"><span class="k">申请理由</span><span class="reason">${a.reason||'—'}</span></div>
+    </div>
+    <div class="card">
+      <div class="section-title">审批记录</div>
+      <div class="timeline">${a.logs.map(l=>`<div class="tl-item ${l.cls||''}"><div class="tl-t">${l.action}</div><div class="tl-d">${l.name}（${l.roleText}）· ${l.timeText}</div></div>`).join('')}</div>
+    </div>
+    ${acts.length?`<div class="card">
+      <div class="form-label">审批意见（驳回时必填）</div>
+      <textarea class="input" id="cmt" placeholder="请输入意见" style="height:54px"></textarea>
+      <div class="btn-row">${acts.map(ac=>`<button class="btn ${ac[2]}" onclick="doAct('${a.id}','${ac[0]}')">${ac[1]}</button>`).join('')}</div>
+    </div>`:''}
+    ${canAdminFinal?`<div class="card">
+      <div class="form-label">录入实际采购价（行政反填实价）*</div>
+      <input class="input" id="fin_${a.id}" type="number" value="${a.recordedFinal!=null?a.recordedFinal:a.amount}" oninput="setFinal('${a.id}',this.value)">
+      <div class="i-meta">估价参考：${fmt(a.amount)} · 差额预览：${(a.finalAmount!=null?a.finalAmount:a.amount)-a.amount>=0?'+':''}${fmt((a.finalAmount!=null?a.finalAmount:a.amount)-a.amount)}</div>
+      <div class="btn-row"><button class="btn pass" onclick="recordFinal('${a.id}')">录入实价并扣减项目成本</button></div>
+    </div>`:''}
+    ${port==='employee'&&a.status==='APPROVED'&&a.fromNew&&a.projectId?(()=>{
+      const np=projById(a.projectId);
+      return `<div class="card" style="border:2px solid var(--blue);background:var(--blue-l);">
+        <div class="section-title" style="color:var(--blue-d);">✓ 立项完成 · 可继续采购</div>
+        ${np?`<div class="info-row"><span class="k">项目编号</span><span class="v">${np.code}</span></div>
+        <div class="info-row"><span class="k">项目名称</span><span class="v">${np.name}</span></div>
+        <div class="info-row"><span class="k">物理预算</span><span class="v amount">${fmt(np.budgetPhysical)}</span></div>
+        <div class="info-row"><span class="k">预算余额</span><span class="v" style="color:var(--green);">${fmt(np.budgetPhysical-np.usedPhysical-np.locked)}</span></div>`:''}
+        <div class="hint ok" style="margin-top:8px;">项目已立项成功，点击下方按钮可直接为该项目的采购申请选择物品并提交。</div>
+        <button class="submit" style="margin-top:10px;" onclick="continuePurchase('${a.projectId}')">为该项目发起采购 →</button>
+      </div>`;
+    })():''}
+    `;
+  };
+});
+function continuePurchase(projectId){
+  state.draft.projectId=projectId;
+  state.draft.projectMode='existing';
+  state.draft.apportionMode='single';
+  goPage('applyCreate');
+}
+function doAct(id,act){
+  const a=appById(id);
+  if(act==='leadPass')leadPass(id);
+  else if(act==='leadRej'){const c=$('cmt')?$('cmt').value:'';leadRej(id,c);}
+  else if(act==='pmPass')pmPass(id);
+  else if(act==='pmRej'){const c=$('cmt')?$('cmt').value:'';pmRej(id,c);}
+  else if(act==='adminApprove')adminApprove(id);
+  else if(act==='adminRej'){const c=$('cmt')?$('cmt').value:'';adminRej(id,c);}
+  else if(act==='receiptConfirm')receiptConfirm(id);
+  else if(act==='receiptRej'){const c=$('cmt')?$('cmt').value:'';receiptRej(id,c);}
+  else if(act==='cancelApp'){a.status='CANCELED';a.logs.push({action:'员工 撤销申请',name:'员工',roleText:'员工',timeText:'08-19 11:30'});toast('已撤销');}
+  renderAll();
+}
+function leadPass(id){const a=appById(id);a.status='PENDING_PM';const lead=TEAMS.find(t=>t.id===EMP_TEAM);a.logs.push({action:'团队负责人 审批通过',name:lead?lead.lead:'（团队负责人）',roleText:'团队负责人',timeText:'08-19 11:10',cls:'pass'});a.logs.push({action:'系统路由：→送部门经理(示例经理)审批',name:'系统',roleText:'系统',timeText:'08-19 11:10'});toast('已转部门经理(示例经理)审批');}
+function leadRej(id,c){const a=appById(id);a.status='REJECTED';a.logs.push({action:'团队负责人 驳回'+(c?('：'+c):''),name:'（团队负责人）',roleText:'团队负责人',timeText:'08-19 11:10',cls:'rej'});toast('已驳回');}
+function pmPass(id){
+  const a=appById(id);
+  if(a.type==='new'||a.fromNew){
+    if(!(a.pmBudget>0)){toast('请先填写项目预算');return;}
+    const np={id:'P'+(projects.length+1),name:a.projectName,code:a.newCode||('GC-2026-00'+(projects.length+1)),manager:'（待指派）',team:EMP_TEAM,owners:[a.applicant],profit:null,budget:a.pmBudget,budgetPhysical:a.pmBudget,used:0,usedPhysical:0,locked:0,demo:false,profitSource:null};
+    projects.push(np);a.projectId=np.id;a.budget=np.budget;
+    a.logs.push({action:'示例经理 立项通过：项目编号 '+np.code+'，预算 '+fmt(a.pmBudget)+'（物理成本）',name:'示例经理',roleText:'部门经理',timeText:'08-19 11:20',cls:'pass'});
+    a.logs.push({action:'立项审批完成（项目负责人终审）· 员工可继续发起该项目采购申请',name:'系统',roleText:'系统',timeText:'08-19 11:20'});
+    a.type='existing';a.fromNew=true;
+    a.status='APPROVED';
+    a.purchaseReady=true;
+    toast('立项通过，流程结束 · 员工可继续发起采购申请');
+  }else{
+    a.logs.push({action:'示例经理 部门经理审批通过',name:'示例经理',roleText:'部门经理',timeText:'08-19 11:20',cls:'pass'});
+    a.logs.push({action:'系统路由：→送行政(示例行政)行政审批',name:'系统',roleText:'系统',timeText:'08-19 11:20'});
+    a.status='PENDING_ADMIN';
+    toast('已转行政审批(示例行政)');
+  }
+}
+function pmRej(id,c){const a=appById(id);a.status='REJECTED';a.logs.push({action:'示例经理 部门经理驳回'+(c?('：'+c):''),name:'示例经理',roleText:'部门经理',timeText:'08-19 11:20',cls:'rej'});toast('已驳回');}
+function adminApprove(id){const a=appById(id);a.status='PENDING_RECEIPT';a.logs.push({action:'示例行政 行政审批通过·转示例收货员收货确认',name:'示例行政',roleText:'行政',timeText:'08-19 11:30',cls:'pass'});a.logs.push({action:'系统路由：→送示例收货员(综合管理部)收货确认',name:'系统',roleText:'系统',timeText:'08-19 11:30'});toast('行政审批通过，待示例收货员收货确认');}
+function adminRej(id,c){const a=appById(id);a.status='REJECTED';a.logs.push({action:'示例行政 行政审批驳回'+(c?('：'+c):''),name:'示例行政',roleText:'行政',timeText:'08-19 11:30',cls:'rej'});toast('已驳回');}
+function receiptConfirm(id){const a=appById(id);a.status='APPROVED';if(a.projectId){const p=projById(a.projectId);if(p){p.used+=a.amount;p.usedPhysical+=a.amount;}}a.logs.push({action:'示例收货员 收货确认通过·物品已签收，流程结束',name:'示例收货员',roleText:'收货确认',timeText:'08-19 14:00',cls:'pass'});toast('收货确认完成，流程结束');}
+function receiptRej(id,c){const a=appById(id);a.status='REJECTED';a.logs.push({action:'示例收货员 收货确认退回'+(c?('：'+c):''),name:'示例收货员',roleText:'收货确认',timeText:'08-19 14:00',cls:'rej'});toast('已退回');}
+// 行政(示例行政)负责成本分摊；财务(示例财务)仅最终核对并入账各项目。
+
+/* —— 审批页面（pm / admin / finance 交互）—— */
+PAGES['pm/approval']=()=>{
+  const pending=apps.filter(a=>a.status==='PENDING_PM');
+  const projApps=pending.filter(a=>a.fromNew);
+  const purApps=pending.filter(a=>!a.fromNew);
+  const tab=state.pmTab||(projApps.length&&!purApps.length?'proj':'pur');
+  const tabs=`<div class="tabs">
+      <span class="tab ${tab==='proj'?'active':''}" onclick="state.pmTab='proj';renderAll()">新建项目立项（${projApps.length}）</span>
+      <span class="tab ${tab==='pur'?'active':''}" onclick="state.pmTab='pur';renderAll()">采购审批（${purApps.length}）</span>
+    </div>`;
+  const head=`<div class="head-tip">示例经理 · 部门经理：审批新建项目立项、采购单</div>`;
+  const projCards=projApps.length?projApps.map(a=>`<div class="card">
+      <div class="tag-h"><div class="i-name">新建项目：${a.projectName}</div><div class="tag ${a.status}">${STATUS_TEXT[a.status]}</div></div>
+      <div class="i-meta">申请人：${a.applicant} · 申请编号：<b>${a.newCode||'—'}</b></div>
+      <div class="i-meta">用途：${a.reason||'—'}</div>
+      <div class="fi"><div class="form-label">项目预算(元) *（物理成本额度，员工据此发起采购）</div><input class="input" id="pmBudget_${a.id}" type="number" placeholder="如 90000" value="${a.pmBudget!=null?a.pmBudget:''}" oninput="setBudget('${a.id}',this.value)"></div>
+      <div class="btn-row"><button class="btn pass" onclick="doAct('${a.id}','pmPass')">立项通过</button><button class="btn rej" onclick="doAct('${a.id}','pmRej')">驳回</button></div>
+    </div>`).join(''):'<div class="empty">暂无待立项的新建项目申请</div>';
+  const purCards=purApps.length?purApps.map(a=>`<div class="card">
+      <div class="tag-h"><div class="i-name">${appTitle(a)}</div><div class="tag ${a.status}">${STATUS_TEXT[a.status]}</div></div>
+      <div class="i-meta">申请人：${a.applicant} · 项目：${a.projectName} · 采购金额 <b>${fmt(a.amount)}</b></div>
+      <div class="i-meta">理由：${a.reason||'—'}</div>
+      <div class="btn-row"><button class="btn pass" onclick="doAct('${a.id}','pmPass')">通过</button><button class="btn rej" onclick="doAct('${a.id}','pmRej')">驳回</button></div>
+    </div>`).join(''):'<div class="empty">暂无待审批的采购单</div>';
+  return head+tabs+(tab==='proj'?projCards:purCards);
+};
+PAGES['admin/approval']=()=>{
+  const list=apps.filter(a=>a.status==='PENDING_ADMIN');
+  return `<div class="head-tip">示例行政 · 行政：行政审批 · 统一处理采购</div>`+
+    (list.length?list.map(a=>{const p=a.projectId?projById(a.projectId):null;return `<div class="card">
+      <div class="tag-h"><div class="i-name">${appTitle(a)}</div><div class="tag ${a.status}">${STATUS_TEXT[a.status]}</div></div>
+      <div class="i-meta">项目：${a.projectName}${a.fromNew?'（新建·已立项）':''}</div>
+      <div class="i-meta">采购金额：<b>${fmt(a.amount)}</b>${p?` · 预算余 ${fmt(p.budget-p.used-p.locked)}`:''}</div>
+      <div class="i-meta">来源：${a.fromNew?'新建项目申请→示例经理已立项':'已有项目直达'}</div>
+      ${a.fromNew?`<div class="i-meta">项目编号：<b>${a.newCode||'—'}</b> · 预算 <b>${fmt(a.budget||0)}</b></div>`:''}
+      <div class="btn-row"><button class="btn pass" onclick="doAct('${a.id}','adminApprove')">通过</button><button class="btn rej" onclick="doAct('${a.id}','adminRej')">驳回</button></div>
+    </div>`;}).join(''):'<div class="empty">暂无待行政审批的采购单</div>');
+};
+PAGES['receipt/approval']=()=>{
+  const list=apps.filter(a=>a.status==='PENDING_RECEIPT');
+  return `<div class="head-tip">示例收货员 · 综合管理部：收货确认</div>`+
+    (list.length?list.map(a=>{const p=a.projectId?projById(a.projectId):null;return `<div class="card">
+      <div class="tag-h"><div class="i-name">${appTitle(a)}</div><div class="tag ${a.status}">${STATUS_TEXT[a.status]}</div></div>
+      <div class="i-meta">项目：${a.projectName}</div>
+      <div class="i-meta">采购物品：${(a.items||[]).map(i=>i.name+(i.qty?('×'+i.qty):'')).join('、')}</div>
+      <div class="i-meta">采购金额：<b>${fmt(a.amount)}</b></div>
+      <div class="i-meta">申请人：${a.applicant} · 行政已审批通过</div>
+      <div class="btn-row"><button class="btn pass" onclick="doAct('${a.id}','receiptConfirm')">确认收货</button><button class="btn rej" onclick="doAct('${a.id}','receiptRej')">退回</button></div>
+    </div>`;}).join(''):'<div class="empty">暂无待收货确认的采购单</div>');
+};
+PAGES['teamlead/approval']=()=>{
+  const list=apps.filter(a=>a.status==='PENDING_LEAD');
+  const lead=TEAMS.find(t=>t.id===EMP_TEAM);
+  return `<div class="head-tip">团队负责人：审批本团队采购需求</div>`+
+    (list.length?list.map(a=>{const p=a.projectId?projById(a.projectId):null;return `<div class="card">
+      <div class="tag-h"><div class="i-name">${appTitle(a)}</div><div class="tag ${a.status}">${STATUS_TEXT[a.status]}</div></div>
+      <div class="i-meta">项目：${a.projectName}${a.fromNew?'（新建·待立项）':''}</div>
+      <div class="i-meta">采购金额：<b>${fmt(a.amount)}</b>${p?` · 预算余 ${fmt(p.budget-p.used-p.locked)}`:''}</div>
+      ${a.fromNew?`<div class="i-meta">注：部门经理(示例经理)终审立项，不转行政</div>`:''}
+      <div class="btn-row"><button class="btn pass" onclick="doAct('${a.id}','leadPass')">通过(转部门经理)</button><button class="btn rej" onclick="doAct('${a.id}','leadRej')">驳回</button></div>
+    </div>`;}).join(''):'<div class="empty">暂无本团队待审批采购单</div>');
+};
+PAGES['admin/monthly']=()=>{
+  const done=apps.filter(a=>a.status==='APPROVED'&&!a.fromNew);
+  const itemDesc=a=>(a.items||[]).map(i=>i.name+(i.qty?('×'+i.qty):'')).join('、');
+  const recorded=done.filter(a=>a.recordedFinal!=null).length;
+  const pending=done.length-recorded;
+  const totalAmt=done.reduce((s,a)=>s+finOf(a),0);
+  const f=state.monthlyFilter||'all';
+  const view=done.filter(a=>f==='all'||(f==='done'&&a.recordedFinal!=null)||(f==='pending'&&a.recordedFinal==null));
+  const groups={};
+  view.forEach(a=>{(groups[a.projectName]=groups[a.projectName]||[]).push(a);});
+  const projNames=Object.keys(groups);
+  const chips=[['all','全部'],['done','已录实价'],['pending','待录实价']].map(c=>`<span class="chip ${f===c[0]?'active':''}" onclick="state.monthlyFilter='${c[0]}';renderAll()">${c[1]}</span>`).join('');
+  const rowsHtml=projNames.map(pn=>{
+    const items=groups[pn];
+    const sub=items.reduce((s,a)=>s+finOf(a),0);
+    const body=items.map(a=>{
+      const diff=finOf(a)-a.amount;
+      return `<div class="co-item" style="cursor:pointer" onclick="openDetail('${a.id}')">
+      <div style="flex:1;min-width:0">
+        <div class="co-name">${teamOfName(a.applicant)} · ${a.applicant}</div>
+        <div class="co-sub">${itemDesc(a)}</div>
+        <div class="co-sub" style="margin-top:4px">估价 <b>${fmt(a.amount)}</b> · 实价 <input class="input fin-in" id="fin_${a.id}" type="number" value="${finOf(a)}" oninput="setFinal('${a.id}',this.value)" onchange="recordFinal('${a.id}')" onclick="event.stopPropagation()"> ${a.recordedFinal==null?'<span class="tag-line wait">待录</span>':''}</div>
+        <div class="co-sub">差额 <span class="${diff>=0?'over':'under'}">${diff>=0?'+':''}${fmt(diff)}</span></div>
+      </div>
+      <div class="co-amt" style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
+        <div>${fmt(finOf(a))}</div>
+        <button class="btn-ghost sm" onclick="event.stopPropagation();openDetail('${a.id}')">详情</button>
+      </div>
+    </div>`;}).join('');
+    return `<div class="card"><div class="section-head"><span class="section-title">${pn}</span><span class="section-more">小计 ${fmt(sub)}</span></div>${body}</div>`;
+  }).join('');
+  const reportHtml=projNames.length?projNames.map(pn=>`<div class="info-row"><span class="k">${pn}</span><span class="v">${groups[pn].length}笔 · 合计 ${fmt(groups[pn].reduce((s,a)=>s+finOf(a),0))}</span></div>`).join(''):'';
+  return `<div class="head-tip">示例行政 · 行政：月度采购汇总 · 录入实价 · 成本分摊</div>`+
+    (done.length?`
+      <div class="card ovw"><div class="ovw-row">
+        <div class="ovw-cell"><div class="ovw-num">${done.length}</div><div class="ovw-lab">总笔数</div></div>
+        <div class="ovw-cell"><div class="ovw-num">${fmt(totalAmt)}</div><div class="ovw-lab">总金额</div></div>
+        <div class="ovw-cell"><div class="ovw-num ok">${recorded}</div><div class="ovw-lab">已录实价</div></div>
+        <div class="ovw-cell"><div class="ovw-num ${pending?'warn':''}">${pending}</div><div class="ovw-lab">待录实价</div></div>
+      </div></div>
+      <div class="filter-row">${chips}</div>
+      <div class="card"><div class="section-title">项目汇总报告（本月）</div>${reportHtml}</div>
+      ${rowsHtml}
+      <div class="card"><button class="submit" onclick="genMonthlyTable()">生成月度采购汇总表单</button>
+        <div class="hint">${pending?`<span class="warn">还有 <b>${pending}</b> 笔待录实价，全部录完才能提交财务</span>`:''}</div>
+      </div>`
+      :'<div class="empty">本月暂无已审批单据，汇总表待采购完成后生成</div>');
+};
+function genMonthlyTable(){
+  const done=apps.filter(a=>a.status==='APPROVED'&&!a.fromNew);
+  if(!done.length){toast('暂无已审批单据');return;}
+  const pending=done.filter(a=>a.recordedFinal==null);
+  if(pending.length){toast('还有 '+pending.length+' 笔待录实价，请先录入');return;}
+  apportionTables.push({month:'2026-08',timeText:'08-19 16:00',status:'待分摊',submittedBy:'示例行政',items:done.map(a=>({id:a.id,project:a.projectName,applicant:a.applicant,team:teamOfName(a.applicant),amount:finOf(a)}))});
+  toast('已生成月度采购汇总表单，财务可核对并入账');
+  renderAll();
+}
+PAGES['finance/reimburse']=()=>{
+  if(!apportionTables.length) return `<div class="head-tip">示例财务 · 财务：核对行政分摊结果并入账各项目</div><div class="empty">暂无行政提交的月度采购汇总表单</div>`;
+  if(state.finDrawer==null) state.finDrawer=0;
+  const openIdx=state.finDrawer;
+  const drawers=apportionTables.map((t,idx)=>{
+    const recs=t.items.map(it=>appById(it.id)).filter(Boolean);
+    const estTotal=recs.reduce((s,a)=>s+a.amount,0);
+    const finTotal=recs.reduce((s,a)=>s+finOf(a),0);
+    const diffTotal=finTotal-estTotal;
+    const isOpen=idx===openIdx;
+    const statusTag=t.status==='已分摊'?`<span class="tag-line ok">已分摊</span>`:`<span class="tag-line wait">待分摊</span>`;
+    const chevron=isOpen?'▾':'▸';
+    if(!isOpen){
+      return `<div class="fin-drawer" onclick="state.finDrawer=${idx};renderAll()">
+        <div class="fin-drawer-head">
+          <div style="flex:1">
+            <span class="fin-drawer-month">${t.month}</span>
+            <span class="fin-drawer-count">${recs.length}笔</span>
+            ${statusTag}
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:11px;color:var(--txt-2)">估价 ${fmt(estTotal)} → 实价 ${fmt(finTotal)}</div>
+            <div style="font-size:11px;color:${diffTotal>=0?'var(--red)':'var(--green)'};margin-top:2px">差额 ${diffTotal>=0?'+':''}${fmt(diffTotal)}</div>
+          </div>
+          <span class="fin-drawer-arrow">${chevron}</span>
+        </div>
+      </div>`;
+    }
+    const groups={};
+    recs.forEach(a=>{(groups[a.projectName]=groups[a.projectName]||[]).push(a);});
+    const projNames=Object.keys(groups);
+    const rowsHtml=projNames.map(pn=>{
+      const items=groups[pn];
+      const body=items.map(a=>{
+        const f=finOf(a), diff=f-a.amount;
+        const st=a.finReturned?'<span class="tag-line rej">已退回</span>':(a.finMarked?'<span class="tag-line ok">已确认</span>':(a.recordedFinal==null?'<span class="tag-line wait">缺实价</span>':'<span class="tag-line wait">待分摊</span>'));
+        return `<div class="co-item" style="cursor:pointer" onclick="openDetail('${a.id}')">
+        <div style="flex:1;min-width:0">
+          <div class="co-name">${teamOfName(a.applicant)} · ${a.applicant}</div>
+          <div class="co-sub">${(a.items||[]).map(i=>i.name+(i.qty?('×'+i.qty):'')).join('、')}</div>
+          <div class="co-sub" style="margin-top:4px">估价 <b>${fmt(a.amount)}</b> → 实价 <b>${fmt(f)}</b> <span class="${diff>=0?'over':'under'}">${diff>=0?'+':''}${fmt(diff)}</span></div>
+          <div class="co-sub" style="margin-top:3px">${st}</div>
+        </div>
+        <div class="co-amt" style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
+          <div>${fmt(f)}</div>
+          <div style="display:flex;gap:4px">
+            <button class="btn-ghost sm" onclick="event.stopPropagation();openDetail('${a.id}')">详情</button>
+            ${a.finMarked?'':`<button class="btn-ghost sm pass" onclick="event.stopPropagation();finMark('${a.id}')">标记正常</button>`}
+            ${a.finReturned?'':`<button class="btn-ghost sm rej" onclick="event.stopPropagation();finReturn('${a.id}')">退回</button>`}
+          </div>
+        </div>
+      </div>`;}).join('');
+      return `<div style="margin-bottom:10px"><div class="section-head"><span class="section-title" style="font-size:13px">${pn}</span><span class="section-more">${items.length}笔 · 合计 ${fmt(items.reduce((s,x)=>s+finOf(x),0))}</span></div>${body}</div>`;
+    }).join('');
+    const byProj={},byTeam={},projImpact={};
+    recs.forEach(a=>{const f=finOf(a);const tm=teamOfName(a.applicant);byProj[a.projectName]=(byProj[a.projectName]||0)+f;byTeam[tm]=(byTeam[tm]||0)+f;if(a.projectId){const p=projById(a.projectId);if(p)projImpact[p.name]={remain:p.budgetPhysical-p.usedPhysical,deducted:f};}});
+    const markedAll=recs.length>0&&recs.every(a=>a.finMarked)&&!recs.some(a=>a.finReturned);
+    const missing=recs.filter(a=>a.recordedFinal==null&&!a.finMarked).length;
+    const isLatest=idx===apportionTables.length-1;
+    return `<div class="fin-drawer fin-drawer-open" onclick="state.finDrawer=${openIdx===idx?-1:idx};renderAll()">
+      <div class="fin-drawer-head">
+        <div style="flex:1">
+          <span class="fin-drawer-month">${t.month}</span>
+          <span class="fin-drawer-count">${recs.length}笔</span>
+          ${statusTag}
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:11px;color:var(--txt-2)">估价 ${fmt(estTotal)} → 实价 ${fmt(finTotal)}</div>
+          <div style="font-size:11px;color:${diffTotal>=0?'var(--red)':'var(--green)'};margin-top:2px">差额 ${diffTotal>=0?'+':''}${fmt(diffTotal)}</div>
+        </div>
+        <span class="fin-drawer-arrow">${chevron}</span>
+      </div>
+      <div class="fin-drawer-body" onclick="event.stopPropagation()">
+        ${rowsHtml}
+        <div class="section-head" style="margin-top:6px"><span class="section-title">核算汇总</span></div>
+        <div class="info-row"><span class="k">估价总计</span><span class="v">${fmt(estTotal)}</span></div>
+        <div class="info-row"><span class="k">实价总计</span><span class="v amount">${fmt(finTotal)}</span></div>
+        <div class="info-row"><span class="k">总差额</span><span class="v ${diffTotal>=0?'over':'under'}">${diffTotal>=0?'+':''}${fmt(diffTotal)}（${diffTotal>=0?'超支':'节省'}）</span></div>
+        <div class="section-title smt">按项目</div>
+        ${Object.entries(byProj).map(([k,v])=>`<div class="info-row"><span class="k">${k}</span><span class="v">${fmt(v)}</span></div>`).join('')||'<div class="i-meta">—</div>'}
+        <div class="section-title smt">按团队</div>
+        ${Object.entries(byTeam).map(([k,v])=>`<div class="info-row"><span class="k">${k}</span><span class="v">${fmt(v)}</span></div>`).join('')||'<div class="i-meta">—</div>'}
+        <div class="section-title smt">预算影响（实价扣减后剩余）</div>
+        ${Object.entries(projImpact).map(([k,v])=>`<div class="info-row"><span class="k">${k}</span><span class="v">物理预算余 ${fmt(v.remain)}</span></div>`).join('')||'<div class="i-meta">—</div>'}
+        ${isLatest?`<div style="margin-top:12px"><button class="submit" onclick="event.stopPropagation();finComplete()">${markedAll?'全部核对完成并入账':'核对入账（需逐笔确认'}</button>
+          ${markedAll?'<div class="hint ok" style="margin-top:6px">所有单据均已核对，点击入账后项目成本正式入账并同步至员工项目页。</div>':(missing?`<div class="hint warn" style="margin-top:6px">还有 <b>${missing}</b> 笔缺实价或未确认，请先查看详情后标记正常 / 退回。</div>`:'<div class="hint" style="margin-top:6px">请逐笔查看详情并标记正常；有疑问的退回行政补录。</div>')}
+        </div>`:''}
+        ${t.status==='已分摊'?`<div class="fin-sync-card" style="margin-top:12px">
+          <div class="fs-title">✓ 成本扣减已同步至项目预算</div>
+          ${Object.entries(projImpact).map(([k,v])=>`<div class="fs-row"><span class="k">${k}</span><span class="v">扣减 ${fmt(v.deducted)} · 余 ${fmt(v.remain)}</span></div>`).join('')}
+          <div class="fs-row" style="margin-top:4px;padding-top:6px;border-top:1px solid var(--blue-l2)"><span class="k">同步状态</span><span class="v" style="color:var(--green)">已同步至员工项目页</span></div>
+        </div>`:''}
+      </div>
+    </div>`;
+  }).join('');
+  return `<div class="head-tip">示例财务 · 财务：核对行政分摊结果并入账（点击月份展开 / 收起）</div>`+drawers;
+};
+function finMark(id){const a=appById(id);a.finMarked=true;a.finReturned=false;a.logs.push({action:'示例财务 财务核对：确认此笔（实价 '+fmt(finOf(a))+'）',name:'示例财务',roleText:'财务',timeText:'08-19 16:20',cls:'pass'});toast('已标记正常');renderAll();}
+function finReturn(id){const a=appById(id);a.finReturned=true;a.finMarked=false;a.logs.push({action:'示例财务 财务退回：请行政补录/核实实价',name:'示例财务',roleText:'财务',timeText:'08-19 16:20',cls:'rej'});toast('已退回行政补录');renderAll();}
+function finComplete(){
+  const curMonth=state.finDrawer!=null?state.finDrawer:apportionTables.length-1;
+  const t=apportionTables[curMonth]||apportionTables[apportionTables.length-1];
+  const recs=t.items.map(it=>appById(it.id)).filter(Boolean);
+  if(!recs.length||!recs.every(a=>a.finMarked)){toast('还有单据未确认，请先逐笔标记正常');return;}
+  t.status='已分摊';
+  recs.forEach(a=>{
+    const fin=finOf(a);
+    if(a.projectId && !a.finAccounted){
+      const p=projById(a.projectId);
+      if(p){p.used+=(fin-a.amount);p.usedPhysical+=(fin-a.amount);}
+      a.recordedFinal=fin;a.finAccounted=true;a.accountDiff=fin-a.amount;
+    }
+    a.logs.push({action:'示例财务 财务核对入账：项目成本按实价入账 '+fmt(fin)+'，已同步扣减至项目预算',name:'示例财务',roleText:'财务',timeText:'08-19 16:30',cls:'pass'});
+  });
+  toast('核对入账完成，项目成本已按实价扣减并同步至员工项目页');
+  renderAll();
+}
+function setFinal(id,v){const a=appById(id);a.finalAmount=(v===''||v==null)?null:Number(v);}
+function recordFinal(id){
+  const a=appById(id);
+  const fin=a.finalAmount!=null?a.finalAmount:a.amount;
+  const prev=(a.recordedFinal!=null)?a.recordedFinal:a.amount;
+  const diff=fin-prev;
+  if(a.projectId){const p=projById(a.projectId);if(p){p.used+=diff;p.usedPhysical+=diff;}}
+  a.recordedFinal=fin;a.accounted=true;a.accountDiff=fin-a.amount;
+  a.logs.push({action:'示例行政 行政录入实际采购价 '+fmt(fin)+'（估价 '+fmt(a.amount)+'，差额 '+(fin-a.amount>=0?'+':'')+fmt(fin-a.amount)+'）',name:'示例行政',roleText:'行政',timeText:'08-19 15:00',cls:'pass'});
+  toast('已录入实价，项目成本按实价扣减');
+  renderAll();
+}
+
+// 反填实价已移至行政(示例行政)在采购时录入；财务仅据月度采购汇总表单做成本分摊确认。
+
+
+/* —— 通知公告 —— */
+['employee','pm','finance','receipt'].forEach(port=>{
+  PAGES[port+'/notice']=()=>`
+    <div class="card"><div class="section-title">通知公告</div></div>
+    ${notices.map(n=>`<div class="card notice" style="cursor:pointer" onclick="state.expandedNotice=state.expandedNotice==='${n.id}'?'':'${n.id}';renderAll()">
+      <div class="n-title">${n.title}</div><div class="n-meta">${n.authorName} · ${n.timeText}</div>
+      ${state.expandedNotice===n.id?`<div class="n-content">${n.content}</div>`:''}
+    </div>`).join('')}`;
+});
+PAGES['admin/notice']=()=>`
+  <div class="card"><button class="btn-ghost" style="width:100%" onclick="toast('演示：展开发布公告表单')">发布公告</button></div>
+  ${notices.map(n=>`<div class="card notice"><div class="n-title">${n.title}</div><div class="n-meta">${n.authorName} · ${n.timeText}</div>
+    <div class="n-content">${n.content}</div><div class="n-ops"><span class="n-edit" onclick="toast('演示：编辑')">编辑</span><span class="n-del" onclick="toast('演示：删除')">删除</span></div></div>`).join('')}`;
+
+/* —— 分类管理（admin）—— */
+PAGES['admin/category']=()=>`
+  <div class="card add-row"><input class="input add-input" placeholder="新分类名称" /><button class="btn-primary add-btn" onclick="toast('演示：添加分类')">添加</button></div>
+  <div class="card">${categories.map(c=>`<div class="cat"><span class="cat-name">${c.name}</span><span class="cat-ops"><span class="op" onclick="toast('演示：重命名')">重命名</span><span class="op del" onclick="toast('演示：删除')">删除</span></span></div>`).join('')}</div>`;
+
+/* —— 行政：部门单据汇总（同部门多条申请汇总成一张部门级单据，可单独驳回某条、其余继续）—— */
+PAGES['admin/deptsum']=()=>{
+  const pend=apps.filter(a=>['PENDING_LEAD','PENDING_PM','PENDING_ADMIN'].includes(a.status));
+  const groups={};
+  pend.forEach(a=>{const emp=employees.find(e=>e.name===a.applicant)||{dept:'未分组'};const d=emp.dept||'未分组';(groups[d]=groups[d]||[]).push(a);});
+  const deptNames=Object.keys(groups);
+  const blocks=deptNames.map(d=>{
+    const items=groups[d];const total=items.reduce((s,a)=>s+a.amount,0);
+    return `<div class="card">
+      <div class="section-head"><span class="section-title">${d}（${items.length}条 · 合计 ${fmt(total)}）</span><span class="section-more" onclick="toast('演示：汇总为一张部门级单据上报')">汇总上报</span></div>
+      ${items.map(a=>`<div class="ds-row">
+        <div><div class="ds-name">${appTitle(a)}</div><div class="ds-sub">${a.applicant} · ${STATUS_TEXT[a.status]}</div></div>
+        <div class="ds-right"><b>${fmt(a.amount)}</b><button class="btn-ghost sm" onclick="doAct('${a.id}','adminRej')">单独驳回</button></div>
+      </div>`).join('')}
+    </div>`;
+  }).join('');
+  return `<div class="head-tip">示例行政 · 行政：部门单据汇总 · 可单独驳回</div>`+
+    (deptNames.length?blocks:'<div class="empty">暂无进行中的采购单可汇总</div>');
+};
+
+/* —— 员工管理（admin）—— */
+PAGES['admin/users']=()=>`
+  <div class="card"><button class="btn-ghost" style="width:100%" onclick="toast('演示：展开添加员工')">添加员工</button></div>
+  <div class="card">${employees.map(u=>`<div class="u"><div class="u-left"><div class="u-avatar">${u.name[0]}</div><div><div class="u-name">${u.name}</div><div class="u-meta">${u.username} · ${u.roleText}${u.dept?' · '+u.dept:''}</div></div></div>
+    <div class="u-ops"><span class="op" onclick="toast('演示：改角色')">角色</span><span class="op" onclick="toast('演示：重置密码')">重置</span><span class="op del" onclick="toast('演示：删除')">删除</span></div></div>`).join('')}</div>`;
+
+/* —— 我的 —— */
+['employee','pm','finance','admin','receipt'].forEach(port=>{
+  PAGES[port+'/mine']=()=>{
+    const u=employees.find(e=>e.role===port)||employees[0];
+    const isAdmin=port==='admin';
+    return `
+    <div class="card profile"><div class="avatar">${u.name[0]}</div><div><div class="name">${u.name}</div><div class="meta">${u.username} · ${u.roleText}${u.dept?' · '+u.dept:''}${u.post?' · '+u.post:''}</div></div></div>
+    <div class="card menu">
+      <div class="menu-item" onclick="goPage('notice')"><span>通知公告</span><span class="arrow">></span></div>
+      <div class="menu-item" onclick="goPage('catalog')"><span>采购物品清单</span><span class="arrow">></span></div>
+      ${isAdmin?`<div class="menu-item" onclick="goPage('category')"><span>分类管理</span><span class="arrow">></span></div>
+      <div class="menu-item" onclick="goPage('users')"><span>员工管理</span><span class="arrow">></span></div>`:''}
+    </div>
+    <div class="card"><button class="btn-danger" onclick="toast('演示：退出登录')">退出登录</button></div>`;
+  };
+});
+
+/* ============ 流程图 SVG ============ */
+function buildFlow(){
+  const C={emp:'#64748B',lead:'#D97706',pm:'#2563EB',fin:'#D97706',adm:'#7C3AED',green:'#059669',grey:'#94A3B8',rcp:'#0891B2'};
+  const TXT='#0F172A',SUB='rgba(15,23,42,.6)';
+  const node=(x,y,w,h,fill,text,sub,fs)=>`
+    <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="12" fill="${fill}" stroke="rgba(255,255,255,.5)" stroke-width="1"/>
+    <text x="${x+w/2}" y="${y+h/2-(sub?5:0)}" fill="${TXT}" font-size="${fs||13}" font-weight="700" text-anchor="middle">${text}</text>
+    ${sub?`<text x="${x+w/2}" y="${y+h/2+12}" fill="${SUB}" font-size="11" font-weight="500" text-anchor="middle">${sub}</text>`:''}`;
+  const label=(x,y,text,color)=>{
+    const w=text.length*12+18, hx=x-w/2, hy=y-11;
+    return `
+    <rect x="${hx}" y="${hy}" width="${w}" height="22" rx="11" fill="#fff" stroke="${color}" stroke-width="1.2"/>
+    <text x="${x}" y="${y+4}" fill="${color}" font-size="11.5" font-weight="600" text-anchor="middle">${text}</text>`;
+  };
+  const arrV=(x1,y1,x2,y2,color)=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2-2}" stroke="${color}" stroke-width="2"/><polygon points="${x2},${y2} ${x2-6},${y2-9} ${x2+6},${y2-9}" fill="${color}"/>`;
+  const arrH=(x1,y1,x2,y2,color)=>`<line x1="${x1}" y1="${y1}" x2="${x2-2}" y2="${y2}" stroke="${color}" stroke-width="2"/><polygon points="${x2},${y2} ${x2-9},${y2-6} ${x2-9},${y2+6}" fill="${color}"/>`;
+  const arrHR=(x1,y1,x2,y2,color)=>`<line x1="${x1}" y1="${y1}" x2="${x2+2}" y2="${y2}" stroke="${color}" stroke-width="2"/><polygon points="${x2},${y2} ${x2+9},${y2-6} ${x2+9},${y2+6}" fill="${color}"/>`;
+  const arrVU=(x1,y1,x2,y2,color)=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2+2}" stroke="${color}" stroke-width="2"/><polygon points="${x2},${y2} ${x2-6},${y2+9} ${x2+6},${y2+9}" fill="${color}"/>`;
+
+  const W=170, H=52, GAP=42;
+  const Y0=22;
+  const CX=300, X=CX-W/2, xR=X+W;
+  const yTop=(i)=>Y0+i*(H+GAP);
+  const yMid=(i)=>yTop(i)+H/2;
+  const yBot=(i)=>yTop(i)+H;
+  const R_X=560, R_W=150, R_Y=yTop(2)-10;
+  const A_X=560, A_Y=yTop(5);
+  const F_X=560, F_Y=yTop(6);
+
+  let s='';
+  const main=[
+    {fill:C.emp,  text:'员工提交采购申请', sub:'其他(普通员工)',   fs:14},
+    {fill:C.lead, text:'团队负责人审批',   sub:'本团队(占位待定)',  fs:13},
+    {fill:C.pm,   text:'部门经理(示例经理)', sub:'采购审批 / 立项终审',    fs:13},
+    {fill:C.adm,  text:'行政(示例行政)',     sub:'行政审批·统一采购',  fs:13},
+    {fill:C.rcp,  text:'收货确认(示例收货员)', sub:'综合管理部·到货签收',  fs:13},
+    {fill:C.green,text:'流程结束',         sub:'审批完成',          fs:13},
+  ];
+  main.forEach((n,i)=>{ s+=node(X, yTop(i), W, H, n.fill, n.text, n.sub, n.fs); });
+  s+=node(R_X, R_Y, R_W, H, '#FEF2F2', '已驳回', '可改后重提', 13);
+  s+=node(A_X, A_Y, R_W, H, C.adm, '价格回填·成本分摊', '行政(示例行政)', 12);
+  s+=node(F_X, F_Y, R_W, H, C.fin, '财务(示例财务)', '最终核对并入账', 13);
+
+  // 主干
+  s+=arrV(CX, yBot(0), CX, yTop(1), C.emp);
+  s+=arrV(CX, yBot(1), CX, yTop(2), C.lead);
+  s+=arrV(CX, yBot(2), CX, yTop(3), C.pm);
+  s+=arrV(CX, yBot(3), CX, yTop(4), C.adm);
+  s+=arrV(CX, yBot(4), CX, yTop(5), C.rcp);
+  // 流程结束 → 行政价格回填·成本分摊（事后）→ 财务核对入账
+  s+=arrH(xR, yMid(5), A_X-8, yMid(5), C.adm);
+  s+=arrHR(A_X-8, yMid(5), A_X, yMid(5), C.adm);
+  s+=arrV(A_X+R_W/2, A_Y+H, A_X+R_W/2, F_Y, C.fin);
+
+  // 驳回支线：团队负责人 / 部门经理 / 行政 → 已驳回
+  [1,2,3].forEach(i=>{
+    const yy=yMid(i);
+    s+=arrH(xR, yy, 540, yy, C.emp);
+    if(R_Y+12>yy){ s+=arrV(540, yy, 540, R_Y+12, C.emp); }
+    else { s+=arrVU(540, yy, 540, R_Y+12, C.emp); }
+    s+=arrH(540, R_Y+12, R_X, R_Y+12, C.emp);
+  });
+
+  // 标签
+  s+=label(CX+12, (yBot(0)+yTop(1))/2, '提交', C.emp);
+  s+=label(CX+12, (yBot(1)+yTop(2))/2, '通过', C.lead);
+  s+=label(CX+12, (yBot(2)+yTop(3))/2, '采购通过', C.pm);
+  s+=label(CX+12, (yBot(3)+yTop(4))/2, '通过', C.adm);
+  s+=label(CX+12, (yBot(4)+yTop(5))/2, '收货确认', C.rcp);
+  s+=label(CX, yBot(2)+16, '新项目:立项终审', C.pm);
+  s+=label(500, yMid(1)+16, '驳回', C.emp);
+  s+=label(500, yMid(2)-16, '驳回', C.emp);
+  s+=label(500, yMid(3)+16, '驳回', C.emp);
+  s+=label(500, yMid(4)+16, '退回', C.rcp);
+  s+=label(560, A_Y-12, '价格回填·成本分摊(非前置)', C.adm);
+  s+=label(560, F_Y+H+16, '核对入账(非前置)', C.fin);
+
+  // 新项目立项分支：PM左侧 → 立项完成（不转行政）
+  const NP_X=18, NP_W=158, NP_H=H;
+  s+=node(NP_X, yTop(2), NP_W, NP_H, '#EFF6FF', '新项目立项完成', '可继续发起采购', 12);
+  s+=`<line x1="${X}" y1="${yMid(2)}" x2="${NP_X+NP_W+8}" y2="${yMid(2)}" stroke="${C.pm}" stroke-width="2" stroke-dasharray="5,3"/>`;
+  s+=`<polygon points="${NP_X+NP_W},${yMid(2)} ${NP_X+NP_W+8},${yMid(2)-5} ${NP_X+NP_W+8},${yMid(2)+5}" fill="${C.pm}"/>`;
+  s+=label((X+NP_X+NP_W)/2, yMid(2)-15, '仅新项目', C.pm);
+
+  $('flowSvg').innerHTML=`<svg viewBox="0 0 760 660" xmlns="http://www.w3.org/2000/svg" style="font-family:inherit">${s}</svg>`;
+}
+
+/* ============ 初始化 ============ */
+renderAll();
+buildFlow();
+</script>
+
+
+<div class="light"></div>
+<div class="light"></div>
+<div class="light"></div>
+<div class="light"></div>
+<div class="light"></div>
+<div class="light"></div>
+<div class="light"></div>
+<div class="light"></div>
+</body></html>
