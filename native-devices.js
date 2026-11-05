@@ -76,7 +76,7 @@ export function installPersonalDevices(scene,T){
  let focused=null;
  const previousClick=scene.disposableFunctions.onHoverClick;
  scene.hoverRaycaster.removeEventListener('hover:click',previousClick);
- const onClick=e=>{if(dialog.open)return;if(scene.hoverRaycaster.params.disabled||document.documentElement.classList.contains('is-menu-open'))return;if(e.detail.url==='#website-work')openWork();else if(['/product-portfolio/videos/','/product-portfolio/skills/'].includes(e.detail.url))location.assign(e.detail.url);else previousClick(e);};
+ const onClick=e=>{if(dialog.open)return;if(scene.hoverRaycaster.params.disabled||document.documentElement.classList.contains('has-modal-menu-open'))return;if(e.detail.url==='#website-work')openWork();else if(['/product-portfolio/videos/','/product-portfolio/skills/'].includes(e.detail.url))location.assign(e.detail.url);else previousClick(e);};
  scene.hoverRaycaster.addEventListener('hover:click',onClick);
  const nav=hero.querySelector('.native-portrait-nav');
  if(nav&&!nav.querySelector('[data-device="skills"]')){const link=document.createElement('a');link.href='/product-portfolio/skills/';link.dataset.device='skills';link.textContent='Skill 合集 ↗';nav.insertBefore(link,nav.querySelector('button'));}
@@ -95,7 +95,7 @@ export function installPersonalDevices(scene,T){
  function openWork(){focused=null;scene.hoverRaycaster.cancelHover();scene.hoverRaycaster.prevent.click=true;dialog.showModal();dialog.querySelector('button').focus();}
  const onPointerMove=e=>{if(e.pointerType!=='touch'&&!e.target.closest('[data-device]'))focused=null;};
  hero.addEventListener('pointermove',onPointerMove);
- const openFromHeader=e=>{if(e.target.closest('header a[href="#website-work"],#sectionHero a.button[href="#website-work"]')){e.preventDefault();e.stopImmediatePropagation();if(!dialog.open)openWork();}};
+ const openFromHeader=e=>{if(e.target.closest('[data-project-entry]')){e.preventDefault();e.stopImmediatePropagation();if(!dialog.open)openWork();}};
  document.addEventListener('click',openFromHeader,true);
  const close=()=>{scene.hoverRaycaster.prevent.click=false;};dialog.addEventListener('close',close);
  const update=scene.update.bind(scene);let last=performance.now(),l=0,p=0,b=0;
