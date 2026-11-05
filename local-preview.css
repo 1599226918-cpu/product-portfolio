@@ -64,12 +64,12 @@ img[data-portrait-kind="head"] { object-fit: contain; object-position: center; }
 @media(max-width:767px){.hero_carousel_track{position:relative;top:115px;z-index:5}}
 
 /* Personal device project drawer; native dialog supplies focus trap and Escape. */
-.website-work{width:min(1100px,calc(100vw - 48px));max-height:calc(100dvh - 48px);padding:clamp(26px,5vw,64px);border:1px solid #f7f7ec25;border-radius:26px;background:#242b45;color:#f7f7ec;box-shadow:0 32px 120px #0008;overflow:auto;overscroll-behavior:contain}
+.website-work{position:fixed;inset:0;margin:auto;width:min(1100px,calc(100vw - 48px));max-height:calc(100dvh - 48px);padding:clamp(26px,5vw,64px);border:1px solid #f7f7ec25;border-radius:26px;background:#242b45;color:#f7f7ec;box-shadow:0 32px 120px #0008;overflow:auto;overscroll-behavior:contain}
 .website-work::backdrop{background:#11162cc9;backdrop-filter:blur(10px)}
 .website-work h2{font-size:clamp(32px,5vw,60px);line-height:1.2;margin:12px 0 20px;color:#ff9cba;font-weight:700}
 .website-work-kicker{font-size:13px;letter-spacing:.15em;color:#bdc7df;margin:6px 0}
 .website-work-intro{line-height:1.8;font-size:15px;color:#c9d0df;margin:0 0 36px}
-.website-work-close{float:right;background:#f7f7ec;color:#242b45;border:0;border-radius:30px;padding:10px 19px;font:inherit;cursor:pointer}
+.website-work-close{float:right;position:relative;z-index:1;background:#f7f7ec;color:#242b45;border:0;border-radius:30px;padding:10px 19px;font:inherit;cursor:pointer}
 .website-work-close:hover{background:#ff9cba}.website-work-close:focus-visible{outline:3px solid #ff9cba;outline-offset:5px}
 .website-work-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;clear:both}
 .website-work-slot{border:1px solid #ffffff25;border-radius:16px;overflow:hidden;background:#1d243c}
