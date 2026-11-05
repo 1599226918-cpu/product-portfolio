@@ -1,0 +1,107 @@
+{
+  "videos": [],
+  "skills": [
+    {
+      "id": "animejs-workflow",
+      "title": "动画交互工作流",
+      "category": "网页动效",
+      "summary": "把入场、悬停和时间线动画，整理成能复用、能检查的实现方法。",
+      "status": "本地工作流封装 · Anime.js",
+      "source": "来源：本地 animejs Skill（2026-09-28）。基于 Anime.js 官方开源项目进行工作流封装；底层动画库归原作者，不是上游官方 Skill。库快照 4.5.0，源码提交 01b81be。",
+      "sections": [
+        {
+          "title": "适合什么时候用",
+          "items": [
+            "网页和 SVG 的入场、错峰、路径描边及交互反馈。",
+            "需要多个元素同步的动画时间线，或逐帧驱动的视频画面。"
+          ]
+        },
+        {
+          "title": "需要准备什么",
+          "text": "已有页面或动画素材、希望呈现的初态与终态，以及触发方式、时长和节奏要求。"
+        },
+        {
+          "title": "工作流",
+          "ordered": true,
+          "items": [
+            "检查项目现有版本与入口，沿用已有框架。",
+            "列清目标元素、状态和触发条件，再安排时间线。",
+            "将动画限制在组件范围内，处理卸载、重播和事件清理。",
+            "补充减少动态效果模式；逐帧导出时使用确定的帧时间。",
+            "在实际浏览器检查初态、中间态、终态、重播和窄屏表现。"
+          ]
+        },
+        {
+          "title": "产出",
+          "text": "可编辑的动画代码、可运行的预览入口，以及实际完成的验证说明；需要视频时另行验证导出文件。"
+        },
+        {
+          "title": "来源项目",
+          "text": "Anime.js · juliangarnier/anime（MIT）。本页介绍的是使用它的本地工作流封装。"
+        }
+      ],
+      "links": [
+        {
+          "label": "下载工作流说明",
+          "href": "/product-portfolio/skills/animejs-workflow.md",
+          "download": true
+        },
+        {
+          "label": "查看 Anime.js 上游项目 ↗",
+          "href": "https://github.com/juliangarnier/anime"
+        }
+      ]
+    },
+    {
+      "id": "openhouse-workflow",
+      "title": "照片到三维场景",
+      "category": "空间与可视化",
+      "summary": "从照片、图纸和尺寸出发，把空间资料变成可编辑场景与可审阅画面。",
+      "status": "本地工作流封装 · OpenHouse 3D",
+      "source": "来源：本地 openhouse-3d Skill（2026-09-28）。基于 yunfanye/openhouse-3d 项目进行本地封装，上游不提供此 SKILL.md；底层源码与素材权利归各自作者。源码提交 b6e5d9b。",
+      "sections": [
+        {
+          "title": "适合什么时候用",
+          "items": [
+            "有参考照片、平面图或可靠尺寸，需要建立建筑与室内场景。",
+            "需要照片匹配静帧、建筑外观运镜、室内漫游或对比画廊。"
+          ]
+        },
+        {
+          "title": "需要准备什么",
+          "text": "照片与拍摄方向、图纸、可靠尺寸、素材来源，以及希望展示的视角。资料不能支持的几何关系需要标记为推断。"
+        },
+        {
+          "title": "工作流",
+          "ordered": true,
+          "items": [
+            "整理参考资料，区分实景、设计图和推断信息。",
+            "选取资料足够的视角，建立项目几何和相机。",
+            "先用低采样静帧核对轮廓、层高、门窗和连接，再增加材质。",
+            "编排镜头路线，检查穿墙、遮挡、急转和反射。",
+            "完成渲染后检查画面与视频解码，记录仍未确认的部分。"
+          ]
+        },
+        {
+          "title": "产出",
+          "text": "可编辑的 Blender 场景、静帧、漫游视频或对比画廊，按实际完成范围交付。"
+        },
+        {
+          "title": "使用边界",
+          "text": "根据照片推断的模型不等于测绘成果；方案演示不标成竣工实拍。代码可运行，也不代表模型或画面已经验收。"
+        }
+      ],
+      "links": [
+        {
+          "label": "下载工作流说明",
+          "href": "/product-portfolio/skills/openhouse-workflow.md",
+          "download": true
+        },
+        {
+          "label": "查看 OpenHouse 3D 上游项目 ↗",
+          "href": "https://github.com/yunfanye/openhouse-3d"
+        }
+      ]
+    }
+  ]
+}
