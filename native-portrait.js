@@ -15,7 +15,7 @@ function surface(image,top=false){
  ctx.restore();return canvas;
 }
 export async function prepareNativePortrait(cfg){
- const [base,surprise,smile,eyeAtlas,eyeRegistration]=await Promise.all([load(cfg.heroArtwork),load('/product-portfolio/portraits/expressions/surprise-v1.webp'),load('/product-portfolio/portraits/expressions/smile-v1.webp'),load('/product-portfolio/portraits/gaze/eye-directions-v1.png'),fetch('/product-portfolio/portraits/gaze/registration-v1.json').then(r=>{if(!r.ok)throw new Error('Gaze registration unavailable');return r.json();})]);
+ const [base,surprise,smile,eyeAtlas,eyeRegistration]=await Promise.all([load(cfg.heroArtwork),load('/product-portfolio/portraits/expressions/surprise-v1.webp'),load('/product-portfolio/portraits/expressions/smile-v1.webp'),load('/product-portfolio/portraits/gaze/eye-directions-v1.webp'),fetch('/product-portfolio/portraits/gaze/registration-v1.json').then(r=>{if(!r.ok)throw new Error('Gaze registration unavailable');return r.json();})]);
  const bottom=surface(base),top=surface(smile,true);
  window.__installPersonalHead=(scene,THREE)=>{
   const {PlaneGeometry}=THREE;

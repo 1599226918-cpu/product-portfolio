@@ -4,7 +4,7 @@ window.PORTFOLIO_CONFIG = {
   name: '',
   nativeHero: true,
   // Complete transparent collage for the home hero (independent of the original face UVs).
-  heroArtwork: '/product-portfolio/portraits/hero-full-braid-v1.png',
+  heroArtwork: '/product-portfolio/portraits/hero-full-braid-v1.webp',
   // Existing destination pages; swap these URLs when personal content is ready.
   heroLinks: {
     laptop: { label: '网站作品', href: '#website-work' },
