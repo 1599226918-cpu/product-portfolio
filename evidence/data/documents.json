@@ -1,0 +1,682 @@
+[
+  {
+    "id": "oa-rules",
+    "title": "任务前置条件与归档规则",
+    "project": "oa",
+    "sourceTitle": "资料与审批条件组合验收记录、纸质合同固定归档节点发布记录",
+    "date": "2026.10.14 / 2026.10.29",
+    "type": "交付记录脱敏节选",
+    "sections": [
+      {
+        "title": "业务判断",
+        "text": "将资料准备、文件定稿、审批节点及任务交付的完成条件拆开定义，再按全部满足的规则组合，防止任务状态与真实准备情况脱节。 资料条件与任务前置依赖同时存在时，必须全部满足才允许相应操作。"
+      },
+      {
+        "title": "前置条件",
+        "headers": [
+          "条件",
+          "满足口径",
+          "失效后的处理"
+        ],
+        "rows": [
+          [
+            "资料齐套",
+            "所选文件夹及子目录的末级目录至少有一个文件",
+            "移出某末级目录最后一个文件后失效；移回恢复"
+          ],
+          [
+            "文件定稿",
+            "以当前文件版本是否定稿为准",
+            "上传新版本使原定稿失效；重新定稿后恢复"
+          ],
+          [
+            "指定审批通过",
+            "绑定归档前的指定中间节点",
+            "重新发布流程使该节点恢复待审；后续节点退回与此分别处理"
+          ]
+        ]
+      },
+      {
+        "title": "状态保护与恢复",
+        "items": [
+          "任一前置条件失效，进行中或待确认的任务保留原进度，阻止认领、开始、提交或确认完成。",
+          "条件恢复后继续原状态，不自动开始或完成；已完成任务不自动重开。",
+          "审批流的资料齐套和全部任务完成条件独立校验，不由按钮可见性代替服务端判断。"
+        ]
+      },
+      {
+        "title": "纸质归档闭环",
+        "text": "在合同和资料审批末尾设置固定归档确认。前序审批通过后仍保持进行中，由指定归档角色确认后结束；证明附件选填，确认人、时间和附件记录留痕。"
+      },
+      {
+        "title": "在途与历史兼容",
+        "text": "在途审批接入固定末节点，保留原指派和已通过的前序节点。历史已完成审批保留原记录，不补做本次归档。"
+      }
+    ],
+    "screens": [
+      {
+        "title": "任务提交后待确认",
+        "url": "/product-portfolio/product-flows/screens/408522dfe1d48b4e.webp",
+        "source": "正式版本操作手册 · 脱敏"
+      },
+      {
+        "title": "前置任务完成后资料归档",
+        "url": "/product-portfolio/product-flows/screens/0e915366b1f2c598.webp",
+        "source": "正式环境验收 · 脱敏"
+      }
+    ],
+    "url": "/product-portfolio/evidence/documents/oa-rules.html",
+    "download": "/product-portfolio/evidence/downloads/oa-rules.pdf"
+  },
+  {
+    "id": "oa-acceptance",
+    "title": "前置条件失效恢复与归档验收",
+    "project": "oa",
+    "sourceTitle": "资料与审批条件组合正式验收记录",
+    "date": "2026.10.14",
+    "type": "交付记录脱敏节选",
+    "sections": [
+      {
+        "title": "实际验收范围",
+        "text": "使用独立验收项目在正式界面执行文件上传、定稿、任务办理、审批流转和最终归档；覆盖三类资料条件的八种组合。此处记录的是验收覆盖，不作为客户业务完成率。 以下八种组合均以任务前置依赖已满足为前提；1 表示满足，0 表示未满足。"
+      },
+      {
+        "title": "八种组合",
+        "headers": [
+          "资料齐套",
+          "文件定稿",
+          "指定审批通过",
+          "任务可提交或确认"
+        ],
+        "rows": [
+          [
+            "0",
+            "0",
+            "0",
+            "阻止"
+          ],
+          [
+            "0",
+            "0",
+            "1",
+            "阻止"
+          ],
+          [
+            "0",
+            "1",
+            "0",
+            "阻止"
+          ],
+          [
+            "0",
+            "1",
+            "1",
+            "阻止"
+          ],
+          [
+            "1",
+            "0",
+            "0",
+            "阻止"
+          ],
+          [
+            "1",
+            "0",
+            "1",
+            "阻止"
+          ],
+          [
+            "1",
+            "1",
+            "0",
+            "阻止"
+          ],
+          [
+            "1",
+            "1",
+            "1",
+            "允许"
+          ]
+        ]
+      },
+      {
+        "title": "发现与修复",
+        "headers": [
+          "发现",
+          "判断与调整",
+          "实际复核"
+        ],
+        "rows": [
+          [
+            "单项条件满足时提前生成整体解锁事件",
+            "改为比较整组前置条件是否可操作",
+            "单项或两项满足不再产生整体解锁"
+          ],
+          [
+            "新文件版本继承旧定稿状态",
+            "清除旧定稿确认，重新核对整组条件",
+            "版本更新后阻塞，重新定稿后恢复"
+          ],
+          [
+            "待确认任务的条件失效保护不足",
+            "提交和确认分别执行服务端检查",
+            "任务保留待确认；条件恢复后才可继续"
+          ]
+        ]
+      },
+      {
+        "title": "闭环结果",
+        "text": "验收项目的任务完成、审批通过和归档状态已逐步读回；条件拒绝没有推进工作区版本。原有资料与版本内容摘要进行了保留核对。"
+      },
+      {
+        "title": "验证边界",
+        "text": "本记录覆盖所列正式界面组合。手机内置浏览器、弱网和各部门实际目录口径按各自验收范围核对。"
+      }
+    ],
+    "screens": [
+      {
+        "title": "附件定稿状态",
+        "url": "/product-portfolio/product-flows/screens/b96a4463e6a53646.webp",
+        "source": "正式版本操作手册 · 脱敏"
+      },
+      {
+        "title": "任务提交后待确认",
+        "url": "/product-portfolio/product-flows/screens/408522dfe1d48b4e.webp",
+        "source": "正式版本操作手册 · 脱敏"
+      },
+      {
+        "title": "前置任务完成后资料归档",
+        "url": "/product-portfolio/product-flows/screens/0e915366b1f2c598.webp",
+        "source": "正式环境验收 · 脱敏"
+      }
+    ],
+    "url": "/product-portfolio/evidence/documents/oa-acceptance.html",
+    "download": "/product-portfolio/evidence/downloads/oa-acceptance.pdf"
+  },
+  {
+    "id": "oa-permissions",
+    "title": "成员权限与操作矩阵",
+    "project": "oa",
+    "sourceTitle": "项目成员三档权限调整、正式发布与账号验收记录",
+    "date": "2026.10.22",
+    "type": "交付记录脱敏节选",
+    "sections": [
+      {
+        "title": "三档授权",
+        "headers": [
+          "角色范围",
+          "预览",
+          "下载",
+          "编辑",
+          "成员管理"
+        ],
+        "rows": [
+          [
+            "仅查看",
+            "允许",
+            "拒绝",
+            "拒绝",
+            "拒绝"
+          ],
+          [
+            "可查看及下载",
+            "允许",
+            "允许",
+            "拒绝",
+            "拒绝"
+          ],
+          [
+            "可编辑成员",
+            "允许",
+            "允许",
+            "允许",
+            "拒绝"
+          ],
+          [
+            "项目负责人",
+            "允许",
+            "允许",
+            "允许",
+            "允许"
+          ]
+        ]
+      },
+      {
+        "title": "撤权判断",
+        "items": [
+          "新增成员、移除成员和调整权限由负责人办理。",
+          "存在未完成任务或待处理审批时先转交，再取消编辑权限或移除。",
+          "普通成员的单文件授权不得超过项目授权范围，移除成员同步回收相应单独授权。",
+          "系统或部门资料管理员的独立管理权限另行判定，不与普通成员权限混用。"
+        ]
+      },
+      {
+        "title": "回归维度",
+        "text": "查看、下载、编辑、成员管理分别核验；授权变更后继续检查旧链接、文档卡片和资源实际动作。"
+      }
+    ],
+    "screens": [
+      {
+        "title": "新增成员三档选项",
+        "url": "/product-portfolio/product-flows/screens/baebed9175413cdc.webp",
+        "source": "正式环境验收 · 脱敏"
+      },
+      {
+        "title": "移除成员后仅剩负责人",
+        "url": "/product-portfolio/product-flows/screens/9acbfd27dda3f00c.webp",
+        "source": "正式环境验收 · 脱敏"
+      }
+    ],
+    "url": "/product-portfolio/evidence/documents/oa-permissions.html",
+    "download": "/product-portfolio/evidence/downloads/oa-permissions.pdf"
+  },
+  {
+    "id": "ride-guide",
+    "title": "用车交接与里程核算操作节选",
+    "project": "ride",
+    "sourceTitle": "里程补录与管理员审核验收记录、预约提交与车辆更新修复记录",
+    "date": "2026.09.15 / 2026.11.02",
+    "type": "交付记录脱敏节选",
+    "sections": [
+      {
+        "title": "业务链路",
+        "text": "用车申请关联调度安排和司机行车单。司机记录实际车辆及行程，管理员核对异常，统计按实际有效记录归集。"
+      },
+      {
+        "title": "异常分类",
+        "headers": [
+          "场景",
+          "办理方式",
+          "统计边界"
+        ],
+        "rows": [
+          [
+            "漏填真实行程",
+            "司机补录实际日期、路线、原因、结束表显及凭证，管理员审核",
+            "待审核不计绩效；通过计入实际发生月份"
+          ],
+          [
+            "换车或表显交接差异",
+            "管理员核实车辆与表显基准，异常差额单独记录",
+            "不直接归为司机遗漏行程或部门费用"
+          ],
+          [
+            "补录驳回",
+            "填写原因并保留审核记录",
+            "不重复扣减有效里程，不回退车辆表显"
+          ]
+        ]
+      },
+      {
+        "title": "角色边界",
+        "items": [
+          "司机仅补录本人行车单；其他司机和用车人不能代填或审核。",
+          "补录不生成乘客任务或满意度评价。",
+          "车辆里程按实际车辆连续衔接，更换司机仍沿用同一车辆的结束表显。"
+        ]
+      },
+      {
+        "title": "提交反馈调整",
+        "text": "预约提交以本次任务落地回执结束等待，完整历史转为后台同步；保留时段冲突、身份、排班和重复提交校验。旧快照不能覆盖新预约，换身份后停止前一身份的同步。"
+      },
+      {
+        "title": "实际验证范围",
+        "text": "既有记录包含服务端回归、开发者工具原生界面和部署回读。预约提速的手机实际耗时未在该次记录中测量，不写成耗时提升比例。"
+      }
+    ],
+    "screens": [
+      {
+        "title": "用户端 · 提交用车申请",
+        "url": "/product-portfolio/product-flows/screens/deedab5217a4540f.webp",
+        "source": "用车交付手册 · 界面脱敏"
+      },
+      {
+        "title": "司机端 · 行车记录单填写",
+        "url": "/product-portfolio/product-flows/screens/f6eee3bbfdc898f4.webp",
+        "source": "用车交付手册 · 界面脱敏"
+      },
+      {
+        "title": "管理员审核里程补录",
+        "url": "/product-portfolio/product-flows/screens/7279f5b1f6947001.webp",
+        "source": "原生小程序验收 · 脱敏"
+      }
+    ],
+    "url": "/product-portfolio/evidence/documents/ride-guide.html",
+    "download": "/product-portfolio/evidence/downloads/ride-guide.pdf"
+  },
+  {
+    "id": "procurement-guide",
+    "title": "采购审批收货与费用归集手册节选",
+    "project": "buy",
+    "sourceTitle": "多角色权限与流程核实简报、采购交付手册",
+    "date": "2026.09.22",
+    "type": "交付记录脱敏节选",
+    "sections": [
+      {
+        "title": "采购主线",
+        "text": "普通成员提交后，由有效团队负责人、部门经理及行政逐级处理，独立收货角色确认到货；全单收货后核定实际价格、按项目归集费用，财务核对入账。"
+      },
+      {
+        "title": "流程分支",
+        "headers": [
+          "条件",
+          "实际处理"
+        ],
+        "rows": [
+          [
+            "团队负责人本人采购",
+            "提交后直接交部门经理，避免本人处理团队节点"
+          ],
+          [
+            "没有有效团队负责人",
+            "采购交行政；项目选择仍按团队与项目关系判定"
+          ],
+          [
+            "申请被驳回",
+            "保留意见，释放冻结预算；修改后按当前组织关系重新审批"
+          ],
+          [
+            "新增项目立项",
+            "负责人节点后由部门经理核定预算，与采购无团队分支分别定义"
+          ]
+        ]
+      },
+      {
+        "title": "收货与入账的完成条件",
+        "text": "收货和财务结算分别管理。采购全收货后流程结束，费用仍需核价与入账；不向普通员工、行政和财务提供独立收货角色的办理指引。"
+      },
+      {
+        "title": "金额与更正",
+        "headers": [
+          "口径",
+          "含义"
+        ],
+        "rows": [
+          [
+            "冻结预算",
+            "为尚未完成实际费用确认的采购保留额度"
+          ],
+          [
+            "已用金额",
+            "已确认采购成本占用"
+          ],
+          [
+            "实际金额",
+            "按实际数量和实际单价形成费用"
+          ],
+          [
+            "费用更正",
+            "金额更正后重新进入财务核对，保留原记录"
+          ]
+        ]
+      },
+      {
+        "title": "版本校正",
+        "text": "申请附件按该次核实的实际页面为选填。早期文档的千元强制附件规则与当前提交路径不一致，未沿用到本节选。撤回条件以尚未开始审批及服务端结果为准。"
+      }
+    ],
+    "screens": [
+      {
+        "title": "普通用户 · 提交后详情",
+        "url": "/product-portfolio/product-flows/screens/af83bcf0db97b0aa.webp",
+        "source": "交付手册 · 原生小程序（隔离数据）"
+      },
+      {
+        "title": "行政 · 采购审批",
+        "url": "/product-portfolio/product-flows/screens/63caf4abd39b1e7a.webp",
+        "source": "交付手册 · 原生小程序（隔离数据）"
+      },
+      {
+        "title": "待收货确认",
+        "url": "/product-portfolio/product-flows/screens/41bab8e6d2ad1e49.webp",
+        "source": "收货修复核验 · 原生界面（隔离数据）"
+      },
+      {
+        "title": "财务 · 入账完成",
+        "url": "/product-portfolio/product-flows/screens/7890692ef3189c17.webp",
+        "source": "交付手册 · 原生小程序（隔离数据）"
+      }
+    ],
+    "url": "/product-portfolio/evidence/documents/procurement-guide.html",
+    "download": "/product-portfolio/evidence/downloads/procurement-guide.pdf"
+  },
+  {
+    "id": "procurement-acceptance",
+    "title": "收货状态与费用交接验收节选",
+    "project": "buy",
+    "sourceTitle": "采购交付资料、收货修复验收与原生界面记录",
+    "date": "2026.09—2026.10",
+    "type": "交付记录脱敏节选",
+    "sections": [
+      {
+        "title": "判断",
+        "text": "审批、收货、核价和入账由不同角色完成，单据进入后续阶段后不应继续要求办理已完成的前序动作。"
+      },
+      {
+        "title": "核对路径",
+        "headers": [
+          "阶段",
+          "核对动作",
+          "交接结果"
+        ],
+        "rows": [
+          [
+            "审批",
+            "当前节点角色通过或驳回",
+            "通过交下一角色；驳回交申请人修改"
+          ],
+          [
+            "收货",
+            "独立收货角色确认或填写驳回原因",
+            "确认结果保留在本单，不重复审批"
+          ],
+          [
+            "核价",
+            "实际单价、规格与费用分摊核对",
+            "保存后交财务核对"
+          ],
+          [
+            "入账",
+            "确认金额、项目归属及凭证",
+            "记录入账完成，金额更正重新待核对"
+          ]
+        ]
+      },
+      {
+        "title": "对应证据",
+        "text": "关联的原生页面记录覆盖收货确认、收货驳回原因、行政费用归集及财务入账。页面采用隔离验收数据或字段脱敏的只读业务界面。"
+      }
+    ],
+    "screens": [
+      {
+        "title": "待收货确认",
+        "url": "/product-portfolio/product-flows/screens/41bab8e6d2ad1e49.webp",
+        "source": "收货修复核验 · 原生界面（隔离数据）"
+      },
+      {
+        "title": "收货驳回理由",
+        "url": "/product-portfolio/product-flows/screens/5592c952b321e663.webp",
+        "source": "收货修复核验 · 原生界面（隔离数据）"
+      },
+      {
+        "title": "行政 · 项目费用归集与保存",
+        "url": "/product-portfolio/product-flows/screens/475893c9106cee1f.webp",
+        "source": "交付手册 · 原生小程序（隔离数据）"
+      },
+      {
+        "title": "财务 · 入账完成",
+        "url": "/product-portfolio/product-flows/screens/7890692ef3189c17.webp",
+        "source": "交付手册 · 原生小程序（隔离数据）"
+      }
+    ],
+    "url": "/product-portfolio/evidence/documents/procurement-acceptance.html",
+    "download": "/product-portfolio/evidence/downloads/procurement-acceptance.pdf"
+  },
+  {
+    "id": "menu-quality",
+    "title": "菜品数据补录与规则自动处理核验",
+    "project": "meal",
+    "sourceTitle": "菜单补录与人工待办核验记录",
+    "date": "2026.09.07",
+    "type": "交付记录脱敏节选",
+    "sections": [
+      {
+        "title": "核心判断",
+        "text": "先补齐能由明确来源确定的字段，再把缺少依据的资料保留给人工。自动补录与人工确认分别记录，避免把规则提取结果当成业务人员确认。"
+      },
+      {
+        "title": "实际计数",
+        "headers": [
+          "统计项",
+          "记录值",
+          "口径"
+        ],
+        "rows": [
+          [
+            "原有资料缺项菜品",
+            "431",
+            "本轮处理前的旧菜人工待办范围"
+          ],
+          [
+            "自动处理后不再需人工",
+            "234",
+            "同一范围内已消除待办的旧菜"
+          ],
+          [
+            "旧菜仍需人工",
+            "197",
+            "431 − 234"
+          ],
+          [
+            "规则自动处理率",
+            "54.3%",
+            "234 ÷ 431，四舍五入到一位小数"
+          ],
+          [
+            "本轮全量菜品",
+            "618",
+            "云端直接计数、全量接口及不同菜名相互核对"
+          ],
+          [
+            "全部人工待办",
+            "237",
+            "197 道旧菜 + 40 道新增菜首次确认"
+          ]
+        ]
+      },
+      {
+        "title": "自动化边界",
+        "items": [
+          "仅填空缺字段，保留原值和已确认空值。",
+          "按菜名和来源表中的明确食材信息提取标签，不将其视为完整配方。",
+          "未命中忌口不推断为没有忌口。",
+          "能力与时令等业务确认继续保留人工办理，不生成模拟确认。"
+        ]
+      },
+      {
+        "title": "验证结果",
+        "text": "原有菜品的能力、时令与确认记录逐字段保持；新增菜品进入首次确认。云端接口及开发者工具实际页面完成计数与待办核对。此处的规则自动处理率不表示模型回答准确率。"
+      }
+    ],
+    "screens": [
+      {
+        "title": "菜单生成",
+        "url": "/product-portfolio/product-flows/screens/2f08aa8950cf6dec.webp",
+        "source": "经营端操作指引 · 界面脱敏"
+      },
+      {
+        "title": "新菜待定价",
+        "url": "/product-portfolio/product-flows/screens/474bf735be8bf2ec.webp",
+        "source": "厨师操作手册 · 原生小程序验收界面 · 已裁调试导航及脱敏"
+      },
+      {
+        "title": "行政设置售价",
+        "url": "/product-portfolio/product-flows/screens/56c549f8c6aa6d34.webp",
+        "source": "厨师操作手册 · 原生小程序验收界面 · 测试记录脱敏"
+      }
+    ],
+    "url": "/product-portfolio/evidence/documents/menu-quality.html",
+    "download": "/product-portfolio/evidence/downloads/menu-quality.pdf"
+  },
+  {
+    "id": "dining-guide",
+    "title": "配餐与厨房履约操作节选",
+    "project": "meal",
+    "sourceTitle": "经营端指引、厨房操作手册、日常点餐原生验收记录",
+    "date": "2026.10—2026.11",
+    "type": "交付记录脱敏节选",
+    "sections": [
+      {
+        "title": "菜单生成",
+        "text": "经营端填写人数、预算和忌口等用餐条件，生成整桌菜单后逐道微调，并在确认前复核菜品、份数和费用。"
+      },
+      {
+        "title": "数据约束",
+        "text": "菜单编排基于菜品目录和可用标签；明确的禁用项与偏好分开处理。菜品资料不完整时保留复核，换菜后再次检查整桌条件。"
+      },
+      {
+        "title": "跨端履约",
+        "headers": [
+          "角色",
+          "核心操作",
+          "结果"
+        ],
+        "rows": [
+          [
+            "经营端",
+            "安排宴请或日常点餐，确认菜单和数量",
+            "订单交厨房处理"
+          ],
+          [
+            "厨房端",
+            "查看待办，接单、制作并确认出餐",
+            "经营端可查看同一订单的进展"
+          ],
+          [
+            "行政端",
+            "处理待定价菜品并维护售价",
+            "菜品进入可用目录，价格变化有对应操作"
+          ]
+        ]
+      },
+      {
+        "title": "实际页面覆盖",
+        "text": "已有原生界面包含宴请条件填写、菜单生成与换菜、客户资料、菜品新增与定价、日常订单、厨房待办、接单、制作和出餐。教学展示中使用脱敏或隔离数据，不暴露客户档案。"
+      }
+    ],
+    "screens": [
+      {
+        "title": "新建宴请",
+        "url": "/product-portfolio/product-flows/screens/d1d759bbd457ccc3.webp",
+        "source": "经营端操作指引 · 界面脱敏"
+      },
+      {
+        "title": "菜单生成",
+        "url": "/product-portfolio/product-flows/screens/2f08aa8950cf6dec.webp",
+        "source": "经营端操作指引 · 界面脱敏"
+      },
+      {
+        "title": "宴请菜单换菜",
+        "url": "/product-portfolio/product-flows/screens/d0e97edbec137d9c.webp",
+        "source": "经营端操作指引 · 界面脱敏"
+      },
+      {
+        "title": "已接单状态",
+        "url": "/product-portfolio/product-flows/screens/b095e491f302028c.webp",
+        "source": "厨师操作手册 · 原生小程序验收界面 · 测试记录脱敏"
+      },
+      {
+        "title": "制作中状态",
+        "url": "/product-portfolio/product-flows/screens/a7840ba2324d6ab7.webp",
+        "source": "厨师操作手册 · 原生小程序验收界面 · 测试记录脱敏"
+      },
+      {
+        "title": "已出餐",
+        "url": "/product-portfolio/product-flows/screens/8362f0fea09558f9.webp",
+        "source": "小程序原生验收 · 示例数据脱敏"
+      }
+    ],
+    "url": "/product-portfolio/evidence/documents/dining-guide.html",
+    "download": "/product-portfolio/evidence/downloads/dining-guide.pdf"
+  }
+]

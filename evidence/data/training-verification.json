@@ -1,0 +1,43 @@
+{
+  "date": "2026-11-05",
+  "source": "现有培训原型的隔离学习身份验证记录",
+  "comparison": {
+    "missingSelections": "对照解释，调整遗漏或多选的项目后再试。",
+    "correctSelections": "已找全需要核对的差异和未知项。",
+    "audioClockSeconds": 16.049184,
+    "speaker": "compare-row-0",
+    "highlight": "项目进度监控"
+  },
+  "interview": {
+    "riskyReply": "我们没有特别的要求，只要能按时交工就行。",
+    "goodReply": "我们非常重视项目的整体进度，希望能在6个月内完成。同时，我们也需要确保工程质量符合我们的标准。",
+    "differentEvidenceVerified": true,
+    "threeRoundsCompleted": true,
+    "audioClockSeconds": 16.02557,
+    "speaker": "seller",
+    "salesBubbleOpacity": 1,
+    "customerBubbleOpacity": 0.2
+  },
+  "timeline": {
+    "outOfOrderFeedback": "这一步需要先完成与客户沟通初步时间表",
+    "correctResult": "行动顺序与待确认边界均已核对。",
+    "audioClockSeconds": 17.04449,
+    "speaker": "timeline-event-0",
+    "visibleNodes": 1
+  },
+  "assessment": {
+    "intentionalWrongDimension": 0,
+    "expectedScore": 75,
+    "actualScore": 75,
+    "dimensions": [
+      0,
+      100,
+      100,
+      100,
+      100
+    ],
+    "dashboardAfterReload": true,
+    "sameAttemptRepeatKeptScore": true,
+    "sameAttemptRepeatRecordCount": 1
+  }
+}

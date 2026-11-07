@@ -1,0 +1,73 @@
+
+#portfolio-completion-review{--pr-bg:#202640;--pr-panel:#282f49;--pr-ink:#fffff2;--pr-accent:#ff98b7;--pr-muted:#c5c7d2;--pr-line:#4b5168;font:14px/1.7 Arial,"PingFang SC","Microsoft YaHei",sans-serif;color:var(--pr-ink);width:100%}
+#portfolio-completion-review *{box-sizing:border-box}
+#portfolio-completion-review button{font:inherit;cursor:pointer}
+#portfolio-completion-review .pr-reviewbar{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;padding:12px 0;color:light-dark(#5f4550,#eac5d1);font-size:12px}
+#portfolio-completion-review .pr-site{background:var(--pr-bg);overflow:hidden}
+#portfolio-completion-review .pr-header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;padding:24px 28px;border-bottom:1px solid var(--pr-line)}
+#portfolio-completion-review .pr-brand{color:var(--pr-accent);background:none;border:0;padding:0;font-size:19px;font-weight:700}
+#portfolio-completion-review .pr-brand span{margin-left:8px}
+#portfolio-completion-review nav{display:flex;flex-wrap:wrap;gap:8px 18px}
+#portfolio-completion-review nav a{color:var(--pr-muted);border:0;background:none;padding:6px 0}
+#portfolio-completion-review nav a[aria-current="page"]{color:var(--pr-accent);box-shadow:0 1px var(--pr-accent)}
+#portfolio-completion-review button:focus-visible{outline:2px solid var(--pr-accent);outline-offset:4px}
+#portfolio-completion-review .pr-location{padding:14px 28px;color:var(--pr-muted);font-size:12px;border-bottom:1px solid var(--pr-line)}
+#portfolio-completion-review main{padding:32px 28px 42px;min-height:480px}
+#portfolio-completion-review h1,#portfolio-completion-review h2,#portfolio-completion-review h3,#portfolio-completion-review p{margin:0}
+#portfolio-completion-review h1{font-size:clamp(32px,5vw,60px);letter-spacing:-.055em;line-height:1.2;color:var(--pr-accent);font-weight:700}
+#portfolio-completion-review h2{font-size:23px;line-height:1.45;font-weight:650;letter-spacing:-.025em}
+#portfolio-completion-review h3{font-size:16px;line-height:1.5;font-weight:650}
+#portfolio-completion-review .pr-kicker{font-size:12px;letter-spacing:.12em;color:var(--pr-accent);margin-bottom:12px}
+#portfolio-completion-review .pr-lead{color:var(--pr-muted);margin-top:16px;max-width:58em}
+#portfolio-completion-review .pr-section{margin-top:30px}
+#portfolio-completion-review .pr-label{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;padding-bottom:12px;margin-bottom:18px;border-bottom:1px solid var(--pr-line);font-size:12px;color:var(--pr-muted)}
+#portfolio-completion-review .pr-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+#portfolio-completion-review .pr-project{background:none;border:0;padding:0;color:var(--pr-ink);text-align:left;display:block;width:100%}
+#portfolio-completion-review .pr-cover{height:200px;background:var(--pr-panel);overflow:hidden;border-radius:4px;border:1px solid var(--pr-line)}
+#portfolio-completion-review .pr-cover img{width:100%;height:100%;object-fit:contain;display:block;transition:transform .25s}
+#portfolio-completion-review .pr-project:hover img{transform:scale(1.025)}
+#portfolio-completion-review .pr-cardtitle{display:flex;justify-content:space-between;gap:12px;margin-top:14px}
+#portfolio-completion-review .pr-cardtitle span{color:var(--pr-accent);font-size:24px}
+#portfolio-completion-review .pr-caption{font-size:12px;color:var(--pr-muted);margin-top:7px}
+#portfolio-completion-review .pr-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+#portfolio-completion-review .pr-tags span{font-size:11px;color:var(--pr-muted);border:1px solid var(--pr-line);border-radius:20px;padding:3px 10px}
+#portfolio-completion-review .pr-btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+#portfolio-completion-review .pr-button{background:transparent;border:1px solid var(--pr-line);padding:9px 15px;border-radius:24px;color:var(--pr-ink)}
+#portfolio-completion-review .pr-button:hover{border-color:var(--pr-accent);color:var(--pr-accent)}
+#portfolio-completion-review .pr-button.is-on{background:var(--pr-accent);border-color:var(--pr-accent);color:var(--pr-bg)}
+#portfolio-completion-review .pr-back{background:none;border:0;color:var(--pr-muted);padding:0;margin-bottom:20px}
+#portfolio-completion-review .pr-brief{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:25px}
+#portfolio-completion-review .pr-brief>div{border-top:1px solid var(--pr-line);padding-top:14px}
+#portfolio-completion-review .pr-brief p{color:var(--pr-muted);margin-top:7px}
+#portfolio-completion-review .pr-sheet{background:var(--pr-panel);padding:22px;border:1px solid var(--pr-line);border-radius:5px;margin-top:20px}
+#portfolio-completion-review .pr-sheet .pr-meta{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:12px;color:var(--pr-muted);margin-bottom:18px}
+#portfolio-completion-review table{border-collapse:collapse;width:100%;margin-top:16px;font-size:13px;table-layout:fixed}
+#portfolio-completion-review th,#portfolio-completion-review td{text-align:left;vertical-align:top;border-bottom:1px solid var(--pr-line);padding:11px 8px;overflow-wrap:anywhere}
+#portfolio-completion-review th{color:var(--pr-accent);font-weight:500}
+#portfolio-completion-review td{color:var(--pr-muted)}
+#portfolio-completion-review .pr-track{display:grid;grid-template-columns:1fr 30px 1fr 30px 1fr;align-items:start;gap:8px;margin-top:20px}
+#portfolio-completion-review .pr-node{width:100%;background:transparent;border:0;padding:0;color:var(--pr-ink);text-align:left}
+#portfolio-completion-review .pr-node img{width:100%;height:180px;object-fit:contain;background:var(--pr-panel);border:1px solid var(--pr-line);display:block;margin-bottom:10px}
+#portfolio-completion-review .pr-node:hover img{border-color:var(--pr-accent)}
+#portfolio-completion-review .pr-join{align-self:center;color:var(--pr-accent);text-align:center}
+#portfolio-completion-review .pr-expanded{margin-top:20px}
+#portfolio-completion-review .pr-expanded img{width:100%;max-height:780px;object-fit:contain;background:var(--pr-panel)}
+#portfolio-completion-review .pr-footnote{font-size:12px;color:var(--pr-muted);margin-top:15px}
+#portfolio-completion-review .pr-list{margin-top:20px;display:grid;gap:0}
+#portfolio-completion-review .pr-row{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:20px 0;border-bottom:1px solid var(--pr-line)}
+#portfolio-completion-review .pr-row>div{min-width:0}
+#portfolio-completion-review .pr-row .pr-button{flex-shrink:0}
+#portfolio-completion-review .pr-stageflow{display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin-top:22px}
+#portfolio-completion-review .pr-stageflow button{border:1px solid var(--pr-line);background:var(--pr-panel);color:var(--pr-ink);padding:13px 18px;border-radius:4px}
+#portfolio-completion-review .pr-stageflow button.is-on{border-color:var(--pr-accent);color:var(--pr-accent)}
+#portfolio-completion-review .pr-stageflow>span{color:var(--pr-accent)}
+#portfolio-completion-review .pr-media{aspect-ratio:16/7;display:flex;align-items:center;justify-content:center;background:var(--pr-panel);border:1px solid var(--pr-line);margin-top:20px;color:var(--pr-accent);font-size:20px;text-align:center;padding:20px}
+#portfolio-completion-review .pr-footer{border-top:1px solid var(--pr-line);padding:22px 28px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;color:var(--pr-muted);font-size:12px}
+#portfolio-completion-review .pr-decision{padding:20px 0;color:light-dark(#493640,#eac5d1)}
+#portfolio-completion-review .pr-decision h3{margin-bottom:8px}
+#portfolio-completion-review .pr-decision p{font-size:13px}
+#portfolio-completion-review [hidden]{display:none!important}
+@media(max-width:620px){#portfolio-completion-review .pr-header{padding:20px}#portfolio-completion-review main{padding:25px 20px 32px}#portfolio-completion-review .pr-location{padding:12px 20px}#portfolio-completion-review .pr-grid,#portfolio-completion-review .pr-brief{grid-template-columns:1fr}#portfolio-completion-review .pr-cover{height:220px}#portfolio-completion-review .pr-row{align-items:flex-start;flex-wrap:wrap}#portfolio-completion-review .pr-track{grid-template-columns:1fr}#portfolio-completion-review .pr-join{transform:rotate(90deg);padding:8px}#portfolio-completion-review .pr-node img{height:240px}#portfolio-completion-review .pr-sheet{padding:16px}#portfolio-completion-review th,#portfolio-completion-review td{padding:10px 4px;font-size:12px}#portfolio-completion-review .pr-footer{padding:20px}#portfolio-completion-review .pr-reviewbar{padding-right:90px}}
+@media(prefers-reduced-motion:reduce){#portfolio-completion-review *{transition:none!important;scroll-behavior:auto!important}}
+
+html{background:#202640;scroll-behavior:smooth}body{margin:0}a{text-decoration:none;color:inherit}#portfolio-completion-review .pr-site{max-width:1600px;margin:auto}#portfolio-completion-review .pr-header{padding-right:5vw;padding-left:5vw}#portfolio-completion-review main{padding:40px 5vw 70px}#portfolio-completion-review .pr-location{padding-left:5vw}#portfolio-completion-review .pr-button{display:inline-block}#portfolio-completion-review .pr-doc-card{display:block;padding:20px 0;border-bottom:1px solid var(--pr-line)}#portfolio-completion-review .pr-doc-card:hover h3{color:var(--pr-accent)}#portfolio-completion-review .pr-number{font-size:32px;color:var(--pr-accent);display:block;line-height:1.3;margin-bottom:8px}#portfolio-completion-review .pr-brief strong{font-weight:650}#portfolio-completion-review .pr-raw{white-space:pre-wrap;overflow-wrap:anywhere;color:var(--pr-muted)}#portfolio-completion-review .pr-question-list{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0}#portfolio-completion-review .pr-question-list button{min-width:64px}#portfolio-completion-review .pr-source-list{margin-top:20px}#portfolio-completion-review .pr-source-list details{border-top:1px solid var(--pr-line);padding:12px 0}#portfolio-completion-review summary{cursor:pointer;color:var(--pr-accent)}#portfolio-completion-review .pr-video{width:100%;aspect-ratio:16/9;background:#151c30;display:block;margin-top:16px;border-radius:5px}#portfolio-completion-review .pr-plainlist{padding-left:20px;color:var(--pr-muted)}#portfolio-completion-review .pr-plainlist li+li{margin-top:8px}#portfolio-completion-review .pr-train-options{display:grid;gap:10px;margin-top:16px}#portfolio-completion-review .pr-train-options button{width:100%;text-align:left;border-radius:6px}#portfolio-completion-review .pr-active-cue{border-left:3px solid var(--pr-accent);padding-left:14px;margin:20px 0}#portfolio-completion-review .pr-audio{width:100%;margin-top:18px}#portfolio-completion-review .pr-order{display:flex;flex-wrap:wrap;gap:8px;padding:12px 0;min-height:50px}#portfolio-completion-review .pr-order span{background:var(--pr-panel);border:1px solid var(--pr-line);padding:8px 12px}#portfolio-completion-review .pr-feedback{margin-top:16px;padding:14px 0;color:var(--pr-accent);border-top:1px solid var(--pr-line)}#portfolio-completion-review .pr-reports{display:grid;gap:15px;margin-top:20px}#portfolio-completion-review .pr-course-screens{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:20px}#portfolio-completion-review .pr-course-screens img{width:100%;border-radius:4px}#portfolio-completion-review .pr-player-cue{transition:background .15s}#portfolio-completion-review .pr-player-cue.active{background:rgba(255,152,183,.12)}#portfolio-completion-review .pr-quiz{border-top:1px solid var(--pr-line);padding:22px 0}#portfolio-completion-review .pr-quiz label{display:flex;gap:10px;color:var(--pr-muted);padding:9px 0}#portfolio-completion-review input{accent-color:var(--pr-accent)}#portfolio-completion-review .pr-quiz input{margin-top:6px}#portfolio-completion-review .pr-mobile-only{display:none}#portfolio-completion-review dialog{width:min(1100px,calc(100vw - 30px));max-height:calc(100dvh - 30px);background:var(--pr-bg);border:1px solid var(--pr-line);color:var(--pr-ink);padding:20px;border-radius:8px}#portfolio-completion-review dialog::backdrop{background:#080d20dd}#portfolio-completion-review dialog img{display:block;max-width:100%;max-height:80dvh;object-fit:contain;margin:auto}body.pr-modal-open{overflow:hidden}@media(max-width:620px){#portfolio-completion-review main{padding:25px 6vw 40px}#portfolio-completion-review .pr-course-screens{grid-template-columns:1fr}#portfolio-completion-review .pr-number{font-size:28px}}

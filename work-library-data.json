@@ -68,6 +68,10 @@
         {
           "title": "使用示例",
           "text": "使用 $rag-quality-evaluation 评估这组脱敏问答，分别记录引用结构与人工语义复核项。"
+        },
+        {
+          "title": "我的实际应用",
+          "text": "OA 知识助手的 20 题首轮评测。可打开对应页面查看实际交付内容、数据口径与验证范围。"
         }
       ],
       "links": [
@@ -79,6 +83,15 @@
         {
           "label": "下载 SKILL.md",
           "href": "/product-portfolio/skills/rag-quality-evaluation/SKILL.md",
+          "download": true
+        },
+        {
+          "label": "查看实际应用 ↗",
+          "href": "/product-portfolio/watch-listen/#rag"
+        },
+        {
+          "label": "下载交付节选 PDF",
+          "href": "/product-portfolio/evidence/downloads/rag-report.pdf",
           "download": true
         }
       ]
@@ -150,6 +163,10 @@
         {
           "title": "使用示例",
           "text": "使用 $adaptive-training-course 把这个岗位问题整理成有事实依据、可练习和可核验的微课。"
+        },
+        {
+          "title": "我的实际应用",
+          "text": "三种实际生成课程、语音与计分验证。可打开对应页面查看实际交付内容、数据口径与验证范围。"
         }
       ],
       "links": [
@@ -161,6 +178,15 @@
         {
           "label": "下载 SKILL.md",
           "href": "/product-portfolio/skills/adaptive-training-course/SKILL.md",
+          "download": true
+        },
+        {
+          "label": "查看实际应用 ↗",
+          "href": "/product-portfolio/evidence/training/"
+        },
+        {
+          "label": "下载交付节选 PDF",
+          "href": "/product-portfolio/evidence/downloads/training-report.pdf",
           "download": true
         }
       ]
@@ -231,6 +257,10 @@
         {
           "title": "使用示例",
           "text": "使用 $enterprise-workflow-design 将这些操作材料整理成状态、角色、交接与验收口径明确的产品方案。"
+        },
+        {
+          "title": "我的实际应用",
+          "text": "OA 前置条件、归档与在途兼容。可打开对应页面查看实际交付内容、数据口径与验证范围。"
         }
       ],
       "links": [
@@ -242,6 +272,15 @@
         {
           "label": "下载 SKILL.md",
           "href": "/product-portfolio/skills/enterprise-workflow-design/SKILL.md",
+          "download": true
+        },
+        {
+          "label": "查看实际应用 ↗",
+          "href": "/product-portfolio/shows/#oa/rules"
+        },
+        {
+          "label": "下载交付节选 PDF",
+          "href": "/product-portfolio/evidence/downloads/oa-rules.pdf",
           "download": true
         }
       ]
@@ -312,6 +351,10 @@
         {
           "title": "使用示例",
           "text": "使用 $permission-matrix-audit 按已给规则建立权限矩阵与可复核的跨角色回归用例。"
+        },
+        {
+          "title": "我的实际应用",
+          "text": "OA 三档权限与撤权边界。可打开对应页面查看实际交付内容、数据口径与验证范围。"
         }
       ],
       "links": [
@@ -323,6 +366,15 @@
         {
           "label": "下载 SKILL.md",
           "href": "/product-portfolio/skills/permission-matrix-audit/SKILL.md",
+          "download": true
+        },
+        {
+          "label": "查看实际应用 ↗",
+          "href": "/product-portfolio/shows/#oa/rules"
+        },
+        {
+          "label": "下载交付节选 PDF",
+          "href": "/product-portfolio/evidence/downloads/oa-permissions.pdf",
           "download": true
         }
       ]
@@ -393,6 +445,10 @@
         {
           "title": "使用示例",
           "text": "使用 $constraint-menu-planning 根据这些菜品和明确约束生成可复算、可检查的菜单草案。"
+        },
+        {
+          "title": "我的实际应用",
+          "text": "菜单编排与菜品资料规则处理。可打开对应页面查看实际交付内容、数据口径与验证范围。"
         }
       ],
       "links": [
@@ -404,6 +460,15 @@
         {
           "label": "下载 SKILL.md",
           "href": "/product-portfolio/skills/constraint-menu-planning/SKILL.md",
+          "download": true
+        },
+        {
+          "label": "查看实际应用 ↗",
+          "href": "/product-portfolio/shows/#meal/results"
+        },
+        {
+          "label": "下载交付节选 PDF",
+          "href": "/product-portfolio/evidence/downloads/menu-quality.pdf",
           "download": true
         }
       ]
@@ -474,6 +539,10 @@
         {
           "title": "使用示例",
           "text": "使用 $redacted-workflow-portfolio 将这些获准使用的页面整理成脱敏、可放大的多角色流程画布。"
+        },
+        {
+          "title": "我的实际应用",
+          "text": "四套系统的真实脱敏泳道画布。可打开对应页面查看实际交付内容、数据口径与验证范围。"
         }
       ],
       "links": [
@@ -485,6 +554,15 @@
         {
           "label": "下载 SKILL.md",
           "href": "/product-portfolio/skills/redacted-workflow-portfolio/SKILL.md",
+          "download": true
+        },
+        {
+          "label": "查看实际应用 ↗",
+          "href": "/product-portfolio/product-flows/"
+        },
+        {
+          "label": "下载交付节选 PDF",
+          "href": "/product-portfolio/evidence/downloads/ride-guide.pdf",
           "download": true
         }
       ]
@@ -555,6 +633,10 @@
         {
           "title": "使用示例",
           "text": "使用 $project-promo-video 根据这些资料组织可执行分镜、样段与明确的成片验收记录。"
+        },
+        {
+          "title": "我的实际应用",
+          "text": "已有成片的脱敏画面与工艺动态节选。可打开对应页面查看实际交付内容、数据口径与验证范围。"
         }
       ],
       "links": [
@@ -567,6 +649,10 @@
           "label": "下载 SKILL.md",
           "href": "/product-portfolio/skills/project-promo-video/SKILL.md",
           "download": true
+        },
+        {
+          "label": "查看实际应用 ↗",
+          "href": "/product-portfolio/videos/"
         }
       ]
     },
@@ -636,6 +722,10 @@
         {
           "title": "使用示例",
           "text": "使用 $role-based-operation-manual 根据核实后的角色、流程和截图生成可审阅的分角色操作手册。"
+        },
+        {
+          "title": "我的实际应用",
+          "text": "采购与用车的多角色交付节选。可打开对应页面查看实际交付内容、数据口径与验证范围。"
         }
       ],
       "links": [
@@ -647,6 +737,15 @@
         {
           "label": "下载 SKILL.md",
           "href": "/product-portfolio/skills/role-based-operation-manual/SKILL.md",
+          "download": true
+        },
+        {
+          "label": "查看实际应用 ↗",
+          "href": "/product-portfolio/books/"
+        },
+        {
+          "label": "下载交付节选 PDF",
+          "href": "/product-portfolio/evidence/downloads/procurement-guide.pdf",
           "download": true
         }
       ]
