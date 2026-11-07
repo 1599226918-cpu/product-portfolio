@@ -1,0 +1,350 @@
+{
+  "date": "2026-11-07",
+  "scope": "既有纯函数规则引擎在独立构造菜品上的执行记录；不是企业订单或模型生成记录。",
+  "engine_sha256": "92c40b42c142524f42900c579b2c19e5e6a2457a687b99e6c09b084bc3e9ddaf",
+  "randomSeed": 42,
+  "input": {
+    "pool": [
+      {
+        "_id": "d1",
+        "name": "清蒸鲈鱼",
+        "course": "热菜",
+        "price": 60,
+        "protein": "鱼",
+        "taboos": [
+          "含海鲜"
+        ],
+        "months": [
+          11
+        ],
+        "chefLevel": "擅长",
+        "active": true,
+        "flavors": [
+          "清淡"
+        ]
+      },
+      {
+        "_id": "d2",
+        "name": "清炒虾仁",
+        "course": "热菜",
+        "price": 50,
+        "protein": "虾",
+        "taboos": [
+          "含海鲜"
+        ],
+        "months": [
+          11
+        ],
+        "chefLevel": "擅长",
+        "active": true,
+        "flavors": [
+          "清淡"
+        ]
+      },
+      {
+        "_id": "d3",
+        "name": "香菇鸡丁",
+        "course": "热菜",
+        "price": 38,
+        "protein": "鸡",
+        "taboos": [],
+        "months": [
+          11
+        ],
+        "chefLevel": "擅长",
+        "active": true,
+        "flavors": [
+          "清淡"
+        ]
+      },
+      {
+        "_id": "d4",
+        "name": "红烧排骨",
+        "course": "热菜",
+        "price": 42,
+        "protein": "猪",
+        "taboos": [],
+        "months": [
+          11
+        ],
+        "chefLevel": "擅长",
+        "active": true,
+        "flavors": [
+          "清淡"
+        ]
+      },
+      {
+        "_id": "d5",
+        "name": "清炒时蔬",
+        "course": "热菜",
+        "price": 18,
+        "protein": "蔬菜",
+        "taboos": [],
+        "months": [
+          11
+        ],
+        "chefLevel": "擅长",
+        "active": true,
+        "flavors": [
+          "清淡"
+        ]
+      },
+      {
+        "_id": "d6",
+        "name": "凉拌豆腐",
+        "course": "冷菜",
+        "price": 16,
+        "protein": "豆制品",
+        "taboos": [],
+        "months": [
+          11
+        ],
+        "chefLevel": "擅长",
+        "active": true,
+        "flavors": [
+          "清淡"
+        ]
+      },
+      {
+        "_id": "d7",
+        "name": "番茄蛋汤",
+        "course": "汤",
+        "price": 8,
+        "protein": "蛋",
+        "taboos": [],
+        "months": [
+          11
+        ],
+        "chefLevel": "擅长",
+        "active": true,
+        "flavors": [
+          "清淡"
+        ]
+      },
+      {
+        "_id": "d8",
+        "name": "清炖牛肉",
+        "course": "热菜",
+        "price": 48,
+        "protein": "牛",
+        "taboos": [],
+        "months": [
+          11
+        ],
+        "chefLevel": "擅长",
+        "active": true,
+        "flavors": [
+          "清淡"
+        ]
+      }
+    ],
+    "ctx": {
+      "guests": 4,
+      "budget": 160,
+      "month": 11,
+      "taboos": [
+        "含海鲜"
+      ],
+      "historyContext": {
+        "lastDishIds": [
+          "d4"
+        ],
+        "lastDishNames": [],
+        "badDishIds": [],
+        "badDishNames": [],
+        "olderDishIds": [],
+        "olderDishNames": []
+      },
+      "allowHistoryRepeat": false
+    },
+    "counts": {
+      "冷菜": 1,
+      "热菜": 2,
+      "位菜": 0,
+      "汤": 1,
+      "主食": 0,
+      "甜品": 0,
+      "hardDish": 0,
+      "meatNeed": 2,
+      "vegNeed": 1
+    }
+  },
+  "output": {
+    "added": [
+      {
+        "_id": "d6",
+        "name": "凉拌豆腐",
+        "course": "冷菜",
+        "price": 16,
+        "protein": "豆制品",
+        "taboos": [],
+        "months": [
+          11
+        ],
+        "chefLevel": "擅长",
+        "active": true,
+        "flavors": [
+          "清淡"
+        ],
+        "owner": "auto",
+        "qty": 1,
+        "historyRepeat": false
+      },
+      {
+        "_id": "d3",
+        "name": "香菇鸡丁",
+        "course": "热菜",
+        "price": 38,
+        "protein": "鸡",
+        "taboos": [],
+        "months": [
+          11
+        ],
+        "chefLevel": "擅长",
+        "active": true,
+        "flavors": [
+          "清淡"
+        ],
+        "owner": "auto",
+        "qty": 1,
+        "historyRepeat": false
+      },
+      {
+        "_id": "d5",
+        "name": "清炒时蔬",
+        "course": "热菜",
+        "price": 18,
+        "protein": "蔬菜",
+        "taboos": [],
+        "months": [
+          11
+        ],
+        "chefLevel": "擅长",
+        "active": true,
+        "flavors": [
+          "清淡"
+        ],
+        "owner": "auto",
+        "qty": 1,
+        "historyRepeat": false
+      },
+      {
+        "_id": "d7",
+        "name": "番茄蛋汤",
+        "course": "汤",
+        "price": 8,
+        "protein": "蛋",
+        "taboos": [],
+        "months": [
+          11
+        ],
+        "chefLevel": "擅长",
+        "active": true,
+        "flavors": [
+          "清淡"
+        ],
+        "owner": "auto",
+        "qty": 4,
+        "historyRepeat": false
+      }
+    ],
+    "result": [
+      {
+        "_id": "d6",
+        "name": "凉拌豆腐",
+        "course": "冷菜",
+        "price": 16,
+        "protein": "豆制品",
+        "taboos": [],
+        "months": [
+          11
+        ],
+        "chefLevel": "擅长",
+        "active": true,
+        "flavors": [
+          "清淡"
+        ],
+        "owner": "auto",
+        "qty": 1,
+        "historyRepeat": false
+      },
+      {
+        "_id": "d3",
+        "name": "香菇鸡丁",
+        "course": "热菜",
+        "price": 38,
+        "protein": "鸡",
+        "taboos": [],
+        "months": [
+          11
+        ],
+        "chefLevel": "擅长",
+        "active": true,
+        "flavors": [
+          "清淡"
+        ],
+        "owner": "auto",
+        "qty": 1,
+        "historyRepeat": false
+      },
+      {
+        "_id": "d5",
+        "name": "清炒时蔬",
+        "course": "热菜",
+        "price": 18,
+        "protein": "蔬菜",
+        "taboos": [],
+        "months": [
+          11
+        ],
+        "chefLevel": "擅长",
+        "active": true,
+        "flavors": [
+          "清淡"
+        ],
+        "owner": "auto",
+        "qty": 1,
+        "historyRepeat": false
+      },
+      {
+        "_id": "d7",
+        "name": "番茄蛋汤",
+        "course": "汤",
+        "price": 8,
+        "protein": "蛋",
+        "taboos": [],
+        "months": [
+          11
+        ],
+        "chefLevel": "擅长",
+        "active": true,
+        "flavors": [
+          "清淡"
+        ],
+        "owner": "auto",
+        "qty": 4,
+        "historyRepeat": false
+      }
+    ],
+    "notes": [],
+    "historyShortages": [],
+    "historyAvoidance": {
+      "basedOnOrderId": "",
+      "lastDishCount": 1,
+      "repeatedDishIds": [],
+      "repeatedDishNames": [],
+      "repeatedCount": 0,
+      "avoidedCount": 1,
+      "shortages": [],
+      "overrideConfirmed": false
+    }
+  },
+  "checks": {
+    "noTaboo": true,
+    "noLastVisit": true,
+    "allAvailable": true,
+    "total": 104,
+    "menuCount": 4,
+    "withinBudget": true
+  }
+}

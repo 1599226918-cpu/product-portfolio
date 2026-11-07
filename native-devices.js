@@ -86,7 +86,7 @@ export function installPersonalDevices(scene,T){
   const id=['/product-portfolio/shows','#website-work'].includes(path)?'index:1':path?.replace(/\/$/,'')==='/product-portfolio/books'?'index:2':path==='/product-portfolio/skills/'?'index:4':'index:3';
   if(id==='index:1'){a.href='#website-work';a.dataset.device='laptop';const label=a.querySelector('[data-hero-link]');if(label)label.textContent='网站作品';else a.textContent='网站作品 ↗';}
   else if(id==='index:2')a.dataset.device='phone';
-  else if(id==='index:3'){a.href='/product-portfolio/videos/';a.dataset.device='player';const label=a.querySelector('[data-hero-link]');if(label)label.textContent='视频作品';else a.textContent='视频作品 ↗';}
+  else if(id==='index:3'){a.href='/product-portfolio/videos/';a.dataset.device='player';const label=a.querySelector('[data-hero-link]');if(label)label.textContent='视频与下载';else a.textContent='视频与下载 ↗';}
   a.addEventListener('focus',()=>focused=id);a.addEventListener('blur',()=>focused=null);
   a.addEventListener('pointerenter',()=>focused=id);a.addEventListener('pointerleave',()=>focused=null);
   if(id==='index:1')a.addEventListener('click',e=>{e.preventDefault();e.stopImmediatePropagation();openWork();},true);

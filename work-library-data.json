@@ -72,6 +72,10 @@
         {
           "title": "我的实际应用",
           "text": "OA 知识助手的 20 题首轮评测。可打开对应页面查看实际交付内容、数据口径与验证范围。"
+        },
+        {
+          "title": "本次实际执行记录",
+          "text": "首轮 20 题及原检索片段；保留初始 4 道新增题的调试过程，最后冻结提示后再检查 4 道新问题。 原提示、自由文本候选、结构化候选及语义约定候选的逐题原始输出，包含耗时、来源与结构检查。 结构通过与语义通过分别判断，保留退化样例；实验不重新检索，不外推生产准确率。"
         }
       ],
       "links": [
@@ -93,6 +97,10 @@
           "label": "下载交付节选 PDF",
           "href": "/product-portfolio/evidence/downloads/rag-report.pdf",
           "download": true
+        },
+        {
+          "label": "查看实际执行记录 ↗",
+          "href": "/product-portfolio/watch-listen/#execution/rag"
         }
       ]
     },
@@ -167,6 +175,10 @@
         {
           "title": "我的实际应用",
           "text": "三种实际生成课程、语音与计分验证。可打开对应页面查看实际交付内容、数据口径与验证范围。"
+        },
+        {
+          "title": "本次实际执行记录",
+          "text": "原有 3 套实际生成课程，包含对照、访谈与时间线；复核了 6 个章节与 15 道练习题。 保留原始记录，形成内容复核 v2、6 段修订版中文讲解与实际语段时间轴。 内容审查记录标注发现与修订，体验成绩与原版记录按版本隔离。"
         }
       ],
       "links": [
@@ -188,6 +200,10 @@
           "label": "下载交付节选 PDF",
           "href": "/product-portfolio/evidence/downloads/training-report.pdf",
           "download": true
+        },
+        {
+          "label": "查看实际执行记录 ↗",
+          "href": "/product-portfolio/watch-listen/#execution/training"
         }
       ]
     },
@@ -449,6 +465,10 @@
         {
           "title": "我的实际应用",
           "text": "菜单编排与菜品资料规则处理。可打开对应页面查看实际交付内容、数据口径与验证范围。"
+        },
+        {
+          "title": "本次实际执行记录",
+          "text": "8 道独立构造菜品，4 位用餐人，预算 160，海鲜忌口及上一桌重复菜限制；固定随机种子 42。 规则补齐 4 道菜，总额 104；保留候选、规则上下文和输出。 本次隔离执行中忌口、历史重复、可用性与预算检查通过；该结果属于规则引擎，不作为大模型生成记录。"
         }
       ],
       "links": [
@@ -470,6 +490,10 @@
           "label": "下载交付节选 PDF",
           "href": "/product-portfolio/evidence/downloads/menu-quality.pdf",
           "download": true
+        },
+        {
+          "label": "查看实际执行记录 ↗",
+          "href": "/product-portfolio/watch-listen/#execution/menu"
         }
       ]
     },

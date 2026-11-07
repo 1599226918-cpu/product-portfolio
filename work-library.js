@@ -111,13 +111,13 @@
     });
     return button;
   };
-  fetch('/product-portfolio/work-library-data.json', {cache: 'no-cache'})
+  fetch('/product-portfolio/work-library-data.json?v=ai-review-20261107', {cache: 'no-cache'})
     .then(response => { if (!response.ok) throw new Error('library unavailable'); return response.json(); })
     .then(data => {
       const items = (Array.isArray(data[library]) ? data[library] : []).filter(item => item.title && (library !== 'videos' || localURL(item.src)));
       count.textContent = library === 'videos' ? `${items.length} 支作品` : `${items.length} 个工作流`;
       if (!items.length) return;
-      list.replaceChildren(...items.map((item, index) => library === 'videos' ? videoCard(item) : skillCard(item, index)));
+      if(library==='skills'){list.replaceChildren();const business=element('h2','skill-group-title','业务工作流 · 实践抽象');list.append(business);items.forEach((item,index)=>{if(index===8)list.append(element('h2','skill-group-title','工具封装 · 动画与三维表达'));list.append(skillCard(item,index));});}else list.replaceChildren(...items.map((item,index)=>videoCard(item,index)));
     })
     .catch(() => { count.textContent = '暂时无法加载'; });
 })();
