@@ -1,0 +1,4 @@
+interface:
+  display_name: "多角色操作手册生成"
+  short_description: "将角色职责、页面证据和业务状态组织成任务导向手册，覆盖操作步骤、交接结果、异常处理与版本核对。"
+  default_prompt: "使用 $role-based-operation-manual 根据核实后的角色、流程和截图生成可审阅的分角色操作手册。"

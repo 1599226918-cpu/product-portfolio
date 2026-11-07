@@ -1,0 +1,4 @@
+interface:
+  display_name: "岗位问题转交互培训课程"
+  short_description: "围绕真实学习问题编排目标、情景、动画与测验，保留事实来源、生成检查点及评分版本，支持局部修正与续作。"
+  default_prompt: "使用 $adaptive-training-course 把这个岗位问题整理成有事实依据、可练习和可核验的微课。"

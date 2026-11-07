@@ -1,0 +1,68 @@
+{
+  "constructed_example": true,
+  "screens": [
+    {
+      "id": "screen-a",
+      "title": "申请列表",
+      "role": "requester",
+      "state": "draft",
+      "sensitive_fields": [
+        "成员姓名",
+        "内部编号"
+      ]
+    },
+    {
+      "id": "screen-b",
+      "title": "填写申请",
+      "role": "requester",
+      "state": "editing",
+      "sensitive_fields": [
+        "项目名称"
+      ]
+    },
+    {
+      "id": "screen-c",
+      "title": "审批待办",
+      "role": "reviewer",
+      "state": "reviewing",
+      "sensitive_fields": [
+        "成员姓名"
+      ]
+    },
+    {
+      "id": "screen-d",
+      "title": "修改后重提",
+      "role": "requester",
+      "state": "rejected",
+      "sensitive_fields": [
+        "内部编号"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "screen-a",
+      "to": "screen-b",
+      "kind": "main",
+      "label": "新建申请"
+    },
+    {
+      "from": "screen-b",
+      "to": "screen-c",
+      "kind": "handoff",
+      "label": "提交审批"
+    },
+    {
+      "from": "screen-c",
+      "to": "screen-d",
+      "kind": "branch",
+      "label": "退回修改"
+    },
+    {
+      "from": "screen-d",
+      "to": "screen-b",
+      "kind": "return",
+      "label": "重新编辑"
+    }
+  ]
+}

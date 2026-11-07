@@ -1,0 +1,4 @@
+interface:
+  display_name: "多约束菜单编排"
+  short_description: "区分硬约束与偏好，在预算、忌口和菜式结构下编排菜单，解释冲突与替换理由，保留需要人工确认的信息。"
+  default_prompt: "使用 $constraint-menu-planning 根据这些菜品和明确约束生成可复算、可检查的菜单草案。"

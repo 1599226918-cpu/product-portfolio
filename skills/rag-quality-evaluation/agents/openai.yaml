@@ -1,0 +1,4 @@
+interface:
+  display_name: "RAG 问答质量评测"
+  short_description: "固定资料与题集，从证据命中、答案忠实度到引用与拒答逐层定位问题，形成可追溯的 Bad Case 与复测记录。"
+  default_prompt: "使用 $rag-quality-evaluation 评估这组脱敏问答，分别记录引用结构与人工语义复核项。"

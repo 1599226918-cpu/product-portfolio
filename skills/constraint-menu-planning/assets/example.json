@@ -1,0 +1,94 @@
+{
+  "constructed_example": true,
+  "brief": {
+    "guests": 4,
+    "budget": 240,
+    "excluded_ingredients": [
+      "牛肉"
+    ],
+    "required_courses": {
+      "cold": 1,
+      "hot": 2,
+      "soup": 1
+    }
+  },
+  "dishes": [
+    {
+      "id": "dish-a",
+      "name": "清拌黄瓜",
+      "course": "cold",
+      "ingredients": [
+        "黄瓜"
+      ],
+      "price": 18,
+      "price_unit": "per-dish",
+      "available": true
+    },
+    {
+      "id": "dish-b",
+      "name": "菌菇鸡丁",
+      "course": "hot",
+      "ingredients": [
+        "鸡肉",
+        "菌菇"
+      ],
+      "price": 48,
+      "price_unit": "per-dish",
+      "available": true
+    },
+    {
+      "id": "dish-c",
+      "name": "时蔬豆腐",
+      "course": "hot",
+      "ingredients": [
+        "青菜",
+        "豆腐"
+      ],
+      "price": 32,
+      "price_unit": "per-dish",
+      "available": true
+    },
+    {
+      "id": "dish-d",
+      "name": "番茄牛肉",
+      "course": "hot",
+      "ingredients": [
+        "番茄",
+        "牛肉"
+      ],
+      "price": 58,
+      "price_unit": "per-dish",
+      "available": true
+    },
+    {
+      "id": "dish-e",
+      "name": "冬瓜汤",
+      "course": "soup",
+      "ingredients": [
+        "冬瓜"
+      ],
+      "price": 20,
+      "price_unit": "per-dish",
+      "available": true
+    }
+  ],
+  "proposed_menu": [
+    {
+      "dish_id": "dish-a",
+      "quantity": 1
+    },
+    {
+      "dish_id": "dish-b",
+      "quantity": 1
+    },
+    {
+      "dish_id": "dish-c",
+      "quantity": 1
+    },
+    {
+      "dish_id": "dish-e",
+      "quantity": 1
+    }
+  ],
+  "expected_total": 118
+}

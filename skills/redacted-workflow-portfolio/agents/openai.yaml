@@ -1,0 +1,4 @@
+interface:
+  display_name: "系统截图脱敏与交互流程画布"
+  short_description: "以真实页面证据组织角色泳道、主线、交接、分支和回退，统一脱敏截图、放大图与原型入口，形成可审阅 HTML。"
+  default_prompt: "使用 $redacted-workflow-portfolio 将这些获准使用的页面整理成脱敏、可放大的多角色流程画布。"

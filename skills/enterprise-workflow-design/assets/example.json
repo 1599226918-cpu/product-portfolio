@@ -1,0 +1,70 @@
+{
+  "constructed_example": true,
+  "business_goal": "使资料申请在审批与接收确认后形成完整交接记录。",
+  "roles": [
+    "requester",
+    "reviewer",
+    "receiver"
+  ],
+  "states": [
+    "draft",
+    "reviewing",
+    "rejected",
+    "receiving",
+    "completed"
+  ],
+  "transitions": [
+    {
+      "id": "submit",
+      "from": "draft",
+      "to": "reviewing",
+      "actor": "requester",
+      "action": "提交申请",
+      "preconditions": [
+        "必填项齐全"
+      ]
+    },
+    {
+      "id": "reject",
+      "from": "reviewing",
+      "to": "rejected",
+      "actor": "reviewer",
+      "action": "退回修改",
+      "preconditions": [
+        "填写退回原因"
+      ]
+    },
+    {
+      "id": "revise",
+      "from": "rejected",
+      "to": "draft",
+      "actor": "requester",
+      "action": "修改申请",
+      "preconditions": []
+    },
+    {
+      "id": "approve",
+      "from": "reviewing",
+      "to": "receiving",
+      "actor": "reviewer",
+      "action": "审批通过",
+      "preconditions": [
+        "检查资料"
+      ]
+    },
+    {
+      "id": "receive",
+      "from": "receiving",
+      "to": "completed",
+      "actor": "receiver",
+      "action": "确认接收",
+      "preconditions": [
+        "指定接收人已核对"
+      ]
+    }
+  ],
+  "completion_evidence": [
+    "审批记录",
+    "接收确认记录"
+  ]
+}

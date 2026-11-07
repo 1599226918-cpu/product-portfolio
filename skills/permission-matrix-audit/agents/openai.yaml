@@ -1,0 +1,4 @@
+interface:
+  display_name: "多角色权限矩阵与回归验收"
+  short_description: "围绕角色、资源与动作核对授权规则，覆盖权限继承、单独授权、降级移除和旧入口，输出可追踪的回归矩阵。"
+  default_prompt: "使用 $permission-matrix-audit 按已给规则建立权限矩阵与可复核的跨角色回归用例。"

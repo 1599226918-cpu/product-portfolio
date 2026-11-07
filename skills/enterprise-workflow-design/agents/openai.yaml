@@ -1,0 +1,4 @@
+interface:
+  display_name: "企业业务流程产品化"
+  short_description: "从业务目标与现有操作出发，建立对象、状态、责任人与完成条件，明确方案取舍、异常路径和可验收范围。"
+  default_prompt: "使用 $enterprise-workflow-design 将这些操作材料整理成状态、角色、交接与验收口径明确的产品方案。"

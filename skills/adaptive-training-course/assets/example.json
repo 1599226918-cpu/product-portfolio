@@ -1,0 +1,70 @@
+{
+  "constructed_example": true,
+  "lesson_id": "lesson-a",
+  "learning_objectives": [
+    {
+      "id": "goal-clarify",
+      "description": "从需求描述中识别已确认事实与待澄清信息。"
+    }
+  ],
+  "scenario": {
+    "id": "scenario-a",
+    "facts": [
+      {
+        "id": "fact-a",
+        "text": "需求方只确认了交付日期，数量与预算尚待澄清。"
+      }
+    ]
+  },
+  "segments": [
+    {
+      "id": "segment-a",
+      "goal_ids": [
+        "goal-clarify"
+      ],
+      "fact_ids": [
+        "fact-a"
+      ],
+      "narration": "先记录已确认的交付日期，再澄清数量与预算。",
+      "interaction": {
+        "kind": "dialogue-branch"
+      }
+    }
+  ],
+  "assessment": {
+    "version": "rubric-v1",
+    "dimensions": [
+      {
+        "id": "information",
+        "weight": 60
+      },
+      {
+        "id": "judgment",
+        "weight": 40
+      }
+    ],
+    "questions": [
+      {
+        "id": "question-a",
+        "goal_ids": [
+          "goal-clarify"
+        ],
+        "fact_ids": [
+          "fact-a"
+        ],
+        "options": [
+          {
+            "id": "ask",
+            "text": "进一步确认数量与预算。"
+          },
+          {
+            "id": "promise",
+            "text": "直接承诺完整方案。"
+          }
+        ],
+        "correct_option": "ask",
+        "rationale": "现有事实只确认了交付日期，数量与预算尚待澄清。"
+      }
+    ]
+  }
+}

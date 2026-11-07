@@ -1,0 +1,50 @@
+{
+  "constructed_example": true,
+  "brief": {
+    "project": "示例项目A",
+    "audience": "项目业务评审人员",
+    "aspect_ratio": "16:9",
+    "duration_seconds": 20
+  },
+  "sources": [
+    {
+      "id": "source-a",
+      "kind": "现场照片",
+      "status": "待审核"
+    },
+    {
+      "id": "source-b",
+      "kind": "设计示意",
+      "status": "待审核"
+    }
+  ],
+  "shots": [
+    {
+      "id": "shot-a",
+      "start_seconds": 0,
+      "duration_seconds": 6,
+      "source_id": "source-a",
+      "purpose": "交代空间与任务",
+      "action": "从入口缓慢推进并展示空间关系",
+      "narration": "从实际工作场景出发，明确本次任务。"
+    },
+    {
+      "id": "shot-b",
+      "start_seconds": 6,
+      "duration_seconds": 8,
+      "source_id": "source-b",
+      "purpose": "解释工作重点",
+      "action": "高亮与当前讲解对应的区域",
+      "narration": "围绕关键节点，说明问题与处理方法。"
+    },
+    {
+      "id": "shot-c",
+      "start_seconds": 14,
+      "duration_seconds": 6,
+      "source_id": "source-a",
+      "purpose": "回到团队行动",
+      "action": "展示核对记录与协作过程",
+      "narration": "保留过程记录，让结果能够被复核。"
+    }
+  ]
+}

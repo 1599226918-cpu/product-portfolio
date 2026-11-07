@@ -1,0 +1,65 @@
+{
+  "constructed_example": true,
+  "roles": [
+    {
+      "id": "requester",
+      "name": "申请人"
+    },
+    {
+      "id": "reviewer",
+      "name": "审核人"
+    }
+  ],
+  "screens": [
+    {
+      "screen_id": "page-a",
+      "title": "申请表",
+      "role": "requester",
+      "capture_version": "sample-v1"
+    },
+    {
+      "screen_id": "page-b",
+      "title": "审核详情",
+      "role": "reviewer",
+      "capture_version": "sample-v1"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "task-submit",
+      "title": "提交资料申请",
+      "role": "requester",
+      "preconditions": [
+        "必填字段准备完成"
+      ],
+      "steps": [
+        {
+          "action": "填写必填字段并检查附件",
+          "screen_id": "page-a"
+        },
+        {
+          "action": "提交申请并查看待审核状态",
+          "screen_id": "page-a"
+        }
+      ],
+      "completion": "申请进入待审核状态并保留提交记录",
+      "handoff_to": "reviewer"
+    },
+    {
+      "id": "task-review",
+      "title": "核对资料申请",
+      "role": "reviewer",
+      "preconditions": [
+        "收到审核任务"
+      ],
+      "steps": [
+        {
+          "action": "核对申请内容与附件",
+          "screen_id": "page-b"
+        }
+      ],
+      "completion": "保留审核意见并反馈申请人",
+      "handoff_to": "requester"
+    }
+  ]
+}

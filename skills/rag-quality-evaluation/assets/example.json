@@ -1,0 +1,54 @@
+{
+  "constructed_example": true,
+  "documents": [
+    {
+      "id": "permission-guide",
+      "sections": [
+        {
+          "id": "preview",
+          "text": "阅读角色可以预览资料，不允许下载附件。"
+        }
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "id": "Q01",
+      "question": "阅读角色可以下载附件吗？",
+      "expected": {
+        "answer_mode": "grounded",
+        "evidence_sections": [
+          "permission-guide/preview"
+        ]
+      }
+    },
+    {
+      "id": "Q02",
+      "question": "本月共有多少份合同？",
+      "expected": {
+        "answer_mode": "insufficient",
+        "evidence_sections": []
+      }
+    }
+  ],
+  "results": [
+    {
+      "case_id": "Q01",
+      "answer": "阅读角色可以预览资料，但不能下载附件。",
+      "answer_mode": "grounded",
+      "citations": [
+        {
+          "document_id": "permission-guide",
+          "section_id": "preview",
+          "quote": "阅读角色可以预览资料，不允许下载附件。"
+        }
+      ]
+    },
+    {
+      "case_id": "Q02",
+      "answer": "现有操作说明未提供合同数量，资料不足。",
+      "answer_mode": "insufficient",
+      "citations": []
+    }
+  ]
+}
