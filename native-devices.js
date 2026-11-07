@@ -115,12 +115,12 @@ function ensureWorkDialog(){
  let dialog=document.querySelector('#website-work');if(dialog)return dialog;
  dialog=document.createElement('dialog');dialog.id='website-work';dialog.className='website-work';dialog.setAttribute('aria-labelledby','website-work-title');
  const cases=[
-  ['oa','项目信息系统','合同审批、资料授权、归档与智能客服','003'],
-  ['ride','企业约车','申请、出车确认与行车记录','202'],
-  ['buy','内部采购','选品、审批、收货与成本','265'],
-  ['meal','宴请与点餐','菜单生成、菜品定价和出餐','006'],
+  ['oa','项目信息系统','合同审批、资料授权、归档与智能客服','abe7f4091340f603.webp'],
+  ['ride','企业约车','申请、出车确认与行车记录','e339e6876cc0e8e4.webp'],
+  ['buy','内部采购','选品、审批、收货与成本','8f77288a2d8dba9c.webp'],
+  ['meal','宴请与点餐','菜单生成、菜品定价和出餐','d848415483419569.webp'],
  ];
- dialog.innerHTML=`<button type="button" class="website-work-close" aria-label="关闭网站作品">关闭 ×</button><p class="website-work-kicker">产品经理作品集</p><h2 id="website-work-title">产品项目</h2><p class="website-work-intro">点击任一项目进入可缩放的流程画布，查看操作和页面截图。</p><div class="website-work-grid">${cases.map(([id,title,desc,image])=>`<a class="website-work-slot website-work-link" href="/product-portfolio/product-flows/#${id}"><div class="website-work-browser"><i></i><i></i><i></i></div><div class="website-work-thumb"><img src="/product-portfolio/images/thumbs/${image}.webp" loading="lazy" alt=""></div><div class="website-work-caption"><h3>${title} ↗</h3><p>${desc}</p></div></a>`).join('')}</div>`;
+ dialog.innerHTML=`<button type="button" class="website-work-close" aria-label="关闭网站作品">关闭 ×</button><p class="website-work-kicker">产品经理作品集</p><h2 id="website-work-title">产品项目</h2><p class="website-work-intro">点击任一项目进入可缩放的流程画布，查看操作和页面截图。</p><div class="website-work-grid">${cases.map(([id,title,desc,image])=>`<a class="website-work-slot website-work-link" href="/product-portfolio/product-flows/#${id}"><div class="website-work-browser"><i></i><i></i><i></i></div><div class="website-work-thumb"><img src="/product-portfolio/product-flows/screens/${image}" loading="lazy" alt=""></div><div class="website-work-caption"><h3>${title} ↗</h3><p>${desc}</p></div></a>`).join('')}</div>`;
  document.body.append(dialog);dialog.querySelector('button').addEventListener('click',()=>dialog.close());dialog.addEventListener('click',e=>{e.stopPropagation();if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close();}});
  return dialog;
 }

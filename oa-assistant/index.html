@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="description" content="工程项目 OA 智能客服交互作品，支持操作规则查询、问答与引用原文查看。">
+  <title>智能客服 · 工程项目信息系统</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" class="svg-symbols" aria-hidden="true">
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+  <symbol id="i-message" viewBox="0 0 24 24"><path d="M4 4h16v12H9l-5 4V4Z"/><path d="M8 8h8M8 12h5"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 7V5h6l3 3h9v12H3V7Z"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M5 3h9l5 5v13H5V3Zm9 0v6h5M9 13h6M9 17h6"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="m11 3 2.5 6.5L20 12l-6.5 2.5L11 21l-2.5-6.5L2 12l6.5-2.5L11 3ZM19 2v5m-2.5-2.5h5"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h16m-5-11-4 4 4 4"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 4v16M4 12h16"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="m14 5 7 7-7 7M3 12h18"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M3 4h7l2 2 2-2h7v16h-7l-2 2-2-2H3V4Zm9 2v16"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3m-4 4v3"/></symbol>
+</svg>
+<div class="oa-shell">
+  <aside class="oa-sidebar" aria-label="OA 导航">
+    <a class="brand" href="../materials/prototype.html" aria-label="返回工作台"><span class="redacted brand-mask-mark" aria-hidden="true"></span><span class="redacted brand-mask-name" aria-hidden="true"></span></a>
+    <nav class="side-nav">
+      <a class="nav-item" href="../materials/prototype.html" aria-label="工作台"><svg class="icon"><use href="#i-grid"/></svg><span aria-hidden="true">工<span class="redacted redacted-word"></span>台</span></a>
+      <a class="nav-item" href="../product-flows/#f09" aria-label="消息中心"><svg class="icon"><use href="#i-message"/></svg><span aria-hidden="true">消息<span class="redacted redacted-word"></span>心</span></a>
+      <button class="nav-item" id="nav-documents" type="button" aria-label="资料管理"><svg class="icon"><use href="#i-folder"/></svg><span aria-hidden="true">资料<span class="redacted redacted-word"></span>理</span><span class="nav-chevron" aria-hidden="true">⌄</span></button>
+      <div class="sub-nav"><button class="nav-item" id="nav-library" type="button" aria-label="操作资料"><span aria-hidden="true">操作<span class="redacted redacted-word"></span>料</span></button><button class="nav-item active" id="nav-chat" type="button" aria-current="page" aria-label="智能客服"><svg class="icon"><use href="#i-spark"/></svg><span aria-hidden="true">智能<span class="redacted redacted-word"></span>服</span></button></div>
+      <a class="nav-item" href="../product-flows/#f03" aria-label="合同管理"><svg class="icon"><use href="#i-file"/></svg><span aria-hidden="true">合同<span class="redacted redacted-word"></span>理</span></a>
+    </nav>
+    <div class="sidebar-bottom"><svg class="icon"><use href="#i-book"/></svg><span>项目协作与操作支持</span></div>
+  </aside>
+  <div class="oa-workspace">
+    <header class="oa-navbar">
+      <button class="icon-button" id="collapse-nav" type="button" aria-label="收起导航" aria-expanded="true"><svg class="icon"><use href="#i-menu"/></svg></button>
+      <div class="breadcrumb"><span>资料管理</span><span class="crumb-separator">/</span><strong>智能客服</strong></div>
+      <div class="nav-actions"><a href="../materials/prototypes.html" aria-label="返回作品集"><span class="redacted account-mask-link" aria-hidden="true"></span></a><span class="redacted account-mask-avatar" aria-label="已脱敏头像"></span><span class="redacted account-mask-name" aria-label="已脱敏账号"></span></div>
+    </header>
+    <nav class="oa-tabs" aria-label="页面标签"><a class="tag-tab" href="../materials/prototype.html">工作台</a><span class="tag-tab active"><i></i>智能客服</span></nav>
+    <main class="app-container">
+      <div class="page-heading"><div><h1>智能客服</h1><p>从合同审批到资料归档，让每个操作问题都有据可查。</p></div><div class="heading-actions"><button class="btn" id="open-library" type="button"><svg class="icon"><use href="#i-book"/></svg>知识资料</button><button class="btn primary" id="new-chat" type="button"><svg class="icon"><use href="#i-plus"/></svg>新建对话</button></div></div>
+      <section class="chat-layout" aria-label="智能客服工作区">
+        <aside class="chat-side" aria-label="知识资料目录"><div class="side-title"><strong>知识资料</strong><span id="document-count"></span></div><p class="side-description">制度与流程 · 系统操作</p><div id="knowledge-list" class="knowledge-list"></div><div class="side-footer"><svg class="icon"><use href="#i-lock"/></svg><div><strong>回答可追溯</strong><p>点击回答中的引用，查看对应规则和完整说明。</p></div></div></aside>
+        <section class="chat-main" aria-labelledby="assistant-title">
+          <header class="chat-head"><span class="ai-badge"><svg class="icon"><use href="#i-spark"/></svg></span><div class="chat-title"><h2 id="assistant-title">工程项目智能客服</h2><p>制度查询、流程指引与操作答疑</p></div><span class="chat-tools">资料问答</span></header>
+          <div class="context-bar"><label for="knowledge-scope">检索范围</label><select id="knowledge-scope" aria-label="检索资料范围"><option value="all">全部操作资料</option></select><span id="scope-count"></span></div>
+          <div id="chat-body" class="chat-body" role="log" aria-live="polite" aria-label="客服对话"></div>
+          <form id="composer" class="chat-foot"><div class="input-box"><textarea id="question" rows="2" maxlength="600" aria-label="输入问题" placeholder="输入问题，例如：只有查看权限，可以下载资料吗？"></textarea><button id="send" class="btn primary send" type="submit" aria-label="发送问题">发送<svg class="icon"><use href="#i-arrow"/></svg></button></div><div class="composer-hint"><span>回答附来源，点击引用查看原文</span><span>Enter 发送 · Shift + Enter 换行</span></div></form>
+        </section>
+      </section>
+    </main>
+  </div>
+</div>
+<dialog id="source-dialog" class="source-dialog" aria-labelledby="source-title"><header class="dialog-head"><div><span class="eyebrow">引用原文</span><h2 id="source-title"></h2><p id="source-subtitle"></p></div><button class="icon-button" id="close-source" type="button" aria-label="关闭原文"><svg class="icon"><use href="#i-close"/></svg></button></header><div class="document-meta"><span id="source-origin"></span><button class="btn" id="download-document" type="button">下载操作说明</button></div><article id="document-body" class="document-body"></article></dialog>
+<dialog id="library-dialog" class="library-dialog" aria-labelledby="library-title"><header class="dialog-head"><div><h2 id="library-title">知识资料</h2><p>按业务主题查找操作说明，查看原文与相关问题。</p></div><button class="icon-button" id="close-library" type="button" aria-label="关闭知识资料"><svg class="icon"><use href="#i-close"/></svg></button></header><div class="library-search"><svg class="icon"><use href="#i-search"/></svg><input id="library-search" type="search" placeholder="搜索资料名称或操作关键词" aria-label="搜索知识资料"></div><div id="library-grid" class="library-grid"></div></dialog>
+<noscript>请启用 JavaScript，浏览智能客服与操作资料。</noscript>
+<script src="knowledge.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
