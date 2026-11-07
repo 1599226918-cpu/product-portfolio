@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>企业用车 · 面试交互原型</title>
+<style>
+:root { --primary:#0e8a7d; --deep:#087467; --light:#e8f5f1; --ink:#263532; --muted:#7b8985; --line:#e3ebe7; background:#f2f6f4; color:var(--ink); font:14px/1.6 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif; }
+* { box-sizing:border-box; } body { margin:0; } button,input,select,textarea { font:inherit; } button { cursor:pointer; } button,a,input,select,textarea { -webkit-tap-highlight-color:transparent; } button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible { outline:3px solid #5dbca8; outline-offset:2px; } [hidden] { display:none!important; }
+.prototype-note { padding:12px 20px; background:#fff7e5; border-bottom:1px solid #eadfc7; color:#745a27; font-size:12px; text-align:center; }
+.review-tools { max-width:850px; margin:15px auto; display:flex; align-items:center; justify-content:space-between; gap:12px; padding:0 16px; } .review-tools a { color:#63736d; font-size:12px; text-decoration:none; } .reset { background:#fff; border:1px solid var(--line); padding:6px 12px; border-radius:6px; color:var(--muted); }
+.roles { display:flex; gap:7px; } .roles button { border:1px solid var(--line); background:#fff; color:#59716a; border-radius:20px; padding:7px 15px; } .roles button[aria-pressed=true] { background:var(--primary); border-color:var(--primary); color:white; }
+.phone { width:390px; margin:0 auto 28px; border:8px solid #263c36; border-radius:35px; overflow:hidden; height:820px; max-height:calc(100dvh - 150px); min-height:590px; background:#f4f7f5; box-shadow:0 18px 40px #1a3b2720; display:flex; flex-direction:column; }
+.status-bar { height:30px; flex:none; display:flex; align-items:center; justify-content:space-between; padding:0 20px; background:var(--primary); color:white; font-size:11px; font-weight:600; }
+.app-head { display:flex; align-items:center; justify-content:center; position:relative; padding:9px 14px 12px; background:var(--primary); color:white; flex:none; min-height:48px; font-size:15px; font-weight:600; } .back { position:absolute; left:12px; border:0; background:transparent; color:white; padding:3px 8px; font-size:23px; } .mini-pill { position:absolute; right:13px; padding:1px 9px; border:1px solid #ffffff5e; border-radius:12px; font-size:14px; }
+#screen { overflow:auto; min-height:0; flex:1; padding:13px 12px 25px; overscroll-behavior:contain; } h1,h2,h3,p { margin:0; } h2 { font-size:16px; } h3 { font-size:14px; } .muted { color:var(--muted); font-size:12px; } .card { background:white; border:1px solid var(--line); border-radius:12px; padding:14px; margin-bottom:12px; } .hero { background:var(--primary); color:white; border:0; padding:17px; } .hero .muted { color:#d2ede4; } .hero strong { font-size:19px; display:block; margin:4px 0 12px; }
+.stats { display:grid; grid-template-columns:repeat(3,1fr); gap:9px; margin:13px 0 0; } .stat { background:#fff; border:1px solid #dbede6; border-radius:8px; padding:9px 4px; text-align:center; color:var(--primary); } .stat b { font-size:20px; display:block; line-height:1.4; } .stat small { color:#70897f; font-size:10px; }
+.quick { display:grid; grid-template-columns:repeat(3,1fr); gap:12px 4px; margin-top:16px; } .quick button { background:none; border:0; display:grid; justify-items:center; gap:6px; font-size:12px; color:#637c71; } .quick i { width:40px; height:40px; background:var(--light); color:var(--primary); display:grid; place-items:center; border-radius:12px; font-size:18px; font-style:normal; }
+.row { display:flex; align-items:center; justify-content:space-between; gap:8px; } .section-head { display:flex; align-items:center; justify-content:space-between; margin:20px 0 10px; } .link { background:none; border:0; color:var(--primary); font-size:12px; padding:0; }
+.badge { font-size:10px; background:#e8f5ee; color:#198667; padding:3px 7px; border-radius:5px; white-space:nowrap; } .badge.wait { color:#ad7c25; background:#fff7e0; } .badge.gray { color:#7e8984; background:#f1f4f2; }
+.order-meta { margin:7px 0; color:#839088; font-size:11px; } .route { font-size:14px; margin:7px 0; font-weight:600; } .small { font-size:11px; } .actions { display:flex; gap:8px; flex-wrap:wrap; margin-top:15px; } .btn { padding:8px 14px; border:1px solid #d3e4db; border-radius:7px; background:white; color:var(--primary); } .btn.primary { background:var(--primary); border-color:var(--primary); color:white; } .btn.danger { color:#bc6955; border-color:#ecd9d1; } .btn.full { width:100%; margin-top:10px; }
+.field { display:grid; gap:5px; margin:12px 0; } .field span { color:#63746b; font-size:12px; } .field input,.field select,.field textarea { width:100%; border:1px solid #e0e7e3; border-radius:7px; background:#fff; padding:9px 10px; min-width:0; color:var(--ink); } .field textarea { resize:vertical; min-height:70px; } .field-row { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.tabs { display:flex; padding:8px 0; border-top:1px solid var(--line); background:#fff; flex:none; } .tabs button { display:grid; gap:2px; flex:1; border:0; background:none; color:#8a9991; padding:3px; font-size:10px; } .tabs b { font-size:17px; line-height:1.4; font-weight:400; } .tabs button.active { color:var(--primary); }
+.note { background:#fff8e6; border:1px solid #f1e7c9; border-radius:7px; padding:9px 10px; margin:10px 0; color:#a08b50; font-size:11px; } .empty { padding:34px 12px; text-align:center; color:#93a096; font-size:12px; }
+.kv { display:grid; grid-template-columns:84px 1fr; gap:10px 9px; margin:16px 0; font-size:12px; } .kv dt { color:var(--muted); } .kv dd { margin:0; overflow-wrap:anywhere; } .calendar { display:grid; grid-template-columns:repeat(7,1fr); gap:5px; margin:14px 0; } .calendar button { border:0; border-radius:8px; background:#f1f6f2; padding:10px 0; color:#708079; } .calendar button.active { background:var(--primary); color:white; }
+.table { width:100%; border-collapse:collapse; font-size:11px; } .table th,.table td { border-bottom:1px solid var(--line); padding:9px 4px; text-align:left; } .table th { color:var(--muted); font-weight:400; }
+#toast { position:fixed; left:50%; bottom:70px; transform:translateX(-50%); background:#23392ee8; color:white; border-radius:8px; padding:11px 18px; max-width:90vw; z-index:30; font-size:13px; text-align:center; }
+@media(max-width:600px) { .prototype-note { text-align:left; padding:10px 12px; } .review-tools { margin:10px auto; padding:0 10px; flex-wrap:wrap; } .review-tools a { display:none; } .roles button { padding:6px 12px; font-size:12px; } .phone { width:min(100%,390px); max-height:none; height:calc(100dvh - 145px); min-height:580px; border-width:0; border-radius:0; box-shadow:none; margin-bottom:0; } }
+</style>
+</head>
+<body>
+<div class="prototype-note">此为原型图，仅供面试时进行简易操作。所有资料均已进行脱敏处理，不涉及原公司内部数据。</div>
+<div class="review-tools"><a href="../../product-flows/#ride">← 返回用车流程画布</a><div class="roles" aria-label="角色切换"><button data-role="employee" aria-pressed="true">用车人</button><button data-role="admin" aria-pressed="false">调度管理员</button><button data-role="driver" aria-pressed="false">司机</button></div><label id="driver-identity-field" hidden><select id="driver-identity" aria-label="司机身份"><option>司机 A</option><option>司机 B</option></select></label><button class="reset" id="reset">重置原型</button></div>
+<main class="phone"><div class="status-bar"><span>9:41</span><span>◕ ▰</span></div><header class="app-head"><button class="back" id="back" aria-label="返回首页" hidden>‹</button><span id="title">首页</span><span class="mini-pill">··· ⊙</span></header><section id="screen" aria-label="用车原型页面"></section><nav class="tabs" aria-label="底部导航"><button data-nav="home" class="active"><b>⌂</b>首页</button><button data-nav="calendar"><b>▦</b>排班</button><button data-nav="messages"><b>♧</b>消息</button><button data-nav="mine"><b>♙</b>我的</button></nav></main>
+<div id="toast" role="status" hidden></div>
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const escape = value => String(value ?? '').replace(/[&<>"']/g, character => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[character]));
+  function day(offset = 1) {
+    const date = new Date();
+    date.setDate(date.getDate() + offset);
+    return [date.getFullYear(), String(date.getMonth() + 1).padStart(2,'0'), String(date.getDate()).padStart(2,'0')].join('-');
+  }
+  const vehicles = [{id:'vehicle-a',name:'车辆 A · 6 座',seats:6},{id:'vehicle-b',name:'车辆 B · 4 座',seats:4}];
+  const drivers = ['司机 A','司机 B'];
+  let role = 'employee';
+  let driverIdentity = '司机 A';
+  let view = 'home';
+  let selectedId = null;
+  let selectedDay = day();
+  let filter = '全部';
+  let orders = [];
+  let nextId = 2;
+  let toastTimer;
+  function seed() {
+    orders = [{id:'DEMO-CAR-001',date:day(),start:'10:00',end:'11:00',from:'办公地点 A',to:'业务地点 B',count:2,reason:'业务出行',status:'待调度',driver:'',vehicle:'',startKm:10000,endKm:null,fee:0,anomaly:false}];
+    nextId = 2;
+  }
+  function toast(text) {
+    clearTimeout(toastTimer);
+    $('toast').textContent = text;
+    $('toast').hidden = false;
+    toastTimer = setTimeout(() => $('toast').hidden = true, 2400);
+  }
+  function go(next, id = null) {
+    view = next;
+    selectedId = id;
+    render();
+    $('screen').scrollTop = 0;
+  }
+  function statusBadge(order) {
+    const type = ['待调度','待核实'].includes(order.status) ? ' wait' : order.status === '已取消' ? ' gray' : '';
+    return '<span class="badge' + type + '">' + order.status + '</span>';
+  }
+  function orderCard(order) {
+    return `<article class="card"><div class="row"><strong>${escape(order.id)}</strong>${statusBadge(order)}</div><p class="order-meta">${escape(order.date)} · ${escape(order.start)}–${escape(order.end)} · ${order.count} 人</p><p class="route">${escape(order.from)} → ${escape(order.to)}</p><div class="row"><span class="muted">${escape(order.driver || '等待调度安排')}</span><button class="link" data-action="detail" data-id="${order.id}">查看详情 ›</button></div></article>`;
+  }
+  function stat(number, label) { return `<div class="stat"><b>${number}</b><small>${label}</small></div>`; }
+  function completed() { return relevantOrders().filter(order => order.status === '已完成'); }
+  function totalKm() { return completed().reduce((total, order) => total + order.endKm - order.startKm, 0); }
+  function relevantOrders() { return role === 'driver' ? orders.filter(order => order.driver === driverIdentity) : orders; }
+  function home() {
+    const names = {employee:['企业用车','用车人 A'],admin:['调度总览','调度管理员'],driver:['出车工作台',driverIdentity]};
+    const statistics = role === 'admin' ? stat(orders.filter(order=>order.status==='待调度').length,'待调度') + stat(orders.filter(order=>order.status==='待核实').length,'待核实') + stat(completed().length,'已完成') : role === 'driver' ? stat(relevantOrders().filter(order=>order.status==='已派车').length,'待出车') + stat(relevantOrders().filter(order=>order.status==='行程中').length,'行程中') + stat(totalKm(),'已完成公里') : stat(orders.length,'预约记录') + stat(orders.filter(order=>order.status==='已派车').length,'已派车') + stat(completed().length,'已完成');
+    const shortcuts = role === 'employee' ? [['booking','＋','申请用车'],['calendar','▦','查看排班'],['list','≡','调度结果']] : role === 'admin' ? [['list','≡','调度待办'],['statistics','▤','统计报表'],['drivers','♙','司机车辆']] : [['list','≡','司机任务'],['calendar','▦','查看排班'],['statistics','▤','行车统计']];
+    return `<section class="card hero"><p>${names[role][0]}</p><strong>${names[role][1]}</strong><p class="muted">预约、派车与行车记录</p><div class="stats">${statistics}</div></section><section class="card"><h3>快捷操作</h3><div class="quick">${shortcuts.map(([target,icon,label])=>`<button data-nav="${target}"><i>${icon}</i>${label}</button>`).join('')}</div></section><div class="section-head"><h3>最近记录</h3><button class="link" data-nav="list">查看全部</button></div>${relevantOrders().slice().reverse().slice(0,3).map(orderCard).join('') || '<div class="empty">暂无分配给当前司机的任务</div>'}`;
+  }
+  function booking() {
+    return `<form id="booking-form" class="card"><h2>用车申请</h2><label class="field"><span>预约日期</span><input name="date" type="date" min="${day(0)}" value="${selectedDay}" required></label><div class="field-row"><label class="field"><span>开始时间</span><input name="start" type="time" value="13:00" required></label><label class="field"><span>结束时间</span><input name="end" type="time" value="14:00" required></label></div><label class="field"><span>出发地点</span><input name="from" placeholder="填写出发地点" maxlength="50" required></label><label class="field"><span>目的地点</span><input name="to" placeholder="填写目的地点" maxlength="50" required></label><label class="field"><span>乘车人数</span><input name="count" type="number" min="1" max="6" value="2" required></label><label class="field"><span>用车事由</span><textarea name="reason" maxlength="120" placeholder="填写出行事由" required></textarea></label><button class="btn primary full" type="submit">提交用车申请</button></form>`;
+  }
+  function list() {
+    const rows = relevantOrders().filter(order => filter === '全部' || order.status === filter);
+    return `<label class="field"><span>按状态筛选</span><select id="status-filter">${['全部','待调度','已派车','行程中','待核实','已完成','已取消'].map(status=>`<option ${status===filter?'selected':''}>${status}</option>`).join('')}</select></label>${rows.slice().reverse().map(orderCard).join('') || '<div class="empty">当前状态下暂无记录</div>'}`;
+  }
+  function detail() {
+    const order = orders.find(item => item.id === selectedId);
+    if (!order) return '<div class="empty">未找到该预约</div>';
+    const vehicle = vehicles.find(item => item.id === order.vehicle);
+    let actions = '';
+    if (role === 'employee' && ['待调度','已派车'].includes(order.status)) actions = `<button class="btn danger" data-action="cancel" data-id="${order.id}">取消预约</button>`;
+    if (role === 'admin' && ['待调度','已派车'].includes(order.status)) actions = `<button class="btn primary" data-nav="assign" data-id="${order.id}">${order.status==='已派车'?'调整派车':'安排车辆与司机'}</button>`;
+    if (role === 'driver' && order.status === '已派车') actions = `<button class="btn primary" data-action="depart" data-id="${order.id}">确认出车</button>`;
+    if (role === 'driver' && order.status === '行程中') actions = `<button class="btn primary" data-nav="trip" data-id="${order.id}">填写电子行车单</button>`;
+    if (role === 'admin' && order.status === '待核实') actions = `<button class="btn primary" data-action="approve" data-id="${order.id}">确认里程并完成</button><button class="btn" data-action="reject" data-id="${order.id}">退回更正</button>`;
+    const mileage = order.endKm !== null ? `<dt>行驶公里</dt><dd>${order.endKm-order.startKm} 公里</dd><dt>出车费用</dt><dd>¥${Number(order.fee).toFixed(2)}</dd>` : '';
+    return `<article class="card"><div class="row"><h2>预约任务详情</h2>${statusBadge(order)}</div><p class="order-meta">${order.id}</p><dl class="kv"><dt>用车人</dt><dd>用车人 A · 部门 A</dd><dt>预约日期</dt><dd>${escape(order.date)}</dd><dt>用车时段</dt><dd>${escape(order.start)}–${escape(order.end)}</dd><dt>行程</dt><dd>${escape(order.from)} → ${escape(order.to)}</dd><dt>事由</dt><dd>${escape(order.reason)}</dd><dt>乘车人数</dt><dd>${order.count} 人</dd><dt>驾驶员</dt><dd>${escape(order.driver||'待安排')}</dd><dt>车辆</dt><dd>${vehicle?vehicle.name:'待安排'}</dd>${mileage}</dl>${order.status==='待核实'?'<div class="note">司机登记了换车起始表显，请核实后完成本次行车记录。</div>':''}<div class="actions">${actions}</div></article>`;
+  }
+  function assignment() {
+    const order = orders.find(item => item.id === selectedId);
+    return `<form id="assign-form" class="card"><h2>车辆与司机安排</h2><p class="order-meta">${order.id} · ${order.date} ${order.start}–${order.end}</p><label class="field"><span>驾驶员</span><select name="driver">${drivers.map(driver=>`<option ${order.driver===driver?'selected':''}>${driver}</option>`).join('')}</select></label><label class="field"><span>车辆</span><select name="vehicle">${vehicles.map(vehicle=>`<option value="${vehicle.id}" ${order.vehicle===vehicle.id?'selected':''}>${vehicle.name}</option>`).join('')}</select></label><p class="muted">${order.count} 人乘车 · 保存前检查车辆座位与同一时段的安排</p><button class="btn primary full">保存派车安排</button></form>`;
+  }
+  function trip() {
+    const order = orders.find(item => item.id === selectedId);
+    return `<form id="trip-form" class="card"><h2>电子行车记录单</h2><p class="order-meta">${order.id}</p><div class="field-row"><label class="field"><span>开始表显（公里）</span><input name="startKm" type="number" min="0" step="1" value="${order.startKm}" required></label><label class="field"><span>结束表显（公里）</span><input name="endKm" type="number" min="0" step="1" value="${order.endKm??''}" required></label></div><label class="field"><span>费用（元）</span><input name="fee" type="number" min="0" step="0.01" value="${order.fee}" required></label><label class="field"><span>起始表显情况</span><select name="anomaly"><option value="normal">正常接续</option><option value="changed" ${order.anomaly?'selected':''}>换车后实际表显，交管理员核实</option></select></label><button class="btn primary full">提交行车单</button></form>`;
+  }
+  function calendar() {
+    const dates = Array.from({length:7}, (_,index)=>day(index));
+    const rows = relevantOrders().filter(order=>order.date===selectedDay && order.status!=='已取消');
+    return `<section class="card"><div class="row"><h2>预约排班</h2><span class="muted">${selectedDay.slice(0,7)}</span></div><div class="calendar">${dates.map(date=>`<button class="${date===selectedDay?'active':''}" data-date="${date}">${date.slice(-2)}</button>`).join('')}</div>${role==='employee'?'<button class="btn primary full" data-nav="booking">申请所选日期用车</button>':''}</section>${rows.map(orderCard).join('')||'<div class="empty">当天暂无排班</div>'}`;
+  }
+  function statistics() {
+    return `<section class="card"><h2>用车统计报表</h2><div class="stats">${stat(orders.length,'预约记录')}${stat(completed().length,'已完成行程')}${stat(totalKm(),'核实后公里')}</div></section><section class="card"><h3>已完成行程明细</h3><table class="table"><thead><tr><th>驾驶员</th><th>公里</th><th>费用</th></tr></thead><tbody>${completed().map(order=>`<tr><td>${order.driver}</td><td>${order.endKm-order.startKm}</td><td>¥${Number(order.fee).toFixed(2)}</td></tr>`).join('')}</tbody></table>${completed().length?'':'<div class="empty">完成行车单后，统计同步更新</div>'}<button class="btn full" data-action="export">导出统计 CSV</button></section>`;
+  }
+  function render() {
+    const titles = {home:'首页',booking:'用车申请',list:role==='admin'?'调度待办':role==='driver'?'司机任务':'预约记录',detail:'任务详情',assign:'安排车辆与司机',trip:'电子行车单',calendar:'查看排班',statistics:'统计报表',drivers:'司机与车辆',messages:'消息',mine:'我的'};
+    $('title').textContent = titles[view];
+    $('back').hidden = view === 'home';
+    $('driver-identity-field').hidden = role !== 'driver';
+    for (const item of document.querySelectorAll('[data-role]')) item.setAttribute('aria-pressed', String(item.dataset.role === role));
+    for (const item of document.querySelectorAll('.tabs button')) item.classList.toggle('active', item.dataset.nav === view);
+    const pages = {home,booking,list,detail,assign:assignment,trip,calendar,statistics,
+      drivers:()=>`<section class="card"><h2>驾驶员</h2>${drivers.map(driver=>`<p class="row" style="margin-top:14px"><span>${driver}</span><span class="badge">可安排</span></p>`).join('')}</section><section class="card"><h2>车辆</h2>${vehicles.map(vehicle=>`<p style="margin-top:14px">${vehicle.name}</p>`).join('')}</section>`,
+      messages:()=>'<section class="card"><h2>业务消息</h2><p class="muted" style="margin-top:10px">预约、派车和行车状态可在对应任务中查看。</p></section>'+relevantOrders().slice().reverse().map(orderCard).join(''),
+      mine:()=>`<section class="card"><h2>${role==='employee'?'用车人 A':role==='admin'?'调度管理员':driverIdentity}</h2><p class="muted" style="margin-top:8px">部门 A</p><div class="actions"><button class="btn" data-nav="list">查看记录</button><button class="btn" data-nav="statistics">用车统计</button></div></section>`};
+    $('screen').innerHTML = pages[view]();
+  }
+  document.addEventListener('click', event => {
+    const target = event.target.closest('button');
+    if (!target) return;
+    if (target.dataset.role) { role = target.dataset.role; filter = '全部'; go('home'); return; }
+    if (target.dataset.nav) { go(target.dataset.nav, target.dataset.id || null); return; }
+    if (target.dataset.date) { selectedDay = target.dataset.date; render(); return; }
+    if (!target.dataset.action) return;
+    const order = orders.find(item => item.id === target.dataset.id);
+    const actions = {
+      detail:()=>go('detail',order.id),
+      cancel:()=>{order.status='已取消';render();toast('预约已取消');},
+      depart:()=>{order.status='行程中';render();toast('已确认出车');},
+      approve:()=>{order.status='已完成';render();toast('里程已核实，统计已更新');},
+      reject:()=>{order.status='行程中';render();toast('已退回司机更正，填报内容保留');},
+      export:()=>{
+        const rows = [['记录编号','日期','驾驶员','公里','费用'],...completed().map(item=>[item.id,item.date,item.driver,item.endKm-item.startKm,item.fee])];
+        const url = URL.createObjectURL(new Blob(['\uFEFF'+rows.map(row=>row.join(',')).join('\n')],{type:'text/csv;charset=utf-8'}));
+        const anchor=document.createElement('a');anchor.href=url;anchor.download='用车原型统计.csv';anchor.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+      }
+    };
+    actions[target.dataset.action]?.();
+  });
+  document.addEventListener('change', event => {
+    if (event.target.id==='status-filter') { filter=event.target.value;render(); }
+    if (event.target.id==='driver-identity') { driverIdentity=event.target.value;go('home'); }
+  });
+  document.addEventListener('submit', event => {
+    event.preventDefault();
+    const form = event.target;
+    const values = Object.fromEntries(new FormData(form));
+    if (form.id === 'booking-form') {
+      if (values.end <= values.start) { toast('结束时间须晚于开始时间'); return; }
+      if (!values.from.trim() || !values.to.trim() || !values.reason.trim()) { toast('请完整填写出行信息'); return; }
+      if (orders.some(order=>order.status!=='已取消' && order.date===values.date && values.start<order.end && values.end>order.start)) { toast('该时段已有预约，请调整出行时间'); return; }
+      const order = {id:'DEMO-CAR-'+String(nextId++).padStart(3,'0'),...values,count:Number(values.count),status:'待调度',driver:'',vehicle:'',startKm:10000,endKm:null,fee:0,anomaly:false};
+      orders.push(order);go('detail',order.id);toast('申请已提交，等待调度安排');
+    }
+    if (form.id === 'assign-form') {
+      const order = orders.find(item=>item.id===selectedId);
+      const vehicle=vehicles.find(item=>item.id===values.vehicle);
+      if (order.count>vehicle.seats) {toast('乘车人数超过车辆座位数');return;}
+      if (orders.some(item=>item.id!==order.id && !['待调度','已取消'].includes(item.status) && item.date===order.date && order.start<item.end && order.end>item.start && (item.vehicle===values.vehicle || item.driver===values.driver))) {toast('车辆或司机在该时段已有安排');return;}
+      Object.assign(order,values,{status:'已派车'});go('detail',order.id);toast('派车已保存，用车人和司机任务同步更新');
+    }
+    if (form.id === 'trip-form') {
+      const startKm=Number(values.startKm),endKm=Number(values.endKm);
+      if (endKm<startKm) {toast('结束表显不能小于开始表显');return;}
+      const order=orders.find(item=>item.id===selectedId);
+      Object.assign(order,{startKm,endKm,fee:Number(values.fee),anomaly:values.anomaly==='changed',status:values.anomaly==='changed'?'待核实':'已完成'});
+      go('detail',order.id);toast(order.anomaly?'已提交表显核实':'行车单已完成，统计已更新');
+    }
+  });
+  $('back').addEventListener('click',()=>go('home'));
+  $('reset').addEventListener('click',()=>{seed();role='employee';driverIdentity='司机 A';$('driver-identity').value=driverIdentity;selectedDay=day();filter='全部';go('home');toast('原型已重置');});
+  seed();render();
+})();
+</script>
+</body>
+</html>

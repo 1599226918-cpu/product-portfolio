@@ -10,7 +10,7 @@
 <body>
 <header class="top">
   <div class="brand"><span class="brand-icon" aria-hidden="true">↗</span><div><a class="home" href="../">作品集首页</a><h1>产品流程画布</h1></div></div>
-  <div class="top-actions" aria-label="浏览方式"><button id="flowMode" type="button" aria-pressed="true">流程画布</button><button id="libraryMode" type="button" aria-pressed="false">已核对截图</button></div>
+  <div class="top-actions" aria-label="浏览方式"><button id="flowMode" type="button" aria-pressed="true">流程画布</button></div>
 </header>
 <nav class="case-links" aria-label="作品集导航"><a href="../materials/prototypes.html">← 体验原型</a></nav>
 <nav id="products" class="products" aria-label="产品"></nav>
@@ -22,15 +22,13 @@
       <div class="legend"><span><i class="main"></i> 主线</span><span><i class="handoff"></i> 跨端交接</span><span><i class="branch"></i> 分支</span><span><i class="return"></i> 回退与重提</span></div>
     </aside>
     <div class="mainpane">
-      <div class="toolbar"><div><h2 id="flowName"></h2><p id="flowDesc"></p></div><div class="zoom" aria-label="画布缩放"><a id="assistantLink" href="../oa-assistant/">体验智能客服 ↗</a><button id="zoomOut" type="button" aria-label="缩小">−</button><output id="zoomValue" aria-live="polite"></output><button id="zoomIn" type="button" aria-label="放大">＋</button><button id="zoomFit" type="button">适应宽度</button><button id="zoomAll" type="button">全览</button></div></div>
+      <div class="toolbar"><div><h2 id="flowName"></h2><p id="flowDesc"></p></div><div class="zoom" aria-label="画布缩放"><a id="prototypeLink" href="../materials/prototypes/engineering-oa.html">体验 OA 原型 HTML ↗</a><button id="zoomOut" type="button" aria-label="缩小">−</button><output id="zoomValue" aria-live="polite"></output><button id="zoomIn" type="button" aria-label="放大">＋</button><button id="zoomFit" type="button">适应宽度</button><button id="zoomAll" type="button">全览</button></div></div>
+      <p class="prototype-notice">此为原型图，仅供面试时进行简易操作。所有资料均已进行脱敏处理，不涉及原公司内部数据。</p>
       <div class="canvas" id="canvas" tabindex="0" aria-label="多角色泳道流程画布"><div id="sizer"><div id="stage" class="stage"></div></div></div>
       <p class="hint">拖动空白处平移 · 点击截图放大 · Ctrl / ⌘ + 滚轮缩放</p>
     </div>
   </section>
-  <section id="library" class="library" hidden>
-    <div class="librarybar"><div><h2 id="libraryTitle">截图资料库</h2><p id="count"></p></div><input id="search" type="search" placeholder="搜索页面、角色或截图编号" aria-label="搜索截图"></div>
-    <div id="grid"></div>
-  </section>
+
 </main>
 <dialog id="viewer" aria-labelledby="viewerTitle">
   <div class="viewerbar"><div><p id="viewerCaption"></p><h2 id="viewerTitle"></h2></div><div class="viewer-actions"><button id="photoOut" type="button" aria-label="缩小截图">−</button><button id="photoIn" type="button" aria-label="放大截图">＋</button><button id="photoFit" type="button">适合窗口</button><button id="photoActual" type="button">原尺寸</button><button id="close" type="button" aria-label="关闭截图">×</button></div></div>

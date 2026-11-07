@@ -11,7 +11,6 @@
   let product = data.products[0].id;
   let selectedFlow = null;
   let renderedProduct = null;
-  let mode = 'flow';
   let zoom = 1;
   let sizing = 'width';
   let inset = 0;
@@ -156,7 +155,15 @@
     const graph = data.canvases[product];
     const info = data.products.find(item => item.id === product);
     $('productName').textContent = info.name;
-    $('assistantLink').hidden = product !== 'oa';
+    const prototypes = {
+      oa: ['OA', 'engineering-oa.html'],
+      ride: ['用车', 'dispatch.html'],
+      buy: ['采购', 'procurement-review.html'],
+      meal: ['兰亭', 'lanting.html']
+    };
+    const [name, fileName] = prototypes[product];
+    $('prototypeLink').textContent = '体验 ' + name + ' 原型 HTML ↗';
+    $('prototypeLink').href = '../materials/prototypes/' + fileName;
     $('productDesc').textContent = graph.images + ' 张截图 · ' + graph.groups.length + ' 组泳道';
     $('flowName').textContent = selectedFlow?.title || info.name + ' · 完整流程';
     $('flowDesc').textContent = selectedFlow?.desc || info.desc;
@@ -178,69 +185,26 @@
     locateFlow();
   }
 
-  function renderLibrary() {
-    const query = $('search').value.trim().toLowerCase();
-    const seen = new Set();
-    const rows = data.items.filter(item => {
-      if (!file(item.id) || (product !== 'all' && item.p !== product) || seen.has(item.asset)) return false;
-      if (query && ![item.id, item.title, item.source, productName(item.p)].some(value => value.toLowerCase().includes(query))) return false;
-      seen.add(item.asset);
-      return true;
-    });
-    $('count').textContent = rows.length + ' 张截图 · 点击放大';
-    $('grid').replaceChildren(...rows.map(item => {
-      const tile = button('', () => openImage(item.id, tile));
-      tile.className = 'tile';
-      tile.setAttribute('aria-label', '放大截图 · ' + item.title);
-      const image = el('img');
-      image.src = file(item.id);
-      image.alt = item.title + ' · 脱敏截图';
-      image.loading = 'lazy';
-      const caption = el('span');
-      caption.append(el('b', item.title), el('small', productName(item.p) + ' · ' + item.source));
-      tile.append(image, caption);
-      return tile;
-    }));
-    if (!rows.length) $('grid').append(el('p', '没有符合条件的截图。'));
-  }
-
   function render() {
-    const options = mode === 'library' ? [{ id: 'all', name: '全部项目' }, ...data.products] : data.products;
-    $('products').replaceChildren(...options.map(info => {
-      const item = button(info.name, () => {
-        if (mode === 'flow') navigate(info.id);
-        else { product = info.id; render(); }
-      });
+    $('products').replaceChildren(...data.products.map(info => {
+      const item = button(info.name, () => navigate(info.id));
       item.setAttribute('aria-pressed', String(product === info.id));
       return item;
     }));
-    if (mode === 'flow') renderCanvas();
-    else renderLibrary();
-  }
-
-  function setMode(next) {
-    mode = next;
-    $('flowView').hidden = next !== 'flow';
-    $('library').hidden = next !== 'library';
-    $('flowMode').setAttribute('aria-pressed', String(next === 'flow'));
-    $('libraryMode').setAttribute('aria-pressed', String(next === 'library'));
+    renderCanvas();
   }
 
   $('flowMode').addEventListener('click', () => { renderedProduct = null; selectFromHash(); });
-  $('libraryMode').addEventListener('click', () => { setMode('library'); product = 'all'; render(); });
-  $('search').addEventListener('input', renderLibrary);
 
   function selectFromHash() {
     const hash = location.hash.slice(1);
     selectedFlow = data.flows.find(flow => flow.id === (hash === 'rag' ? 'f10' : hash)) || null;
     product = selectedFlow?.p || data.products.find(info => info.id === hash)?.id || data.products[0].id;
-    setMode('flow');
     render();
   }
 
   window.addEventListener('hashchange', selectFromHash);
   new ResizeObserver(() => {
-    if (mode !== 'flow') return;
     if (sizing === 'width') { fit(); locateFlow(); }
     else if (sizing === 'all') fit(true);
     else resize();
